@@ -28,7 +28,14 @@
         <span>{{ title }}</span>
       </button>
       <span class="remaining-space"></span>
-      <span>Angular</span>
+      <span><button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon class="material-icons-outlined">account_box</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item routerLink="/login" routerLinkActive="active">
+          <span>Se Connecter</span>
+        </button>
+      </mat-menu></span>
     </mat-toolbar>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

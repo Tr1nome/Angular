@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TitleService } from './service/title.service';
+import { Globals } from './globals';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +9,7 @@ import { TitleService } from './service/title.service';
 })
 
 export class AppComponent implements OnInit {
+  title: string = Globals.APP_NAME;
   opened: boolean;
   constructor(private titleService: TitleService) { }
 

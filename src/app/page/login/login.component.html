@@ -1,0 +1,22 @@
+<div class= "container-fluid">
+  <div fxLayout="row" fxLayoutAlign="center center" style="margin-top:200px;">
+    <mat-card class="col-6">
+      <mat-card-title class="text-center">Se connecter</mat-card-title>
+        <mat-card-content>
+          <form class="form-content" [formGroup]="loginForm">
+            <mat-form-field>
+              <input matInput placeholder="nom d'utilisateur..." 
+              formControlName="username" autocomplete="Off" required/>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="password" placeholder="mot de passe..." 
+                formControlName="username" autocomplete="Off" required/>
+              </mat-form-field>
+              <button class="mt-3" mat-flat-button
+              (click)="login()"
+              color="primary">Connexion</button>
+          </form>
+        </mat-card-content>
+    </mat-card>
+  </div>
+</div> 

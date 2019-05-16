@@ -1,12 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconModule, MatToolbarModule, MatButtonModule, 
+import { MatIconModule, MatToolbarModule, MatButtonModule,
   MatSidenavModule, MatCheckboxModule, MatListModule, MatMenuModule, MatFormFieldModule,
 MatInputModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -41,6 +42,7 @@ const appRoutes: Routes = [
     FlexLayoutModule,
     MatSidenavModule,
     FormsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,

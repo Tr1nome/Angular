@@ -1,26 +1,51 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="over" [(opened)]="opened">
+  <mat-sidenav #sidenav mode="side" [(opened)]="opened">
     <mat-toolbar color="primary" role="heading">
       <span>Menus</span>
       <span class="remaining-space"></span>
-        <button mat-button (click)="sidenav.toggle()">
-          <mat-icon>clear</mat-icon>
-          </button>
+      <button mat-button (click)="sidenav.toggle()">
+        <mat-icon>clear</mat-icon>
+      </button>
     </mat-toolbar>
+    <nav>
+      <mat-nav-list>
+        <a routerLink="/formation" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <mat-icon matListIcon>view_list</mat-icon>
+          <span>List formation</span>
+        </a>
+        <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <mat-icon matListIcon>view_list</mat-icon>
+          <span>List actu</span>
+        </a>
+      </mat-nav-list>
+    </nav>
   </mat-sidenav>
-  
+
   <mat-sidenav-content>
     <mat-toolbar color="primary" role="heading">
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon>view_headline</mat-icon>
-          <span>{{ title }}</span>
-          </button>
-            <span class="remaining-space"></span>
-            <span>Angular</span>
+        <span>{{ title }}</span>
+      </button>
+      <span class="remaining-space"></span>
+      <span>Angular</span>
     </mat-toolbar>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
-<div class="container-fluid">
-  bruh
-</div>
 
+<!--<ng-container *ngIf="(asyncTabs | async) === null">
+    Loading tabs...
+  </ng-container>
+  
+  <mat-tab-group>
+    <mat-tab *ngFor="let tab of asyncTabs | async">
+      <ng-template mat-tab-label>{{tab.label}}
+        
+      </ng-template>
+      {{tab.content}}
+    </mat-tab>
+  </mat-tab-group>
+<div class="example-box" cdkDrag>
+</div>
+<mat-icon matBadge="2">thumb_up</mat-icon>-->

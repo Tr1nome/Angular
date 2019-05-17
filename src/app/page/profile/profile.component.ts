@@ -4,11 +4,12 @@ import { Globals } from '../../globals';
 import { AuthService } from '../../service/auth.service';
 
 @Component({
-  selector: 'app-actu',
-  templateUrl: './actu.component.html',
-  styleUrls: ['./actu.component.scss']
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.scss']
 })
-export class ActuComponent implements OnInit {
+export class ProfileComponent implements OnInit {
+
   user: User|null;
   constructor(private auth: AuthService) { }
 

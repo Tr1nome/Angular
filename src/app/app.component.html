@@ -9,15 +9,15 @@
     </mat-toolbar>
     <nav>
       <mat-nav-list>
+          <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <mat-icon matListIcon>send</mat-icon>
+            <span>Accueil</span>
+          </a>
         <a routerLink="/formation" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
           <mat-icon matListIcon>send</mat-icon>
           <span>List formation</span>
         </a>
-        <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <mat-icon matListIcon>send</mat-icon>
-          <span>List actu</span>
-        </a>
-        <a routerLink="/test" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+        <a routerLink="/event" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
           <mat-icon matListIcon>send</mat-icon>
           <span>List Event</span>
         </a>

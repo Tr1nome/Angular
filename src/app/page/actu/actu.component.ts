@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../class/user';
 import { Globals } from '../../globals';
-import { AuthService } from '../../service/auth.service';
+import { ActuService } from '../../service/actu.service';
+import { Router } from '@angular/router';
+import { Actu } from '../../class/actu';
 
 @Component({
   selector: 'app-actu',
@@ -9,15 +10,25 @@ import { AuthService } from '../../service/auth.service';
   styleUrls: ['./actu.component.scss']
 })
 export class ActuComponent implements OnInit {
-  user: User|null;
-  constructor(private auth: AuthService) { }
+
+  color = 'warn';
+  diameter = 50;
+  public isLoading = false;
+  mode = 'indeterminate';
+  actus: Actu[];
+  public apiUrl = Globals.APP_API + 'actu';
+  constructor(private actuService: ActuService, private router: Router) { }
 
   ngOnInit() {
+    return this.getAllActus();
   }
 
-  isConnected(): boolean {
-    this.user = this.auth.currentUser;
-    return this.auth.isConnected();
+  getAllActus(): void {
+    this.isLoading = true;
+    this.actuService.getAllActus().subscribe(data => {
+      this.actus = data;
+      this.isLoading = false;
+    });
   }
-
 }
+

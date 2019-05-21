@@ -11,6 +11,10 @@ import { Product } from '../../class/product';
 })
 export class ProductComponent implements OnInit {
 
+  color = 'warn';
+  diameter = 50;
+  public isLoading = false;
+  mode = 'indeterminate';
   products: Product[];
   public apiUrl = Globals.APP_API + 'product';
   constructor(private productService: ProductService, private router: Router) { }
@@ -20,8 +24,10 @@ export class ProductComponent implements OnInit {
   }
 
   getAllProducts(): void {
+    this.isLoading = true;
     this.productService.getAllProducts().subscribe(data => {
       this.products = data;
+      this.isLoading = false;
     });
   }
   addProduct(): void {

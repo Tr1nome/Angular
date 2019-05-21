@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatToolbarModule, MatButtonModule,
   MatSidenavModule, MatCheckboxModule, MatListModule, MatMenuModule, MatFormFieldModule,
 MatInputModule} from '@angular/material';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -28,11 +29,15 @@ import { IsSignedInGuard } from './guard/is-signed-in.guard';
 import { ProductComponent } from './page/product/product.component';
 import { AddProductComponent } from './page/product/add-product/add-product.component';
 import { UpdateProductComponent } from './page/product/update-product/update-product.component';
+import { RegistrationComponent } from './page/formation/registration/registration.component';
+import { EventComponent } from './page/event/event.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, canActivate: [IsSignedInGuard], data: { title: 'Nos Formations' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
+  { path: 'event', component: EventComponent, data: { title: 'Evenements' } },
+  { path: 'formation-registration', component: RegistrationComponent, data: { title: 'Inscription à une formation' } },
   { path: 'profile', component: ProfileComponent, data: { title: 'Mon profil' } },
   { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
   { path: 'add-product', component: AddProductComponent, data: { title: 'Ajouter un produit' } },
@@ -50,7 +55,9 @@ const appRoutes: Routes = [
     ProfileComponent,
     ProductComponent,
     AddProductComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    RegistrationComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,
@@ -74,6 +81,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatGridListModule,
+    MatProgressSpinnerModule,
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

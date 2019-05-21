@@ -1,0 +1,30 @@
+<div style="display:flex; justify-content:center;">
+  <mat-spinner 
+  [color]="color" 
+  [mode]="mode" 
+  [diameter]="diameter" 
+  *ngIf="isLoading">
+  Chargement des Events...
+</mat-spinner>
+</div>
+<h2 *ngIf="!isLoading">Nos évènements</h2>
+<table class="table" *ngIf="!isLoading">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Titre</th>
+        <th scope="col">Description</th>
+        <th scope="col">Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let event of events">
+        <th scope="row">{{ event.id }}</th>
+        <td>{{ event.name }}</td>
+        <td>{{ event.description }}</td>
+        <td>Date</td>
+        <td><button class="btn btn-success">Inscription</button></td>
+      </tr>
+    </tbody>
+  </table>

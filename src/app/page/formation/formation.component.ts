@@ -11,6 +11,10 @@ import { Formation } from '../../class/formation';
 })
 export class FormationComponent implements OnInit {
 
+  color = 'warn';
+  diameter = 50;
+  public isLoading = false;
+  mode = 'indeterminate';
   formations: Formation[];
   public apiUrl = Globals.APP_API + 'product';
 
@@ -21,9 +25,15 @@ export class FormationComponent implements OnInit {
   }
 
   getAllFormations(): void {
+    this.isLoading = true;
     this.formationService.getAllFormations().subscribe(data => {
       this.formations = data;
+      this.isLoading = false;
     });
+  }
+
+  registerToFormation(): void {
+    this.router.navigate( ['formation-registration']);
   }
 
 }

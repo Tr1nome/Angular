@@ -1,61 +1,12 @@
-<div class="container" *ngIf="isConnected()">
+<div style="display:flex; justify-content:center;"><mat-spinner [color]="color" [mode]="mode" [diameter]="diameter" *ngIf="isLoading"></mat-spinner></div>
+<div class="container" *ngIf="!isLoading">
     <h1 >Actualités</h1>
-    <div class="row">
-      <h2>Actu 1</h2>
+    <div style="height:80px;">
+
     </div>
-      <div class="row">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ipsum tellus,
-          condimentum a nibh scelerisque, scelerisque tincidunt ligula. Pellentesque
-            posuere dolor non nibh faucibus bibendum. Praesent pretium tristique dignissim.
-            Cras at mattis nunc. Sed vulputate lorem diam. In interdum ante at sem imperdiet,
-              id luctus augue ornare. Duis eget orci vel ante porttitor tincidunt. Ut nec dui dolor.
-              Etiam dapibus sagittis nulla ac convallis. Maecenas in ullamcorper est, non tincidunt sem.
-                Morbi tincidunt, quam nec volutpat condimentum, metus augue efficitur nisi,
-                eu efficitur nunc velit in lorem. Aliquam eleifend dui sit amet 
-                libero convallis tempor. Etiam eget ultrices leo, sed egestas mauris.
-                  Vestibulum sit amet lectus vel erat interdum pulvinar non a nibh.
-                  Sed ultrices dui ut sagittis pretium. Mauris quis bibendum nisi.
-                    Nunc consectetur tortor quis orci lacinia, sed placerat metus ultrices.
-                    Pellentesque fermentum nec elit semper tincidunt.
-                      Sed at ipsum lacinia lectus efficitur convallis
-                      id nec turpis. Pellentesque sit amet varius ligula.
-                        Duis vestibulum sit amet enim commodo volutpat.
-                        Nullam sit amet pharetra tortor, et varius nunc.
-                          Mauris ac pellentesque lacus, ut congue velit.
-                          In eu magna in quam vehicula ullamcorper.
-                            Cras turpis augue, facilisis nec massa luctus,
-                            porttitor suscipit tortor. Aliquam efficitur feugiat nibh.
-      </div>
-  </div>
-
-
-
-<div class="container" *ngIf="!isConnected()">
-  <h1>Actualités non connecté</h1>
-  <div class="row">
-    <h2>Actu 1</h2>
-  </div>
-    <div class="row">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ipsum tellus,
-        condimentum a nibh scelerisque, scelerisque tincidunt ligula. Pellentesque
-          posuere dolor non nibh faucibus bibendum. Praesent pretium tristique dignissim.
-          Cras at mattis nunc. Sed vulputate lorem diam. In interdum ante at sem imperdiet,
-            id luctus augue ornare. Duis eget orci vel ante porttitor tincidunt. Ut nec dui dolor.
-            Etiam dapibus sagittis nulla ac convallis. Maecenas in ullamcorper est, non tincidunt sem.
-              Morbi tincidunt, quam nec volutpat condimentum, metus augue efficitur nisi,
-              eu efficitur nunc velit in lorem. Aliquam eleifend dui sit amet 
-              libero convallis tempor. Etiam eget ultrices leo, sed egestas mauris.
-                Vestibulum sit amet lectus vel erat interdum pulvinar non a nibh.
-                Sed ultrices dui ut sagittis pretium. Mauris quis bibendum nisi.
-                  Nunc consectetur tortor quis orci lacinia, sed placerat metus ultrices.
-                  Pellentesque fermentum nec elit semper tincidunt.
-                    Sed at ipsum lacinia lectus efficitur convallis
-                    id nec turpis. Pellentesque sit amet varius ligula.
-                      Duis vestibulum sit amet enim commodo volutpat.
-                      Nullam sit amet pharetra tortor, et varius nunc.
-                        Mauris ac pellentesque lacus, ut congue velit.
-                        In eu magna in quam vehicula ullamcorper.
-                          Cras turpis augue, facilisis nec massa luctus,
-                          porttitor suscipit tortor. Aliquam efficitur feugiat nibh.
+    <div *ngFor="let actu of actus">
+      <h2 style="color:#0000ff;">{{ actu.title }}</h2>
+      {{ actu.content }}
+      <hr style="color:black;">
     </div>
 </div>

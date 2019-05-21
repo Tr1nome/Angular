@@ -12,6 +12,7 @@ import { User } from '../../class/user';
 export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public connectionFailed: boolean;
+  public loading: boolean;
   constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) {
     if (this.auth.isConnected()) {
       this.router.navigate(['/actu']);

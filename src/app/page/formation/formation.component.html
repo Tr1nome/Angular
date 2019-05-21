@@ -1,3 +1,22 @@
-<p>
-  formation works!
-</p>
+<h2>Les formations de Fenrir Studio</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Image</th>
+      <th scope="col">Titre de la formation</th>
+      <th scope="col">Description</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let formation of formations">
+      <th scope="row">{{ formation.id }}</th>
+      <td scope="row"><img class="img-thumbnail" style="width:100px;height:100px;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
+      <td>{{ formation.name }}</td>
+      <td>{{ formation.description }}</td>
+      <td><button class="btn btn-success">Inscription</button></td>
+    </tr>
+  </tbody>
+</table>

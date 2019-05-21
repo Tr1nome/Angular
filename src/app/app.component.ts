@@ -15,6 +15,9 @@ export class AppComponent implements OnInit {
   title: string = Globals.APP_NAME;
   opened: boolean;
   user: User|null;
+  prefix = 'http://connexion.fr/';
+  refreshRate = 3;
+  formations: [];
   constructor(private titleService: TitleService, private auth: AuthService) { }
 
   ngOnInit(): void {

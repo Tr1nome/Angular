@@ -11,6 +11,7 @@ import { Globals } from '../globals';
 })
 export class TitleService {
 
+  public currentTitle: string;
   constructor(
       private router: Router,
       private activatedRoute: ActivatedRoute,
@@ -46,6 +47,9 @@ export class TitleService {
             });
           }
         }))
-        .subscribe((pathString) => this.titleService.setTitle(`${pathString} - ${Globals.APP_TAB_TITLE}`));
+        .subscribe((pathString) =>{
+           this.titleService.setTitle(`${pathString} - ${Globals.APP_TAB_TITLE}`);
+           this.currentTitle = pathString;
+    });
   }
 }

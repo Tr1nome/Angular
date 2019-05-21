@@ -12,7 +12,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule, MatToolbarModule, MatButtonModule,
   MatSidenavModule, MatCheckboxModule, MatListModule, MatMenuModule, MatFormFieldModule,
-MatInputModule } from '@angular/material';
+MatInputModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -24,12 +24,19 @@ import { FormationComponent } from './page/formation/formation.component';
 import { ActuComponent } from './page/actu/actu.component';
 import { LoginComponent } from './page/login/login.component';
 import { ProfileComponent } from './page/profile/profile.component';
+import { IsSignedInGuard } from './guard/is-signed-in.guard';
+import { ProductComponent } from './page/product/product.component';
+import { AddProductComponent } from './page/product/add-product/add-product.component';
+import { UpdateProductComponent } from './page/product/update-product/update-product.component';
 
 const appRoutes: Routes = [
-  { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
+  { path: 'formation', component: FormationComponent, canActivate: [IsSignedInGuard], data: { title: 'Nos Formations' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
   { path: 'profile', component: ProfileComponent, data: { title: 'Mon profil' } },
+  { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
+  { path: 'add-product', component: AddProductComponent, data: { title: 'Ajouter un produit' } },
+  { path: 'update-product' , component: UpdateProductComponent, data: { title: 'Editer un produit' } },
   { path: '', redirectTo: '/actu', pathMatch: 'full' },
   { path: '**', component: AppComponent }
 ];
@@ -40,7 +47,10 @@ const appRoutes: Routes = [
     FormationComponent,
     ActuComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProductComponent,
+    AddProductComponent,
+    UpdateProductComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,6 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="opened">
-    <mat-toolbar color="primary" role="heading">
+    <mat-toolbar class="darkNav" role="heading">
       <span>Menus</span>
       <span class="remaining-space"></span>
       <button mat-button (click)="sidenav.toggle()">
@@ -10,12 +10,20 @@
     <nav>
       <mat-nav-list>
         <a routerLink="/formation" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <mat-icon matListIcon>view_list</mat-icon>
+          <mat-icon matListIcon>send</mat-icon>
           <span>List formation</span>
         </a>
         <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <mat-icon matListIcon>view_list</mat-icon>
+          <mat-icon matListIcon>send</mat-icon>
           <span>List actu</span>
+        </a>
+        <a routerLink="/test" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <mat-icon matListIcon>send</mat-icon>
+          <span>List Event</span>
+        </a>
+        <a routerLink="/product" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <mat-icon matListIcon>send</mat-icon>
+          <span>List Products</span>
         </a>
       </mat-nav-list>
     </nav>
@@ -25,24 +33,24 @@
     <mat-toolbar color="primary" role="heading">
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon>view_headline</mat-icon>
-        <span>{{ title }}</span>
+        <span>{{ title }} - {{ titleService.currentTitle }}</span>
       </button>
       <span class="remaining-space"></span>
-      <span *ngIf="!isConnected()"><button mat-button [matMenuTriggerFor]="menu">
+      <span *ngIf="!isConnected()">
+        <button mat-button [matMenuTriggerFor]="menu">
           <span>Non connecté</span>
         <mat-icon class="material-icons-outlined">account_box</mat-icon>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item routerLink="/login" routerLinkActive="active">
-          
-          <span>Se Connecter</span>
-        </button>
-      </mat-menu></span>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item routerLink="/login" routerLinkActive="active">
+            <span>Se Connecter</span>
+          </button>
+        </mat-menu>
+      </span>
       <span *ngIf="isConnected()">
-          
         <button mat-button [matMenuTriggerFor]="menu">
-            <span>{{ user?.username }}</span>
-          <mat-icon class="material-icons">account_box</mat-icon>
+          <img style="width:40px; height:40px; border-radius:50%;" src= "{{prefix}}{{ user?.image.imgPath }}"/>
+          <span class="ml-2">{{ user?.username }}</span>
         </button>
         
         <mat-menu #menu="matMenu">
@@ -50,13 +58,20 @@
                 <mat-icon class="material-icons">account_circle</mat-icon>
                 <span>Mon compte</span>
               </button>
-          <button mat-menu-item (click)="logout()">
-              <mat-icon class="material-icons">delete</mat-icon>
+          <button mat-menu-item routerLink="/actu" (click)="logout()">
+              <mat-icon class="material-icons">exit_to_app</mat-icon>
             <span>Se Déconnecter</span>
           </button>
         </mat-menu></span>
     </mat-toolbar>
     <router-outlet></router-outlet>
+    <footer>
+        <p>
+          &copy; All rights reserved for 
+          <i>Fenrir Studio</i>
+           2019
+        </p>
+    </footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

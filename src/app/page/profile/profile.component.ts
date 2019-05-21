@@ -10,8 +10,12 @@ import { AuthService } from '../../service/auth.service';
 })
 export class ProfileComponent implements OnInit {
 
+  changeText: boolean;
   user: User|null;
-  constructor(private auth: AuthService) { }
+  prefix = 'http://connexion.fr/';
+  constructor(private auth: AuthService) {
+    this.changeText = false;
+   }
 
   ngOnInit() {
   }

@@ -1,4 +1,25 @@
 <p *ngIf="isConnected()">
   Bienvenue {{ user?.username }}, sur votre espace perso ! 
-  Votre adresse mail est {{ user?.email }}
+  Votre adresse mail est {{ user?.email }}.
 </p>
+<div class="container" *ngIf="isConnected()">
+    
+  <img class="img-thumbnail" src="{{prefix}}{{user?.image.imgPath}}" style="width:300px;height:300px;"/>
+  <a (mouseover)="changeText=true" (mouseout)="changeText=false" class="centeredLink" href="https://github.com/Tr1nome/Angular">
+    <span *ngIf="!changeText"></span>
+    <span *ngIf="changeText">Changer la photo</span>
+  </a>
+  <h1>Mes Formations</h1>
+  <li *ngFor="let formation of user.formations">
+    <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
+    {{formation.name}} :
+    {{formation.description}}
+    <a href="">Me désinscrire</a>
+  </li>
+  <h1 *ngIf="events!=null">Mes Evenements</h1>
+  <li *ngFor="let event of user.events">
+    {{ event.name }} :
+    {{ event.description }}
+  </li>
+</div>
+

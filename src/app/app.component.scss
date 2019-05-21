@@ -63,5 +63,28 @@ example-card {
 
   nav mat-nav-list a.active{
     
-    background:yellow;
+    background:black;
+    color:white;
+  }
+
+  .darNav{
+    background:black;
+  }
+  
+  .mat-toolbar.mat-primary{
+    background:black;
+  }
+
+  .mat-drawer-inner-container{
+    background:black;
+    color:white;
+  }
+
+  footer{
+    background:black;
+    width:100vw;
+    height:80px;
+    color:white;
+    position:fixed;
+    bottom:0;
   }

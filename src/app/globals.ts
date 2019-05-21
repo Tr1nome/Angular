@@ -5,4 +5,5 @@ export class Globals {
     public static get APP_API(): string { return 'http://api.connexion.fr/'; }
     public static get APP_USER_TOKEN(): string { return 'id-token'; }
     public static get APP_USER(): string { return 'data-user'; }
+    public static get APP_FORMATION(): string { return this.APP_API + 'formation'; }
 }

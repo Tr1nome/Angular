@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormationService } from 'src/app/service/formation.service';
+import { Router } from '@angular/router';
+import { Globals } from '../../globals';
+import { Formation } from '../../class/formation';
 
 @Component({
   selector: 'app-formation',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormationComponent implements OnInit {
 
-  constructor() { }
+  formations: Formation[];
+  public apiUrl = Globals.APP_API + 'product';
+
+  constructor(private formationService: FormationService, private router: Router) { }
 
   ngOnInit() {
+    this.getAllFormations();
+  }
+
+  getAllFormations(): void {
+    this.formationService.getAllFormations().subscribe(data => {
+      this.formations = data;
+    });
   }
 
 }

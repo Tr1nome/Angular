@@ -1,0 +1,19 @@
+<div class="center-div">
+  <mat-spinner 
+  [color]="color" 
+  [mode]="mode" 
+  [diameter]="diameter" 
+  *ngIf="isLoading">
+  Chargement en cours..
+  </mat-spinner>
+</div>
+<div class="image">
+  <h2 *ngIf="!isLoading">Les créations des adhérents de Fenrir Studio</h2>
+  <div class="displayer" style="display:flex; justify-content: space-evenly;">
+     <div class="item" *ngFor="let image of images">
+    <img title="{{image.alternative}}" alt="{{image.alternative}}" style="max-width: 200px;max-height: 150px;" class="img-thumbnail" src="http://connexion.fr/{{ image.imgPath }}"/>
+    </div>
+  </div>
+</div>
+
+

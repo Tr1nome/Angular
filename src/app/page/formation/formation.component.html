@@ -1,4 +1,11 @@
-<div style="display:flex; justify-content:center;"><mat-spinner [color]="color" [mode]="mode" [diameter]="diameter" *ngIf="isLoading"></mat-spinner></div>
+<div class="center-div">
+  <mat-spinner 
+  [color]="color" 
+  [mode]="mode" 
+  [diameter]="diameter" 
+  *ngIf="isLoading">
+  </mat-spinner>
+</div>
 <h2 *ngIf="!isLoading">Les formations de Fenrir Studio</h2>
 
 <table class="table" *ngIf="!isLoading">
@@ -8,6 +15,7 @@
       <th scope="col">Image</th>
       <th scope="col">Titre de la formation</th>
       <th scope="col">Description</th>
+      <th scope="col">Inscrits</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -17,7 +25,15 @@
       <td scope="row"><img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
       <td style="font-weight:bold;">{{ formation.name }}</td>
       <td>{{ formation.description }}</td>
-      <td><button (click)="registerToFormation(formation)" class="btn btn-success">Inscription</button></td>
+      <td style="display:block;" *ngFor="let user of formation.user">
+        
+        <img src="http://connexion.fr/{{ user.image.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
+        {{ user.username }} y participe
+      </td>
+      <td>
+        <button *ngIf="!formation.inscrit" (click)="registerToFormation(formation)" class="btn btn-success">Inscription</button>
+        <button *ngIf="formation.inscrit" (click)="checkoutFormation(formation)" class="btn btn-danger">Se désinscrire</button>
+      </td>
     </tr>
   </tbody>
 </table>

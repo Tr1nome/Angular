@@ -1,10 +1,9 @@
-<div style="display:flex; justify-content:center;">
+<div class="center-div">
     <mat-spinner 
     [color]="color" 
     [mode]="mode" 
     [diameter]="diameter" 
-    *ngIf="isLoading">
-    Chargement des Events...
+    *ngIf="isLoading">Chargement des Events...
   </mat-spinner>
   </div>
 <h2 *ngIf="!isLoading">Liste des produits</h2>

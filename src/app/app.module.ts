@@ -20,6 +20,8 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrModule } from 'ngx-toastr';
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 
 import { FormationComponent } from './page/formation/formation.component';
 import { ActuComponent } from './page/actu/actu.component';
@@ -31,12 +33,14 @@ import { AddProductComponent } from './page/product/add-product/add-product.comp
 import { UpdateProductComponent } from './page/product/update-product/update-product.component';
 import { RegistrationComponent } from './page/formation/registration/registration.component';
 import { EventComponent } from './page/event/event.component';
+import { PortfolioComponent } from './page/portfolio/portfolio.component';
 
 const appRoutes: Routes = [
-  { path: 'formation', component: FormationComponent, canActivate: [IsSignedInGuard], data: { title: 'Nos Formations' } },
+  { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
   { path: 'event', component: EventComponent, data: { title: 'Evenements' } },
+  { path: 'portfolio', component: PortfolioComponent, data: { title: 'Portfolio' } },
   { path: 'formation-registration', component: RegistrationComponent, data: { title: 'Inscription à une formation' } },
   { path: 'profile', component: ProfileComponent, data: { title: 'Mon profil' } },
   { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
@@ -57,7 +61,8 @@ const appRoutes: Routes = [
     AddProductComponent,
     UpdateProductComponent,
     RegistrationComponent,
-    EventComponent
+    EventComponent,
+    PortfolioComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,11 @@ const appRoutes: Routes = [
     MatInputModule,
     MatGridListModule,
     MatProgressSpinnerModule,
+    SlimLoadingBarModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      closeButton: true
+    }),
     RouterModule.forRoot(appRoutes)
   ],
   providers: [

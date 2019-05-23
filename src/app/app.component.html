@@ -25,20 +25,25 @@
           <mat-icon matListIcon>send</mat-icon>
           <span>List Products</span>
         </a>
+        <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <mat-icon matListIcon>send</mat-icon>
+          <span>Créations</span>
+        </a>
       </mat-nav-list>
     </nav>
   </mat-sidenav>
 
   <mat-sidenav-content>
     <mat-toolbar color="primary" role="heading">
-      <button mat-button (click)="sidenav.toggle()">
+      <button mat-button (click)="sidenav.toggle()" *ngIf="isConnected()">
         <mat-icon>view_headline</mat-icon>
-        <span>{{ title }} - {{ titleService.currentTitle }}</span>
+        <!--<span>{{ title }} - {{ titleService.currentTitle }}</span>-->
       </button>
+      Fenrir Studio
       <span class="remaining-space"></span>
       <span *ngIf="!isConnected()">
         <button mat-button [matMenuTriggerFor]="menu">
-          <span>Non connecté</span>
+          <span>Inconnu</span>
         <mat-icon class="material-icons-outlined">account_box</mat-icon>
       </button>
         <mat-menu #menu="matMenu">

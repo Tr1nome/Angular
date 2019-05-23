@@ -1,4 +1,11 @@
-<div style="display:flex; justify-content:center;"><mat-spinner [color]="color" [mode]="mode" [diameter]="diameter" *ngIf="isLoading"></mat-spinner></div>
+<div class="center-div">
+  <mat-spinner 
+  [color]="color" 
+  [mode]="mode" 
+  [diameter]="diameter" 
+  *ngIf="isLoading">
+  </mat-spinner>
+</div>
 <div class="container" *ngIf="!isLoading">
     <h1 >Actualités</h1>
     <div style="height:80px;">

@@ -15,4 +15,8 @@ export class FormationService {
   getAllFormations() {
     return this.http.get<Formation[]>(this.baseurl + 'formation');
   }
+
+  getFormationById(id: string) {
+    return this.http.get<Formation>(this.baseurl + 'formation' + '/' + id);
+  }
 }

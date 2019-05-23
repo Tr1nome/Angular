@@ -3,6 +3,9 @@ import { FormationService } from 'src/app/service/formation.service';
 import { Router } from '@angular/router';
 import { Globals } from '../../globals';
 import { Formation } from '../../class/formation';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/service/auth.service';
+import { User } from 'src/app/class/user';
 
 @Component({
   selector: 'app-formation',
@@ -11,6 +14,7 @@ import { Formation } from '../../class/formation';
 })
 export class FormationComponent implements OnInit {
 
+  inscrit = false;
   color = 'warn';
   diameter = 50;
   public isLoading = false;
@@ -18,7 +22,7 @@ export class FormationComponent implements OnInit {
   formations: Formation[];
   public apiUrl = Globals.APP_API + 'product';
 
-  constructor(private formationService: FormationService, private router: Router) { }
+  constructor(private formationService: FormationService, private toast: ToastrService, private auth: AuthService) { }
 
   ngOnInit() {
     this.getAllFormations();
@@ -32,8 +36,33 @@ export class FormationComponent implements OnInit {
     });
   }
 
-  registerToFormation(): void {
-    this.router.navigate( ['formation-registration']);
+  registerToFormation(formation: Formation): void {
+    this.formationService.getFormationById(formation.id);
+    console.log(formation.id);
+    formation.inscrit = true;
+    this.showToaster('register', formation);
+  }
+
+  checkoutFormation(formation: Formation): void {
+    this.formationService.getFormationById(formation.id);
+    formation.inscrit = false;
+    this.showToaster('unregister', formation);
+
+  }
+
+  showToaster(notificationType: string, formation: Formation) {
+
+    switch (notificationType) {
+      case 'register':
+      this.toast.success('Inscription à : ' + formation.name + ' prise en compte !',
+       'Console');
+      break;
+      case 'unregister':
+      this.toast.success('Désinscription à : ' + formation.name + '  prise en compte !',
+      'Console');
+      break;
+    }
+
   }
 
 }

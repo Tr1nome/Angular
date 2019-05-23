@@ -3,6 +3,8 @@ import { TitleService } from './service/title.service';
 import { Globals } from './globals';
 import { AuthService } from './service/auth.service';
 import { User } from './class/user';
+import { ToastrService } from 'ngx-toastr';
+import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
 
 
 @Component({
@@ -18,7 +20,7 @@ export class AppComponent implements OnInit {
   prefix = 'http://connexion.fr/';
   refreshRate = 3;
   formations: [];
-  constructor(private titleService: TitleService, private auth: AuthService) { }
+  constructor(private titleService: TitleService, private auth: AuthService, private toast: ToastrService,private slimLoadingBarService: SlimLoadingBarService) { }
 
   ngOnInit(): void {
     this.titleService.init();
@@ -32,5 +34,23 @@ export class AppComponent implements OnInit {
   logout(): void {
     this.auth.logout();
   }
+
+  showToaster() {
+    this.toast.success('Hello, I\'m the toastr message.');
+  }
+
+  startLoading() {
+    this.slimLoadingBarService.start(() => {
+        console.log('Loading complete');
+    });
+}
+
+stopLoading() {
+    this.slimLoadingBarService.stop();
+}
+
+completeLoading() {
+    this.slimLoadingBarService.complete();
+}
 }
 

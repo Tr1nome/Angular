@@ -3,6 +3,7 @@ import { Globals } from '../../globals';
 import { ProductService } from '../../service/product.service';
 import { Router } from '@angular/router';
 import { Product } from '../../class/product';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product',
@@ -17,7 +18,7 @@ export class ProductComponent implements OnInit {
   mode = 'indeterminate';
   products: Product[];
   public apiUrl = Globals.APP_API + 'product';
-  constructor(private productService: ProductService, private router: Router) { }
+  constructor(private productService: ProductService, private router: Router, private toast: ToastrService) { }
 
   ngOnInit() {
     this.getAllProducts();
@@ -35,9 +36,11 @@ export class ProductComponent implements OnInit {
   }
 
   deleteProduct(product: Product) {
+    alert('voulez vous vraiment détruire ce produit ?');
     this.productService.deleteProduct(product.id).subscribe(data => {
       console.log(data);
       this.getAllProducts();
+      this.showToaster('delete', product);
     });
   }
 
@@ -46,6 +49,21 @@ export class ProductComponent implements OnInit {
     localStorage.removeItem('productId');
     localStorage.setItem('productId', product.id);
     this.router.navigate(['update-product']);
+    this.showToaster('update', product);
+  }
+
+  showToaster(notificationType: string, product: Product) {
+
+    switch (notificationType) {
+      case 'delete':
+      this.toast.success('Le produit : ' + product.name + ' a été supprimé avec succés !',
+       'Fenrir Indique');
+      break;
+      case 'update':
+      this.toast.success('Le produit : ' + product.name + ' a été mis à jour avec succés !');
+      break;
+    }
+
   }
 
 }

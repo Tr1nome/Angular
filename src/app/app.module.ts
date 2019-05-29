@@ -34,10 +34,14 @@ import { UpdateProductComponent } from './page/product/update-product/update-pro
 import { RegistrationComponent } from './page/formation/registration/registration.component';
 import { EventComponent } from './page/event/event.component';
 import { PortfolioComponent } from './page/portfolio/portfolio.component';
+import { EditFormationComponent } from './page/formation/edit-formation/edit-formation.component';
+import { HtmlPipe } from './pipe/html.pipe';
+import { RegisterComponent } from './page/register/register.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
+  { path: 'register', component: LoginComponent, data: { title: 'Inscription' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
   { path: 'event', component: EventComponent, data: { title: 'Evenements' } },
   { path: 'portfolio', component: PortfolioComponent, data: { title: 'Portfolio' } },
@@ -46,6 +50,7 @@ const appRoutes: Routes = [
   { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
   { path: 'add-product', component: AddProductComponent, data: { title: 'Ajouter un produit' } },
   { path: 'update-product' , component: UpdateProductComponent, data: { title: 'Editer un produit' } },
+  { path: 'edit-formation' , component: EditFormationComponent, data: { title: 'Inscription' } },
   { path: '', redirectTo: '/actu', pathMatch: 'full' },
   { path: '**', component: AppComponent }
 ];
@@ -62,7 +67,10 @@ const appRoutes: Routes = [
     UpdateProductComponent,
     RegistrationComponent,
     EventComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    EditFormationComponent,
+    HtmlPipe,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

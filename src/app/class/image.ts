@@ -1,6 +1,8 @@
 export class Image {
-    id: string;
-    path: string;
+    id: number;
     imgPath: string;
+    path: string;
     alternative: string;
+    file: File;
+    allowed: boolean;
 }

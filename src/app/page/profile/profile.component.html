@@ -5,10 +5,17 @@
 <div class="container" *ngIf="isConnected()">
     
   <img class="img-thumbnail" src="{{prefix}}{{user?.image.imgPath}}" style="width:300px;height:300px;"/>
-  <a (mouseover)="changeText=true" (mouseout)="changeText=false" class="centeredLink" href="https://github.com/Tr1nome/Angular">
-    <span *ngIf="!changeText"></span>
-    <span *ngIf="changeText">Changer la photo</span>
-  </a>
+  
+    <h3>Changer ma photo de profil</h3>
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <input style="display:block;" type="file" id="file" name="fichier" (change)="handleFileInput($event.target.files)"/>
+        </div>
+        <div class="form-group">
+            <button [disabled]="!hasFile" class="btn btn-primary">Upload</button>
+        </div>
+    </form>
+</div>
   <h1>Mes Formations</h1>
   <li *ngFor="let formation of user.formations">
     <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
@@ -21,5 +28,3 @@
     {{ event.name }} :
     {{ event.description }}
   </li>
-</div>
-

@@ -1,0 +1,26 @@
+<mat-card-content>
+  <form class="form-content" [formGroup]="userForm" >
+    <mat-form-field>
+      <input matInput
+             placeholder="nom d'utilisateur..."
+             formControlName="username"
+             autocomplete="Off" required />
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput
+             placeholder="Mot de passe..."
+             formControlName="password"
+             autocomplete="Off" required />
+    </mat-form-field>
+    <div class="row justify-content-between">
+      <div class="col-6 text-right">
+        <button class="btn btn-sm btn-success" mat-flat-button
+                [disabled]="userForm.invalid"
+                (click)="createUser()">
+          <span>Créer un compte</span>
+        </button>
+      </div>
+    </div>
+  </form>
+
+</mat-card-content>

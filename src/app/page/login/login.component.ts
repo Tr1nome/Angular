@@ -49,12 +49,12 @@ completeLoading() {
       this.auth.login(val.username, val.password)
         .subscribe(() => {
           this.startLoading();
-          console.log('connected !');
           this.auth.profile().subscribe(
             (user) => {
               setTimeout(function() {
                 this.completeLoading();
-              }, 3000);
+                console.log('connected !');
+              }, 2000);
               this.router.navigate(['/actu']);
              },
             (err) => {

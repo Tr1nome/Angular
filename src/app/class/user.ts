@@ -1,8 +1,9 @@
 export class User {
     username: string;
     email: string;
+    passwod: string;
     formations: [];
-    events: string;
+    events: [];
     enabled: boolean;
     image: number;
 }

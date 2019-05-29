@@ -13,17 +13,17 @@ export class ImageService {
   file: File;
   constructor(private http: HttpClient) { }
 
-  baseurl: string = Globals.APP_API;
+  baseurl: string = Globals.APP_API + 'image';
 
   getAllImages() {
-    return this.http.get<Image[]>(this.baseurl + 'image');
+    return this.http.get<Image[]>(this.baseurl);
   }
-  public uploadImage(image: File) {
+  public uploadImage(file: File) {
     const formData = new FormData();
 
-    formData.append('image', image);
+    formData.append('file', file, file.name);
 
-    return this.http.post(this.baseurl + 'image/new', formData);
+    return this.http.post(this.baseurl + '/new', formData);
   }
 
 }

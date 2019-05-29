@@ -20,9 +20,9 @@ export class FormationComponent implements OnInit {
   public isLoading = false;
   mode = 'indeterminate';
   formations: Formation[];
-  public apiUrl = Globals.APP_API + 'product';
+  user: User|null;
 
-  constructor(private formationService: FormationService, private toast: ToastrService, private auth: AuthService) { }
+  constructor(private formationService: FormationService, private toast: ToastrService, private router: Router) { }
 
   ngOnInit() {
     this.getAllFormations();
@@ -36,8 +36,8 @@ export class FormationComponent implements OnInit {
     });
   }
 
-  registerToFormation(formation: Formation): void {
-    this.formationService.getFormationById(formation.id);
+  registerToFormation(formation: Formation) {
+    console.log(formation);
     console.log(formation.id);
     formation.inscrit = true;
     this.showToaster('register', formation);

@@ -22,6 +22,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 import { FormationComponent } from './page/formation/formation.component';
 import { ActuComponent } from './page/actu/actu.component';
@@ -36,12 +37,13 @@ import { EventComponent } from './page/event/event.component';
 import { PortfolioComponent } from './page/portfolio/portfolio.component';
 import { EditFormationComponent } from './page/formation/edit-formation/edit-formation.component';
 import { HtmlPipe } from './pipe/html.pipe';
-import { RegisterComponent } from './page/register/register.component';
+import { RegisterComponent } from './component/register/register.component';
+import { ImageComponent } from './page/image/image.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
-  { path: 'register', component: LoginComponent, data: { title: 'Inscription' } },
+  { path: 'register', component: RegisterComponent, data: { title: 'Inscription' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
   { path: 'event', component: EventComponent, data: { title: 'Evenements' } },
   { path: 'portfolio', component: PortfolioComponent, data: { title: 'Portfolio' } },
@@ -70,7 +72,8 @@ const appRoutes: Routes = [
     PortfolioComponent,
     EditFormationComponent,
     HtmlPipe,
-    RegisterComponent
+    RegisterComponent,
+    ImageComponent
   ],
   imports: [
     BrowserModule,
@@ -94,6 +97,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatGridListModule,
+    NgxGalleryModule,
     MatProgressSpinnerModule,
     SlimLoadingBarModule.forRoot(),
     ToastrModule.forRoot({

@@ -64,6 +64,18 @@ export class AuthService {
       return this.userSubject.value;
     } ));
   }
+
+  public register(data) {
+    const obj = {
+      firstName: data.firstname,
+      lastName: data.lastname,
+      username: data.username,
+      email: data.email,
+      password: data.password
+    };
+    return this.http.post(Globals.APP_API + 'auth/register', obj);
+  }
+
   public get currentUser(): User|null {
     return this.userSubject.value;
   }

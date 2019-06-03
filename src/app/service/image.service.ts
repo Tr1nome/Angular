@@ -11,6 +11,8 @@ import { map } from 'rxjs/operators';
 export class ImageService {
 
   file: File;
+  title: string;
+  description: string;
   constructor(private http: HttpClient) { }
 
   baseurl: string = Globals.APP_API + 'image';
@@ -20,9 +22,7 @@ export class ImageService {
   }
   public uploadImage(file: File) {
     const formData = new FormData();
-
     formData.append('file', file, file.name);
-
     return this.http.post(this.baseurl + '/new', formData);
   }
 

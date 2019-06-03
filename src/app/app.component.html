@@ -58,7 +58,7 @@
       </span>
       <span *ngIf="isConnected()">
         <button mat-button [matMenuTriggerFor]="menu">
-          <img style="width:40px; height:40px; border-radius:50%;" src= "{{prefix}}{{ user?.image.imgPath }}"/>
+          <!--<img style="width:40px; height:40px; border-radius:50%;" src= "{{prefix}}{{ user?.image.imgPath }}"/>-->
           <span class="ml-2">{{ user?.username }}</span>
         </button>
         
@@ -74,13 +74,13 @@
         </mat-menu></span>
     </mat-toolbar>
     <router-outlet></router-outlet>
-    <footer>
+    <!--<footer>
         <p>
           &copy; All rights reserved for 
           <i>Fenrir Studio</i>
            2019
         </p>
-    </footer>
+    </footer>-->
   </mat-sidenav-content>
 </mat-sidenav-container>
 

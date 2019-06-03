@@ -7,14 +7,17 @@
   Chargement en cours..
   </mat-spinner>
 </div>
-<div class="image">
-    <div class="container">
+    <div *ngIf="isAvailable" class="container">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-6">
                 <h3>Partager un fichier</h3>
                 <form (ngSubmit)="onSubmit()">
                     <div class="form-group">
                         <input style="display:block;" type="file" id="file" name="fichier" (change)="handleFileInput($event.target.files)"/>
+                        <!--<small>Entrer un titre</small>
+                        <input style="display:block;" type="text" id='title' name="title"/>
+                        <small>Entrer une description</small>
+                        <textarea style="display:block;" type="text" id="description" name="description"></textarea>-->
                     </div>
                     <div class="form-group">
                         <button [disabled]="!hasFile" class="btn btn-primary">Upload</button>
@@ -23,17 +26,39 @@
             </div>
         </div>
     </div>
+    <button class="btn btn-success" (click)= "toggleUploader()"><mat-icon>backup</mat-icon></button>
+    <hr>
   <h2 *ngIf="!isLoading">Nos créations</h2>
-  <div class="displayer" style="display:flex; justify-content: space-evenly;">
-     <div class="item" *ngFor="let image of images">
-    <img title="{{image.alternative}}" 
+  
+  <div class="displayer">
+    <div class="item" *ngFor="let image of images">
+        <mat-card *ngIf= "image.allowed" class="example-card">
+                <mat-card-header>
+                    <div mat-card-avatar class="example-header-image"></div>
+                    <mat-card-title>{{image.title}}</mat-card-title>
+                    <mat-card-subtitle>Upload le 01/01/1993</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image src="http://connexion.fr/{{ image.imgPath }}" style="height:200px;" alt="http://connexion.fr/{{ image.alternative }}">
+                <mat-card-content>
+                    <p>
+                    {{image.description}}
+                    </p>
+                </mat-card-content>
+                <mat-card-actions>
+                    <button mat-button>J'aime</button>
+                    <button mat-button>Partager</button>
+                </mat-card-actions>
+        </mat-card>
+    
+        <!--<app-image></app-image>-->
+    <!--<img title="{{image.alternative}}" 
     alt="{{image.alternative}}" 
     style="max-width: 200px;max-height: 150px;" 
     class="img-thumbnail" src="http://connexion.fr/{{ image.imgPath }}"
-    *ngIf="image.allowed"/>
+    *ngIf="image.allowed"
+    (mouseenter) ="displayImage()"
+    (mouseleave) = "noDisplay()"
+    />
+    <span *ngIf="hovering">Description</span>-->
     </div>
   </div>
-</div>
-
-
-

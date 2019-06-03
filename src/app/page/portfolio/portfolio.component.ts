@@ -4,6 +4,7 @@ import { Globals } from '../../globals';
 import { Image } from '../../class/image';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService, Toast } from 'ngx-toastr';
+import {MatCardModule} from '@angular/material/card';
 
 @Component({
   selector: 'app-portfolio',
@@ -20,7 +21,12 @@ export class PortfolioComponent implements OnInit {
   public apiUrl = Globals.APP_API + 'image';
   fileData = null;
   hasFile: boolean;
-  constructor(private imageService: ImageService, private http: HttpClient, private toast: ToastrService) { }
+  hovering = false;
+  title: string;
+  description: string;
+  public isAvailable: boolean;
+
+  constructor(private imageService: ImageService, private toast: ToastrService) { }
 
   ngOnInit() {
     this.getAllImages();
@@ -48,6 +54,7 @@ export class PortfolioComponent implements OnInit {
     audio.load();
     audio.play();
   }
+
   getAllImages(): void {
     this.isLoading = true;
     this.imageService.getAllImages().subscribe(data => {
@@ -56,6 +63,9 @@ export class PortfolioComponent implements OnInit {
     });
   }
 
+  toggleUploader() {
+    this.isAvailable = !this.isAvailable;
+  }
   showToaster(notificationType: string) {
 
     switch (notificationType) {

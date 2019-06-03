@@ -38,23 +38,7 @@ export class ProfileComponent implements OnInit {
     this.user = this.auth.currentUser;
     return this.auth.isConnected();
   }
-
-  handleFileInput(files) {
-    this.fileData = files.item(0);
-    this.hasFile = true;
-  }
-
-  onSubmit() {
-    this.imageService.uploadImage(this.fileData)
-      .subscribe(data => {
-        console.log(data);
-        this.showToaster('success');
-        this.playAudio();
-    }, err => {
-      console.error(err);
-      this.showToaster('failure');
-    });
-  }
+  
   playAudio() {
     const audio = new Audio();
     audio.src = '../../assets/audio/notif.mp3';

@@ -15,7 +15,7 @@
       <th scope="col">Image</th>
       <th scope="col">Titre de la formation</th>
       <th scope="col">Description</th>
-      <!--<th scope="col">Statut</th>-->
+      <th scope="col">Statut</th>
       <th scope="col">Inscrits</th>
       <th scope="col">Actions</th>
     </tr>
@@ -34,12 +34,14 @@
         <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
       </td>
       <td>
-        <button *ngIf="!formation.inscrit" 
+        <button (click)="open()" class="btn btn-success">Détails</button>
+
+        <!--<button *ngIf="!formation.inscrit" 
         (click)="registerToFormation(formation)" 
         class="btn btn-success">Inscription</button>
         <button *ngIf="formation.inscrit" 
         (click)="checkoutFormation(formation)" 
-        class="btn btn-danger">Se désinscrire</button>
+        class="btn btn-danger">Se désinscrire</button>-->
       </td>
     </tr>
   </tbody>

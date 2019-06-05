@@ -14,13 +14,12 @@
                 <input matInput type="password" placeholder="mot de passe..." 
                 formControlName="password" autocomplete="Off" required/>
             </mat-form-field>
-            <a style="display:flex; justify-content: center;" href="">Mot de passe oublié ?</a>
-            <a style="display:flex; justify-content: center;" href="">Inscription</a>
+            <a style="display:flex; justify-content: center;" href="http://connexion.fr/resetting/request">Mot de passe oublié ?</a>
+            <a style="display:flex; justify-content: center;" routerLink="/register">Inscription</a>
               <button class="mt-3" [disabled]="loading || loginForm.invalid" mat-flat-button (click)="login()" color="primary">Connexion</button>
           </form>
         </mat-card-content>
     </mat-card>
   </div>
-</div> 
-<app-register></app-register>
-<a href="mailto:leosouly@gmail.com">Contact</a>
+</div>
+<div style="height:100px;"></div>

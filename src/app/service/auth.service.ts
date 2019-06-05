@@ -67,8 +67,6 @@ export class AuthService {
 
   public register(data) {
     const obj = {
-      firstName: data.firstname,
-      lastName: data.lastname,
       username: data.username,
       email: data.email,
       password: data.password

@@ -6,16 +6,20 @@
   *ngIf="isLoading">
   </mat-spinner>
 </div>
-<div class="container" *ngIf="!isLoading">
-    <h1 >Actualités</h1>
-    <div style="height:80px;">
-
+<div class="container-fluid" *ngIf="!isLoading">
+  <div class="row">
+    <div class="col-8">
+      <h1 >Actualités</h1>
+        <div style="height:80px;">
+          </div>
+          <div *ngFor="let actu of actus">
+            <h2 style="color:#0000ff;">{{ actu.title }}</h2>
+            <div [innerHTML]="actu.content | html "></div>
+            <button style="background: rgba(0,0,0,0);border: 0px;"><mat-icon class="material-icons" color="primary">thumb_up_outline</mat-icon></button><span>J'aime</span>
+            <button style="background: rgba(0,0,0,0);border: 0px;"><mat-icon class="material-icons" style="margin-left: 1em;">mode_comment</mat-icon></button><span>Commenter</span>
+            <hr style="color:black;">
+      </div>
     </div>
-    <div *ngFor="let actu of actus">
-      <h2 style="color:#0000ff;">{{ actu.title }}</h2>
-      <div [innerHTML]="actu.content | html "></div>
-      <button style="background: rgba(0,0,0,0);border: 0px;"><mat-icon class="material-icons" color="primary">thumb_up_outline</mat-icon></button><span>J'aime</span>
-      <button style="background: rgba(0,0,0,0);border: 0px;"><mat-icon class="material-icons" style="margin-left: 1em;">mode_comment</mat-icon></button><span>Commenter</span>
-      <hr style="color:black;">
-    </div>
-</div>
+      <div class="col-4">
+        <app-notifications></app-notifications>
+      </div>

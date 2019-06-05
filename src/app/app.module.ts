@@ -23,6 +23,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { NgxGalleryModule } from 'ngx-gallery';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { FormationComponent } from './page/formation/formation.component';
 import { ActuComponent } from './page/actu/actu.component';
@@ -39,6 +41,7 @@ import { EditFormationComponent } from './page/formation/edit-formation/edit-for
 import { HtmlPipe } from './pipe/html.pipe';
 import { RegisterComponent } from './component/register/register.component';
 import { ImageComponent } from './page/image/image.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
@@ -73,7 +76,8 @@ const appRoutes: Routes = [
     EditFormationComponent,
     HtmlPipe,
     RegisterComponent,
-    ImageComponent
+    ImageComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +88,7 @@ const appRoutes: Routes = [
     MatSidenavModule,
     FormsModule,
     HttpClientModule,
+    MatSnackBarModule,
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,
@@ -98,6 +103,7 @@ const appRoutes: Routes = [
     MatInputModule,
     MatGridListModule,
     NgxGalleryModule,
+    MatDividerModule,
     MatProgressSpinnerModule,
     SlimLoadingBarModule.forRoot(),
     ToastrModule.forRoot({

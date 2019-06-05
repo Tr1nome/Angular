@@ -52,8 +52,8 @@ completeLoading() {
           this.auth.profile().subscribe(
             (user) => {
               setTimeout(function() {
-                this.completeLoading();
                 console.log('connected !');
+                this.completeLoading();
               }, 2000);
               this.router.navigate(['/actu']);
              },

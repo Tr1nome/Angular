@@ -25,23 +25,19 @@
       <th scope="row">{{ formation.id }}</th>
       <td scope="row"><img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
       <td style="font-weight:bold;">{{ formation.name }}</td>
-      <td>{{ formation.description }}</td>
+      <td><div [innerHTML]="formation.description | html "></div></td>
       <td *ngIf="formation.inscrit">Inscrit</td>
-      <td *ngIf="!formation.inscrit">Non inscrit</td>
+      <td></td>
       <td style="display:block;" *ngFor="let user of formation.user">
-        
-        <img src="http://connexion.fr/{{ user.image.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
+        <img src="http://connexion.fr/{{ user.image.imgPath }}" 
+        style="width:30px;height:30px;border-radius: 50%;"/>
         <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
       </td>
       <td>
-        <button (click)="open()" class="btn btn-success">Détails</button>
-
-        <!--<button *ngIf="!formation.inscrit" 
+        <!--<button (click)="registerToFormation(formation)" class="btn btn-success">S'inscrire</button>-->
+        <button 
         (click)="registerToFormation(formation)" 
         class="btn btn-success">Inscription</button>
-        <button *ngIf="formation.inscrit" 
-        (click)="checkoutFormation(formation)" 
-        class="btn btn-danger">Se désinscrire</button>-->
       </td>
     </tr>
   </tbody>

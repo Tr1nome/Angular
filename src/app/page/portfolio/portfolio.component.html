@@ -29,7 +29,6 @@
     <button class="btn btn-success" (click)= "toggleUploader()"><mat-icon>backup</mat-icon></button>
     <hr>
   <h2 *ngIf="!isLoading">Nos créations</h2>
-  
   <div class="displayer">
     <div class="item" *ngFor="let image of images">
         <mat-card *ngIf= "image.allowed" class="example-card">

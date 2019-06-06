@@ -24,4 +24,12 @@ export class FormationService {
   updateFormation(formation: Formation) {
     return this.http.put(this.baseurl + 'formation' + '/' + formation.id, formation);
   }
+
+  registerFormation(formation: Formation) {
+    return this.http.patch(this.baseurl + 'formation/' + formation.id + '/register', formation);
+  }
+
+  leaveFormation(formation: Formation) {
+    return this.http.patch(this.baseurl + 'formation/' + formation.id + '/leave', formation);
+  }
 }

@@ -39,15 +39,24 @@ export class FormationComponent implements OnInit {
   registerToFormation(formation: Formation) {
     console.log(formation);
     console.log(formation.id);
-    formation.inscrit = true;
+    this.formationService.registerFormation(formation).subscribe(data => {
+      this.isLoading = false;
+      formation.inscrit = true;
+    });
     this.showToaster('register', formation);
   }
 
   checkoutFormation(formation: Formation): void {
-    this.formationService.getFormationById(formation.id);
-    formation.inscrit = false;
+    console.log(formation);
+    console.log(formation.id);
+    this.formationService.leaveFormation(formation).subscribe(data => {
+      this.isLoading = false;
+      formation.inscrit = false;
+    });
     this.showToaster('unregister', formation);
-
+    setTimeout(function() {
+      this.router.navigate(['/formation']);
+    }, 2000);
   }
 
   showToaster(notificationType: string, formation: Formation) {

@@ -23,8 +23,17 @@
     {{formation.description}}
     <a href="">Me désinscrire</a>
   </li>
-  <h1 *ngIf="events!=null">Mes Evenements</h1>
-  <li *ngFor="let event of user.events">
-    {{ event.name }} :
-    {{ event.description }}
-  </li>
+  <h1>Mes Evenements</h1>
+  
+  <div *ngIf="user.events != null">
+      <li *ngFor="let event of user.events">
+      {{ event.name }} :
+      {{ event.description }}
+      </li>
+  </div>
+  <div *ngIf="user.events == null">
+      <ngb-alert [dismissible]="false">
+          <strong>Warning!</strong> Better check yourself, you're not looking too good.
+        </ngb-alert>
+  </div>
+  

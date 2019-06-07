@@ -17,12 +17,12 @@
     </form>
 </div>
   <h1>Mes Formations</h1>
-  <li *ngFor="let formation of user.formations">
-    <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
-    {{formation.name}} :
-    {{formation.description}}
-    <a href="">Me désinscrire</a>
-  </li>
+  <div *ngFor="let formation of user.formations">
+      <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
+    <p [innerHTML]="formation.name | html"></p>
+    <p [innerHTML]="formation.description | html"></p>
+    <hr style="background: black;">
+  </div>
   <h1>Mes Evenements</h1>
   
   <div *ngIf="user.events != null">

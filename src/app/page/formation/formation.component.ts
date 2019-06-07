@@ -36,6 +36,14 @@ export class FormationComponent implements OnInit {
     });
   }
 
+  getFormationById(formation: Formation): void {
+    console.log(formation);
+    this.formationService.getFormationById(formation).subscribe(data => {
+      console.log('succés');
+      this.router.navigate(['formation/show']);
+    });
+  }
+
   registerToFormation(formation: Formation) {
     console.log(formation);
     console.log(formation.id);

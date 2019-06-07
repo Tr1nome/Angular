@@ -37,14 +37,15 @@ import { UpdateProductComponent } from './page/product/update-product/update-pro
 import { RegistrationComponent } from './page/formation/registration/registration.component';
 import { EventComponent } from './page/event/event.component';
 import { PortfolioComponent } from './page/portfolio/portfolio.component';
-import { EditFormationComponent } from './page/formation/edit-formation/edit-formation.component';
 import { HtmlPipe } from './pipe/html.pipe';
 import { RegisterComponent } from './component/register/register.component';
 import { ImageComponent } from './page/image/image.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { ShowComponent } from './page/formation/show/show.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
+  { path: 'formation/show', component: ShowComponent, data: { title: 'Formation' } },
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
   { path: 'register', component: RegisterComponent, data: { title: 'Inscription' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
@@ -55,7 +56,6 @@ const appRoutes: Routes = [
   { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
   { path: 'add-product', component: AddProductComponent, data: { title: 'Ajouter un produit' } },
   { path: 'update-product' , component: UpdateProductComponent, data: { title: 'Editer un produit' } },
-  { path: 'edit-formation' , component: EditFormationComponent, data: { title: 'Inscription' } },
   { path: '', redirectTo: '/actu', pathMatch: 'full' },
   { path: '**', component: AppComponent }
 ];
@@ -73,11 +73,11 @@ const appRoutes: Routes = [
     RegistrationComponent,
     EventComponent,
     PortfolioComponent,
-    EditFormationComponent,
     HtmlPipe,
     RegisterComponent,
     ImageComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ShowComponent
   ],
   imports: [
     BrowserModule,

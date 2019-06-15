@@ -37,8 +37,17 @@ export class PortfolioComponent implements OnInit {
     this.hasFile = true;
   }
 
+  setTitle() {
+    let titleBox = <HTMLInputElement> document.getElementById('title');
+    this.title = titleBox.value;
+  }
+  setDescription() {
+    let descriptionBox = <HTMLInputElement> document.getElementById('description');
+    this.description = descriptionBox.value;
+  }
+
   onSubmit() {
-    this.imageService.uploadImage(this.fileData)
+    this.imageService.uploadImage(this.fileData, this.title, this.description)
       .subscribe(data => {
         console.log(data);
         this.showToaster('success');

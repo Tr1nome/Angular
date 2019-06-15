@@ -20,9 +20,11 @@ export class ImageService {
   getAllImages() {
     return this.http.get<Image[]>(this.baseurl);
   }
-  public uploadImage(file: File) {
+  public uploadImage(file: File, title: string, description: string) {
     const formData = new FormData();
     formData.append('file', file, file.name);
+    formData.append('title', title);
+    formData.append('description', description);
     return this.http.post(this.baseurl + '/new', formData);
   }
 

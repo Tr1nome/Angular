@@ -7,13 +7,14 @@
   Chargement en cours..
   </mat-spinner>
 </div>
+
     <div *ngIf="isAvailable" class="container">
         <div class="row">
             <div class="col-md-6">
                 <h3>Partager un fichier</h3>
                 <form (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <input style="display:block;" type="file" id="file" name="fichier" (change)="handleFileInput($event.target.files)"/>
+                        <input style="display:block;" type="file" id="file" name="fichier"(change)="preview($event.target.files)" (change)="handleFileInput($event.target.files)"/>
                         <small>Entrer un titre</small>
                         <input style="display:block;" type="text" id='title' name="title" (change) = "setTitle()"/>
                         <small>Entrer une description</small>
@@ -24,6 +25,8 @@
                     </div>
                 </form>
             </div>
+            <span style="color:red" *ngIf="message">{{message}}</span>
+            <img class='img-thumbnail' [src]="imgURL" height="200" *ngIf="imgURL">
         </div>
     </div>
     <button class="btn btn-success" (click)= "toggleUploader()"><mat-icon>backup</mat-icon></button>
@@ -31,23 +34,43 @@
   <h2 *ngIf="!isLoading">Nos créations</h2>
   <div class="displayer">
     <div class="item" *ngFor="let image of images">
-        <mat-card *ngIf= "image.allowed" class="example-card">
-                <mat-card-header>
-                    <div mat-card-avatar class="example-header-image"></div>
-                    <mat-card-title>{{image.title}}</mat-card-title>
-                    <mat-card-subtitle>Upload le 01/01/1993</mat-card-subtitle>
-                </mat-card-header>
-                    <img mat-card-image src="http://connexion.fr/{{ image.imgPath }}" style="height:200px;" alt="http://connexion.fr/{{ image.alternative }}">
-                    <mat-card-content>
-                        <p>
-                        {{image.description}}
-                        </p>
-                    </mat-card-content>
-                        <mat-card-actions>
-                            <button mat-button>J'aime</button>
-                            <button mat-button>Partager</button>
-                        </mat-card-actions>
-        </mat-card>
+      <ng-template #content let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Ces utilisateurs ont aimé</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">
+            <div *ngFor="let likedBy of image.likedBy">{{ likedBy.username }}</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+          </div>
+      </ng-template>
+      <mat-card *ngIf= "image.allowed" class="example-card">
+        <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>{{image.title}}</mat-card-title>
+            <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}} par {{image.uploadedBy.username}}</mat-card-subtitle>
+        </mat-card-header>
+          <img mat-card-image src="http://connexion.fr/{{ image.imgPath }}" style="height:200px;cursor:pointer;" alt="http://connexion.fr/{{ image.alternative }}">
+            <mat-card-content>
+                <p>
+                {{image.description}}
+                </p>
+            </mat-card-content>
+              <mat-card-actions>
+                  <button mat-button *ngIf="!image.liked" (click)="setLike(this.image)">J'aime</button>
+                  <button mat-button *ngIf="image.liked" (click)="setDislike(this.image)">Je n'aime plus</button>
+                  <button mat-button>Partager</button>
+                  <mat-icon *ngIf="!image.liked">favorite_border</mat-icon>
+                  <mat-icon *ngIf="image.liked">favorite</mat-icon>
+                  <small *ngIf="image.likedBy.length > 0" class="likeNumber"(click)="open(content)">({{ image.likedBy.length }})</small>
+                  
+              </mat-card-actions>
+                      
+      </mat-card>
         <!--<app-image></app-image>-->
     <!--<img title="{{image.alternative}}" 
     alt="{{image.alternative}}" 

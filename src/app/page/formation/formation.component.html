@@ -16,6 +16,7 @@
       <th scope="col">Titre de la formation</th>
       <th scope="col">Description</th>
       <th scope="col">Statut</th>
+      <th scope="col">Jour de la semaine</th>
       <th scope="col">Inscrits</th>
       <th scope="col">Actions</th>
     </tr>
@@ -26,7 +27,9 @@
       <td scope="row"><img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
       <td style="font-weight:bold;">{{ formation.name }}</td>
       <td><div [innerHTML]="formation.description | html "></div></td>
-      <td *ngIf="formation.inscrit">Inscrit</td>
+      <td *ngIf="formation.inscrit == true">Inscrit</td>
+      <td *ngIf="formation.inscrit == false">Non inscrit</td>
+      <td>{{ formation.day.name }}</td>
       <td></td>
       <td style="display:block;" *ngFor="let user of formation.user">
         <img src="http://connexion.fr/{{ user.image.imgPath }}" 

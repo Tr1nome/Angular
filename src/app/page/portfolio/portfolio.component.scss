@@ -33,6 +33,15 @@ input {
   cursor: pointer;
 }
 
+.likeNumber{
+  color:black;
+  text-decoration: none;
+}
+
+.likeNumber:hover{
+  text-decoration:underline;
+  cursor: pointer;
+}
 .img-preview-container {
   background-color: #f7f7f7;
   position: relative;
@@ -112,11 +121,11 @@ input {
 }
 
 .example-card {
-  max-width: 800px;
-  max-height: 400px;
+  max-width: 400px;
+  max-height: 500px;
 }
 
 .example-header-image {
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/1024px-User_icon_2.svg.png');
+  background-image: url('https://static.wixstatic.com/media/4eadbd_a218f84f90ba4681a96faa45633dd083~mv2.png/v1/fill/w_194,h_130,al_c,q_80,usm_0.66_1.00_0.01/4eadbd_a218f84f90ba4681a96faa45633dd083~mv2.webp');
   background-size: cover;
 }

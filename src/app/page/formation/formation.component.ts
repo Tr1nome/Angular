@@ -26,11 +26,13 @@ export class FormationComponent implements OnInit {
 
   ngOnInit() {
     this.getAllFormations();
+    this.checkInscription();
   }
 
   getAllFormations(): void {
     this.isLoading = true;
     this.formationService.getAllFormations().subscribe(data => {
+      localStorage.setItem('formations', JSON.stringify(data));
       this.formations = data;
       this.isLoading = false;
     });
@@ -39,17 +41,21 @@ export class FormationComponent implements OnInit {
   getFormationById(formation: Formation): void {
     console.log(formation);
     this.formationService.getFormationById(formation).subscribe(data => {
-      console.log('succés');
+      console.log(data);
       this.router.navigate(['formation/show']);
     });
   }
-
+  checkInscription(): void {
+    const data = localStorage.getItem('formations');
+    console.log(JSON.parse(data));
+  }
   registerToFormation(formation: Formation) {
     console.log(formation);
     console.log(formation.id);
     this.formationService.registerFormation(formation).subscribe(data => {
-      this.isLoading = false;
-      formation.inscrit = true;
+      console.log(data);
+      localStorage.removeItem('formation-data');
+      localStorage.setItem('formation-data', JSON.stringify(data));
     });
     this.showToaster('register', formation);
   }

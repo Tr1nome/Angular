@@ -17,23 +17,34 @@
     </form>
 </div>
   <h1>Mes Formations</h1>
-  <div *ngFor="let formation of user.formations">
-      <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
-    <p [innerHTML]="formation.name | html"></p>
-    <p [innerHTML]="formation.description | html"></p>
-    <hr style="background: black;">
+  <div *ngIf="user.formations.length < 1">
+    <ngb-alert [dismissible] = "false"><strong>Aucune formation</strong>, vous ne participez à aucune formation actuellement !
+      <a routerLink="/formation">Voir les formations disponibles</a> 
+    </ngb-alert>
   </div>
-  <h1>Mes Evenements</h1>
+  <div *ngIf="user?.formations?.length >=1">
+      <div *ngFor="let formation of user.formations">
+          <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
+        <p [innerHTML]="formation.name | html"></p>
+        <p [innerHTML]="formation.description | html"></p>
+        <hr style="background: black;">
+      </div>
+  </div>
   
-  <div *ngIf="user.events != null">
+  <h1>Mes Evenements</h1>
+  <div *ngIf="user?.events?.length < 1">
+    <ngb-alert [dismissible] = "false"><strong>Aucun évènement</strong>, vous ne participez actuellement à aucun évènement ! 
+      <a routerLink="/event">Voir les évènements en cours</a>
+    </ngb-alert>
+  </div>
+    <div *ngIf="user.events.length >=1">
       <li *ngFor="let event of user.events">
-      {{ event.name }} :
-      {{ event.description }}
+          {{ event.name }} :
+          {{ event.description }}
+          <a routerLink="/event/{{event.id}}">Voir les détails de l'évènement</a>
       </li>
-  </div>
-  <div *ngIf="user.events == null">
-      <ngb-alert [dismissible]="false">
-          <strong>Warning!</strong> Better check yourself, you're not looking too good.
-        </ngb-alert>
-  </div>
+    </div>
+  
+  
+      
   

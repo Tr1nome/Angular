@@ -6,7 +6,7 @@
   *ngIf="isLoading">
   </mat-spinner>
 </div>
-<h2 *ngIf="!isLoading" class="test">Les formations de Fenrir Studio</h2>
+<h2 *ngIf="!isLoading">Les formations de Fenrir Studio</h2>
 
 <table class="table" *ngIf="!isLoading">
   <thead>
@@ -23,24 +23,41 @@
   </thead>
   <tbody>
     <tr *ngFor="let formation of formations">
+        <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Ces utilisateurs participent</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <div *ngFor="let user of formation.user">
+                    <img src="http://connexion.fr/{{ user.image.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
+                    <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+              </div>
+          </ng-template>
       <th scope="row">{{ formation.id }}</th>
       <td scope="row"><img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
       <td style="font-weight:bold;">{{ formation.name }}</td>
       <td><div [innerHTML]="formation.description | html "></div></td>
-      <td *ngIf="formation.inscrit == true">Inscrit</td>
-      <td *ngIf="formation.inscrit == false">Non inscrit</td>
+      <td *ngIf="formation.inscrit">Inscrit</td>
+      <td *ngIf="!formation.inscrit">Non inscrit</td>
       <td>{{ formation.day.name }}</td>
-      <td></td>
-      <td style="display:block;" *ngFor="let user of formation.user">
+      <!--<td style="display:block;" *ngFor="let user of formation.user">
         <img src="http://connexion.fr/{{ user.image.imgPath }}" 
         style="width:30px;height:30px;border-radius: 50%;"/>
         <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
-      </td>
-      <td>
-        <!--<button (click)="registerToFormation(formation)" class="btn btn-success">S'inscrire</button>-->
-        <button 
-        (click)="registerToFormation(formation)" 
-        class="btn btn-success">Inscription</button>
+      </td>-->
+      <td><button (click) ="open(content)"class="btn btn-info"><mat-icon>list</mat-icon>Voir les participants</button></td>
+      <td style="display:flex; justify-content: space-evenly;">
+        <div><button *ngIf="!formation.inscrit" (click)="registerToFormation(formation)" class="btn btn-success">Suivre</button></div>
+        <div><button *ngIf="formation.inscrit" (click)="checkoutFormation(formation)" class="btn btn-danger">Ne plus suivre</button></div>
+          <div><button *ngIf="formation.inscrit" (click)="registerToFormation(formation)" class="btn btn-warning">Déclarer une absence</button></div>
+        
       </td>
     </tr>
   </tbody>

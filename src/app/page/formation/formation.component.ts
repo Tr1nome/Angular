@@ -6,6 +6,7 @@ import { Formation } from '../../class/formation';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { User } from 'src/app/class/user';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-formation',
@@ -22,19 +23,38 @@ export class FormationComponent implements OnInit {
   formations: Formation[];
   user: User|null;
 
-  constructor(private formationService: FormationService, private toast: ToastrService, private router: Router) { }
+  constructor(
+    private formationService: FormationService,
+    private toast: ToastrService,
+    private router: Router,
+    private authService: AuthService,
+    private modalService: NgbModal) { }
 
   ngOnInit() {
     this.getAllFormations();
     this.checkInscription();
   }
 
+  open(content) {
+    this.modalService.open(content);
+  }
+
   getAllFormations(): void {
+    const currentUser = this.authService.currentUser;
     this.isLoading = true;
     this.formationService.getAllFormations().subscribe(data => {
       localStorage.setItem('formations', JSON.stringify(data));
       this.formations = data;
       this.isLoading = false;
+      data.forEach((formations) => {
+        formations.user.forEach(element => {
+          console.log(element);
+          const name = element['username'];
+          if (name === currentUser.username) {
+            formations.inscrit = true;
+          }
+        });
+    });
     });
   }
 
@@ -50,19 +70,14 @@ export class FormationComponent implements OnInit {
     console.log(JSON.parse(data));
   }
   registerToFormation(formation: Formation) {
-    console.log(formation);
-    console.log(formation.id);
     this.formationService.registerFormation(formation).subscribe(data => {
       console.log(data);
-      localStorage.removeItem('formation-data');
-      localStorage.setItem('formation-data', JSON.stringify(data));
+      formation.inscrit = true;
     });
     this.showToaster('register', formation);
   }
 
   checkoutFormation(formation: Formation): void {
-    console.log(formation);
-    console.log(formation.id);
     this.formationService.leaveFormation(formation).subscribe(data => {
       this.isLoading = false;
       formation.inscrit = false;

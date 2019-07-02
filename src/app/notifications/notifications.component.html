@@ -1,9 +1,11 @@
 <p style="display:flex;justify-content:center;font-size:2em;">Utilisateurs</p>
 <mat-list *ngFor="let user of users">
-  <mat-list-item class="sticky-top" style="font-weight:bold;cursor:pointer;" placement="left" ngbTooltip="{{ user.username }}"><img style="border-radius: 50%; width:30px;height:30px;" src="http://connexion.fr/{{user.image.imgPath}}"/> {{user.username}}
+  <mat-list-item class="sticky-top" style="font-weight:bold;cursor:pointer;" placement="left" ngbTooltip="{{ user.username }}">
+    <img style="border-radius: 50%; width:30px;height:30px;" src="http://connexion.fr/{{user.image.imgPath}}"/>
+     {{user.username}}
   <img src="" style="background:green; border-radius: 50%;width:10px;height:10px;left: 15px;
   position: absolute;
-  top: 25px;"/>
+  top: 25px;"/><small *ngIf="user.connected">(connecté)</small>
   </mat-list-item>
   <mat-divider></mat-divider>
 </mat-list>

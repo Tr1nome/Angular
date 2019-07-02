@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormationService } from 'src/app/service/formation.service';
 import { Router } from '@angular/router';
 import { Globals } from '../../globals';
@@ -22,6 +22,7 @@ export class FormationComponent implements OnInit {
   mode = 'indeterminate';
   formations: Formation[];
   user: User|null;
+  error: string;
 
   constructor(
     private formationService: FormationService,
@@ -37,6 +38,10 @@ export class FormationComponent implements OnInit {
 
   open(content) {
     this.modalService.open(content);
+  }
+
+  absent(test) {
+    this.modalService.open(test, {size: 'lg'});
   }
 
   getAllFormations(): void {
@@ -58,11 +63,18 @@ export class FormationComponent implements OnInit {
     });
   }
 
-  getFormationById(formation: Formation): void {
-    console.log(formation);
-    this.formationService.getFormationById(formation).subscribe(data => {
+  viewDetails(id: any) {
+    console.log(id);
+    this.getFormationById(id);
+    this.router.navigate(['formation/', id]);
+  }
+
+  getFormationById(id: number): void {
+
+    this.formationService.getFormationById(id).subscribe(data => {
       console.log(data);
-      this.router.navigate(['formation/show']);
+      // this.viewDetails(data);
+      this.router.navigate(['formation/', data.id]);
     });
   }
   checkInscription(): void {
@@ -73,32 +85,40 @@ export class FormationComponent implements OnInit {
     this.formationService.registerFormation(formation).subscribe(data => {
       console.log(data);
       formation.inscrit = true;
+      this.getAllFormations();
+      this.showToaster('register', formation);
+    }, err => {
+      this.error = err;
+      this.showToaster('error', err);
     });
-    this.showToaster('register', formation);
   }
 
   checkoutFormation(formation: Formation): void {
     this.formationService.leaveFormation(formation).subscribe(data => {
       this.isLoading = false;
       formation.inscrit = false;
+      this.getAllFormations();
+      this.showToaster('unregister', formation);
+    }, err => {
+      this.error = err;
+      this.showToaster('error', err);
     });
-    this.showToaster('unregister', formation);
-    setTimeout(function() {
-      this.router.navigate(['/formation']);
-    }, 2000);
   }
 
   showToaster(notificationType: string, formation: Formation) {
 
     switch (notificationType) {
       case 'register':
-      this.toast.success('Inscription à : ' + formation.name + ' prise en compte !',
-       'Console');
-      break;
+        this.toast.success('Inscription à : ' + formation.name + ' prise en compte !',
+        'Console');
+        break;
       case 'unregister':
-      this.toast.success('Désinscription à : ' + formation.name + '  prise en compte !',
-      'Console');
-      break;
+        this.toast.success('Désinscription à : ' + formation.name + '  prise en compte !',
+        'Console');
+        break;
+      case 'error':
+        this.toast.error('Une erreur est survenue, veuillez réessayer plus tard ou contacter Fenrir Studio' + ' code d\'erreur ' + this.error);
+        break;
     }
 
   }

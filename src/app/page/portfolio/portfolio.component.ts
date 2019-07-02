@@ -1,14 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ImageService } from 'src/app/service/image.service';
 import { Globals } from '../../globals';
 import { Image } from '../../class/image';
-import { HttpClient } from '@angular/common/http';
 import { ToastrService, Toast } from 'ngx-toastr';
-import {MatCardModule} from '@angular/material/card';
 import { AuthService } from '../../service/auth.service';
-import { User } from '../../class/user';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { CdkDragPreview } from '@angular/cdk/drag-drop';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/switchMap';
+
 
 @Component({
   selector: 'app-portfolio',
@@ -16,7 +17,7 @@ import { CdkDragPreview } from '@angular/cdk/drag-drop';
   styleUrls: ['./portfolio.component.scss']
 })
 export class PortfolioComponent implements OnInit {
-
+  @Input() likedBy$: Observable<any>;
   color = 'warn';
   diameter = 50;
   public isLoading = false;
@@ -31,16 +32,18 @@ export class PortfolioComponent implements OnInit {
   hasFile: boolean;
   hovering = false;
   title: string;
-  me = this;
+  likes: number;
   description: string;
   public isAvailable: boolean;
 
 // tslint:disable-next-line: max-line-length
-  constructor(private imageService: ImageService, private toast: ToastrService, private authService: AuthService, private modalService: NgbModal) { }
+  constructor(private imageService: ImageService, private toast: ToastrService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.getAllImages();
-    // this.checkLikesOnImage(new Image());
+    this.likedBy$ = Observable
+      .interval(1000)
+      .startWith(0).switchMap(() => this.imageService.getImage(this.image));
   }
   open(content) {
     this.modalService.open(content);
@@ -81,9 +84,9 @@ export class PortfolioComponent implements OnInit {
   onSubmit() {
     this.imageService.uploadImage(this.fileData, this.title, this.description)
       .subscribe(data => {
-        console.log(data);
         this.showToaster('success');
         this.playAudio();
+        this.getAllImages();
     }, err => {
       console.error(err);
       this.showToaster('failure');
@@ -104,7 +107,6 @@ export class PortfolioComponent implements OnInit {
       this.isLoading = false;
       data.forEach((images) => {
           images.likedBy.forEach(element => {
-            console.log(element);
             const name = element['username'];
             if (name === currentUser.username) {
               images.liked = true;
@@ -113,19 +115,10 @@ export class PortfolioComponent implements OnInit {
       });
     });
   }
-
-  getImageById(image: Image) {
-    this.imageService.getImageById(image).subscribe(data => {
-      this.image = data;
-    });
-  }
   setLike(image: Image) {
     this.imageService.likeImage(image).subscribe(data => {
-      console.log(data);
-      localStorage.setItem('data-image', JSON.stringify(image));
       image.liked = true;
-      this.getImageById(image);
-      // this.getAllImages();
+      this.ngOnInit();
     }, err => {
       console.log(err);
     });
@@ -140,7 +133,7 @@ export class PortfolioComponent implements OnInit {
   setDislike(image: Image) {
     this.imageService.dislikeImage(image).subscribe(data => {
       image.liked = false;
-      console.log(data);
+      this.ngOnInit();
     }, err => {
       console.log(err);
     });

@@ -22,8 +22,12 @@ export class ImageService {
     return this.http.get<Image[]>(this.baseurl);
   }
 
-  getImageById(image: Image) {
-    return this.http.get<Image>(this.baseurl + '/' + image.id);
+  getImage(image: Image) {
+    return this.http.get<Image>(this.baseurl + '/' + image.id + '/likes');
+  }
+
+  deleteImage(image: Image) {
+    return this.http.delete<Image>(this.baseurl + '/' + image.id);
   }
   public uploadImage(file: File, title: string, description: string) {
     const formData = new FormData();

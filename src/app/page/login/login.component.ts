@@ -14,7 +14,11 @@ export class LoginComponent implements OnInit {
   public loginForm: FormGroup;
   public connectionFailed: boolean;
   public loading: boolean;
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router, private loader: SlimLoadingBarService) {
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private loader: SlimLoadingBarService) {
     if (this.auth.isConnected()) {
       this.router.navigate(['/actu']);
     }
@@ -51,9 +55,9 @@ completeLoading() {
           this.startLoading();
           this.auth.profile().subscribe(
             (user) => {
-              setTimeout(function() {
+              setTimeout(() => {
                 console.log('connected !');
-                this.completeLoading();
+                user.connected = true;
               }, 2000);
               this.router.navigate(['/actu']);
              },

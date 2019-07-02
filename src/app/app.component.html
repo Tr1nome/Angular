@@ -41,9 +41,8 @@
     <mat-toolbar color="primary" role="heading">
       <button mat-button (click)="sidenav.toggle()" *ngIf="isConnected()">
         <mat-icon>view_headline</mat-icon>
-        <span>{{ title }} - {{ titleService.currentTitle }}</span>
+        {{ title }} - {{ titleService.currentTitle }}
       </button>
-      Fenrir Studio
       <span class="remaining-space"></span>
       <span *ngIf="!isConnected()">
         <button mat-button [matMenuTriggerFor]="menu">
@@ -81,6 +80,9 @@
            2019
         </p>
     </footer>-->
+    <div class="footer">
+      Footer
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
 

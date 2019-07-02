@@ -41,11 +41,11 @@ import { HtmlPipe } from './pipe/html.pipe';
 import { RegisterComponent } from './component/register/register.component';
 import { ImageComponent } from './page/image/image.component';
 import { NotificationsComponent } from './notifications/notifications.component';
-import { ShowComponent } from './page/formation/show/show.component';
+import { FormationShowComponent } from './page/formation/formation-show/formation-show.component';
 
 const appRoutes: Routes = [
-  { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations' } },
-  { path: 'formation/show', component: ShowComponent, data: { title: 'Formation' } },
+  { path: 'formation', component: FormationComponent, data: { title: 'Nos Formations'} },
+  { path: 'formation/:id', component: FormationShowComponent, data: { title: 'Détails Formation'}},
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
   { path: 'register', component: RegisterComponent, data: { title: 'Inscription' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
@@ -77,7 +77,7 @@ const appRoutes: Routes = [
     RegisterComponent,
     ImageComponent,
     NotificationsComponent,
-    ShowComponent
+    FormationShowComponent
   ],
   imports: [
     BrowserModule,

@@ -2,7 +2,7 @@
   Bienvenue {{ user?.username }}, sur votre espace perso ! 
   Votre adresse mail est {{ user?.email }}.
 </p>
-<div class="container" *ngIf="isConnected()">
+<div *ngIf="isConnected()">
     
   <img class="img-thumbnail" src="{{prefix}}{{user?.image.imgPath}}" style="width:300px;height:300px;"/>
   
@@ -16,7 +16,7 @@
         </div>
     </form>
 </div>
-  <h1>Mes Formations</h1>
+  <h2>Mes Formations</h2>
   <div *ngIf="user.formations.length < 1">
     <ngb-alert [dismissible] = "false"><strong>Aucune formation</strong>, vous ne participez à aucune formation actuellement !
       <a routerLink="/formation">Voir les formations disponibles</a> 
@@ -24,14 +24,12 @@
   </div>
   <div *ngIf="user?.formations?.length >=1">
       <div *ngFor="let formation of user.formations">
-          <img style="width:50px;height:50px;" class="img-thumbnail" src="{{prefix}}{{formation.image.imgPath}}"/>
         <p [innerHTML]="formation.name | html"></p>
         <p [innerHTML]="formation.description | html"></p>
-        <hr style="background: black;">
       </div>
   </div>
-  
-  <h1>Mes Evenements</h1>
+  <hr>
+  <h2>Mes Evenements</h2>
   <div *ngIf="user?.events?.length < 1">
     <ngb-alert [dismissible] = "false"><strong>Aucun évènement</strong>, vous ne participez actuellement à aucun évènement ! 
       <a routerLink="/event">Voir les évènements en cours</a>
@@ -44,6 +42,40 @@
           <a routerLink="/event/{{event.id}}">Voir les détails de l'évènement</a>
       </li>
     </div>
+    <hr>
+    <h2>Mes images</h2>
+
+    <div style="display:flex">
+      
+    <div *ngFor="let photo of user.photos">
+        <ng-template #image let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Suppression d'une image</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <div>
+                  <p>Voulez vous vraiment supprimer cette image ? Elle n'apparaîtra plus ni dans votre espace perso, ni dans l'onglet portfolio</p>
+                    <img src="http://connexion.fr/{{ photo.imgPath }}" style="width:150px;height:150px;"/>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+                <button type="button" class="btn btn-outline-dark" (click)="deleteImage(photo)">Oui</button>
+              </div>
+          </ng-template>
+      <img src="{{prefix}}{{photo.imgPath}}" title="{{photo.title}}" style="width:100px;height:100px;cursor:pointer;" class='img-thumbnail img-fluid'/>
+      <button (click)="deleteModal(image)" style="width:40px;height:40px;position:relative;top:-30px;left:-40px;" class="btn btn-danger"><mat-icon>delete</mat-icon></button>
+    </div>
+      
+
+    </div>
+    <div style='height:200px;'>
+
+    </div>
+  
   
   
       

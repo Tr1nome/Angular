@@ -8,21 +8,44 @@
 </div>
 <h2 *ngIf="!isLoading">Les formations de Fenrir Studio</h2>
 
-<table class="table" *ngIf="!isLoading">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Image</th>
-      <th scope="col">Titre de la formation</th>
-      <th scope="col">Description</th>
-      <th scope="col">Statut</th>
-      <th scope="col">Jour de la semaine</th>
-      <th scope="col">Inscrits</th>
-      <th scope="col">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let formation of formations">
+<div *ngIf="!isLoading">
+    <div class="container-fluid" *ngFor="let formation of formations">
+        <ng-template #test let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Déclarer une indisponibilité</h4>
+              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+              <div class="modal-body">
+                <div>
+                  Il arrive à tout le monde d'avoir un empêchement mais vous pouvez cependant justifier votre abscence en cochant une des cases ci dessous
+                  ou en écrivant simplement un petit mot, merci !
+                </div>
+                <hr>
+                <div>
+                  
+                  <input id="reason1" type="checkbox"/>
+                  <label for="reason1">Vous avez un empêchement du aux cours</label>
+                </div>
+                <div> 
+                  
+                  <input id="reason2" type="checkbox"/>
+                  <label for="reason2">Vous avez un empêchement du à une raison personnelle</label>
+                </div>
+                <div>
+                  <label for="reason3">Vous avez un empêchement du à une autre raison</label>
+                </div>
+                <div>
+                  <textarea id="reason3" type="checkbox" placeholder="Entrez votre texte"></textarea>
+                </div>
+
+                
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
+              </div>
+          </ng-template>
         <ng-template #content let-modal>
             <div class="modal-header">
               <h4 class="modal-title" id="modal-basic-title">Ces utilisateurs participent</h4>
@@ -40,28 +63,32 @@
                 <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
               </div>
           </ng-template>
-      <th scope="row">{{ formation.id }}</th>
-      <td scope="row"><img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/></td>
-      <td style="font-weight:bold;">{{ formation.name }}</td>
-      <td><div [innerHTML]="formation.description | html "></div></td>
-      <td *ngIf="formation.inscrit">Inscrit</td>
-      <td *ngIf="!formation.inscrit">Non inscrit</td>
-      <td>{{ formation.day.name }}</td>
-      <!--<td style="display:block;" *ngFor="let user of formation.user">
-        <img src="http://connexion.fr/{{ user.image.imgPath }}" 
-        style="width:30px;height:30px;border-radius: 50%;"/>
-        <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
-      </td>-->
-      <td><button (click) ="open(content)"class="btn btn-info"><mat-icon>list</mat-icon>Voir les participants</button></td>
-      <td style="display:flex; justify-content: space-evenly;">
-        <div><button *ngIf="!formation.inscrit" (click)="registerToFormation(formation)" class="btn btn-success">Suivre</button></div>
-        <div><button *ngIf="formation.inscrit" (click)="checkoutFormation(formation)" class="btn btn-danger">Ne plus suivre</button></div>
-          <div><button *ngIf="formation.inscrit" (click)="registerToFormation(formation)" class="btn btn-warning">Déclarer une absence</button></div>
-        
-      </td>
-    </tr>
-  </tbody>
-</table>
-<div>
-  
+          <div class="row">
+            <div class="col-6">
+              <img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/>
+              <p style="font-weight:bold;">{{ formation.name }}</p>
+              <div [innerHTML]="formation.description | html "></div>
+              <p style=color:green; *ngIf="formation.inscrit">Inscrit</p>
+              <p style="color:red;" *ngIf="!formation.inscrit">Non inscrit</p>
+              <p>{{ formation.day.name }}</p>
+            </div>
+              <div class="col-6">
+                <ul>
+                  <li><button class="btn" (click) ="open(content)">Voir les participants</button></li>
+                  <li><button class="btn btn-success" *ngIf="!formation.inscrit" (click)="registerToFormation(formation)">Suivre</button></li>
+                  <li><button class="btn btn-danger" *ngIf="formation.inscrit" (click)="checkoutFormation(formation)">Ne plus suivre</button></li>
+                  <li><button class="btn btn-warning" *ngIf="formation.inscrit" (click)="absent(test)">Déclarer une absence</button></li>
+                  <li><button class="btn btn-info" routerLink="/formation/{{ formation.id }}">En savoir plus</button></li>
+                </ul>
+                
+                
+                
+                
+                
+              </div>
+            </div>
+            <hr>
+          </div>
+          
+      <div>
 </div>

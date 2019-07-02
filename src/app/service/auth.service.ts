@@ -30,6 +30,7 @@ export class AuthService {
     return this.http.post<Login>(Globals.APP_API + 'login_check', {username, password })
     .pipe(map( (data) => {
       if (data && data.token) {
+        console.log(data);
         localStorage.setItem(Globals.APP_USER_TOKEN, JSON.stringify(data));
         this.loginSubject.next(data);
       }

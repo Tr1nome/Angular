@@ -17,8 +17,8 @@ export class FormationService {
     return this.http.get<Formation[]>(this.baseurl + 'formation');
   }
 
-  getFormationById(formation: Formation) {
-    return this.http.get<Formation>(this.baseurl + 'formation' + '/' + formation.id);
+  getFormationById(id: number) {
+    return this.http.get<Formation>(this.baseurl + 'formation' + '/' + id);
   }
 
   updateFormation(formation: Formation) {

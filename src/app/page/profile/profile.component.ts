@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../class/user';
 import { Globals } from '../../globals';
+import { Image } from '../../class/image';
 import { AuthService } from '../../service/auth.service';
 import { ProfileService } from 'src/app/service/profile.service';
 import { Router } from '@angular/router';
 import { Formation } from 'src/app/class/formation';
 import { ImageService } from '../../service/image.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-profile',
@@ -20,13 +22,16 @@ export class ProfileComponent implements OnInit {
   user: User|null;
   prefix = 'http://connexion.fr/';
   fileData = null;
+  image: Image;
   hasFile: boolean;
+
   constructor(
     private auth: AuthService,
     private profileService: ProfileService,
     private router: Router,
     private imageService: ImageService,
-    private toast: ToastrService) {
+    private toast: ToastrService,
+    private modal: NgbModal) {
     this.changeText = false;
    }
 
@@ -38,7 +43,23 @@ export class ProfileComponent implements OnInit {
     this.user = this.auth.currentUser;
     return this.auth.isConnected();
   }
-  
+
+  dismissModal(image) {
+    this.modal.dismissAll();
+  }
+
+  deleteModal(image) {
+    this.modal.open(image);
+  }
+
+  deleteImage(image: Image): void {
+    console.log(image);
+    this.imageService.deleteImage(image).subscribe(data => {
+      this.image = data;
+      this.dismissModal(image);
+      this.ngOnInit();
+    });
+  }
   playAudio() {
     const audio = new Audio();
     audio.src = '../../assets/audio/notif.mp3';

@@ -6,4 +6,6 @@ export class User {
     events: [];
     enabled: boolean;
     image: number;
+    connected: boolean;
+    photos: [];
 }

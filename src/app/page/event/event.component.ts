@@ -3,6 +3,8 @@ import { Globals } from '../../globals';
 import { EventService } from '../../service/event.service';
 import { Router } from '@angular/router';
 import { Event } from '../../class/event';
+import { ToastrService } from 'ngx-toastr';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-event',
@@ -16,17 +18,52 @@ export class EventComponent implements OnInit {
   mode = 'indeterminate';
   events: Event[];
   public apiUrl = Globals.APP_API + 'event';
-  constructor(private eventService: EventService, private router: Router) { }
+  constructor(
+    private eventService: EventService,
+    private router: Router,
+    private toast: ToastrService,
+    private authService: AuthService) { }
 
   ngOnInit() {
     this.getAllEvents();
   }
 
   getAllEvents(): void {
+    const currentUser = this.authService.currentUser;
     this.isLoading = true;
     this.eventService.getAllEvents().subscribe(data => {
       this.events = data;
       this.isLoading = false;
+      data.forEach((events) => {
+        events.user.forEach(element => {
+          let name: string;
+          name = element['username'];
+          if (name === currentUser.username) {
+            console.log(name);
+            events.inscrit = true;
+            }
+          });
+        });
+      });
+  }
+
+  registerToEvent(event: Event) {
+    this.eventService.registerEvent(event).subscribe(data => {
+      console.log(data);
+      event.inscrit = true;
+      this.getAllEvents();
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  checkoutEvent(event: Event) {
+    this.eventService.leaveEvent(event).subscribe(data => {
+      console.log(data);
+      event.inscrit = true;
+      this.getAllEvents();
+    }, err => {
+      console.log(err);
     });
   }
 }

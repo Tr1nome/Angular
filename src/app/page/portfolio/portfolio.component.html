@@ -16,9 +16,9 @@
                     <div class="form-group">
                         <input style="display:block;" type="file" id="file" name="fichier"(change)="preview($event.target.files)" (change)="handleFileInput($event.target.files)"/>
                         <small>Entrer un titre</small>
-                        <input style="display:block;" type="text" id='title' name="title" (change) = "setTitle()"/>
+                        <input class="form-control" style="display:block;" autocomplete="Off" type="text" id='title' name="title" (change) = "setTitle()"/>
                         <small>Entrer une description</small>
-                        <textarea style="display:block;" type="text" id="description" name="description" (change) = "setDescription()"></textarea>
+                        <textarea class="form-control" style="display:block;" type="text" id="description" name="description" (change) = "setDescription()"></textarea>
                     </div>
                     <div class="form-group">
                         <button [disabled]="!hasFile" class="btn btn-primary">Upload</button>
@@ -33,7 +33,9 @@
     
     <hr>
   <h2 *ngIf="!isLoading">Nos créations</h2>
-    <div style="display:flex;flex-direction: column;justify-content: center;align-items: center;">
+  
+  <hr>
+    <div *ngIf="displayByLike" style="display:flex;flex-direction: column-reverse;justify-content: center;align-items: center;">
       <div class="item" *ngFor="let image of images">
         <ng-template #content let-modal>
           <div class="modal-header">
@@ -52,34 +54,40 @@
         <mat-card *ngIf= "image.allowed" class="example-card">
           <mat-card-header>
               <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title>{{image.title}}</mat-card-title>
-              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}} par {{image.uploadedBy.username}}</mat-card-subtitle>
+              <mat-card-title *ngIf="image.title !== 'undefined'">{{image.title}}</mat-card-title>
+              <mat-card-title *ngIf="image.title === 'undefined'">Image sans titre</mat-card-title>
+              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}} par {{image.uploadedBy?.username}}</mat-card-subtitle>
           </mat-card-header>
-            <img mat-card-image src="http://connexion.fr/{{ image.imgPath }}" style="cursor:pointer;" alt="http://connexion.fr/{{ image.alternative }}">
+            <img mat-card-image src="http://admin.fenrir-studio.fr/{{ image.imgPath }}" style="cursor:pointer;" alt="http://connexion.fr/{{ image.alternative }}">
               <mat-card-content>
-                  <p>
+                  <p *ngIf="image.description !=='undefined'">
                   {{image.description}}
                   </p>
-                  
+                  <p *ngIf="image.description ==='undefined'">
+                    Aucune description pour cette image..
+                    </p>  
               </mat-card-content>
                 <mat-card-actions>
-                    <hr>
-                    <button mat-button ngbTooltip="Aimer cette image" *ngIf="!image.liked" (click)="setLike(this.image)"><mat-icon>thumb_up</mat-icon>J'aime</button>
-                    <button mat-button ngbTooltip="Ne plus aimer cette image" *ngIf="image.liked" (click)="setDislike(this.image)"><mat-icon>thumb_down</mat-icon>Je n'aime plus</button>
-                    <button mat-button ngbTooltip="Partager cette image sur les réseaux sociaux"><mat-icon>share</mat-icon>Partager</button>
                     <mat-icon *ngIf="!image.liked">favorite_border</mat-icon>
                     <mat-icon class="heart" *ngIf="image.liked">favorite</mat-icon>
                     <ng-template #users><p *ngFor="let likedBy of image.likedBy">{{ likedBy.username}}</p></ng-template>
                       <small *ngIf="image.likedBy.length > 0" placement="top" [ngbTooltip]="users" class="likeNumber" (click)="open(content)">
                         {{ image.likedBy.length }}
-                      </small>   
+                      </small> 
+                      <mat-icon ngbTooltip="Cette image a été likée plus de 5 fois" *ngIf="image.likedBy.length >=5">camera</mat-icon>  
+                    <hr>
+                    <button mat-button ngbTooltip="Aimer cette image" *ngIf="!image.liked" (click)="setLike(this.image)"><mat-icon>thumb_up</mat-icon> J'aime</button>
+                    <button mat-button ngbTooltip="Ne plus aimer cette image" *ngIf="image.liked" (click)="setDislike(this.image)"><mat-icon>thumb_down</mat-icon> Je n'aime plus</button>
+                    <button mat-button ngbTooltip="Partager cette image sur les réseaux sociaux"><mat-icon>share</mat-icon> Partager</button>
+                    
                 </mat-card-actions>           
         </mat-card>
         <mat-card *ngIf= "!image.allowed" class="example-card">
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title>{{image.title}}</mat-card-title>
-              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}} par {{image.uploadedBy.username}}</mat-card-subtitle>
+                <mat-card-title *ngIf="image.title !== 'undefined'">{{image.title}}</mat-card-title>
+                <mat-card-title *ngIf="image.title === 'undefined'">Image sans titre</mat-card-title>
+              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</mat-card-subtitle>
             </mat-card-header>
               <!--<img mat-card-image src="assets/images/placeholder.png" style="height:200px;cursor:pointer;" alt="placeholder">-->
               <div style="height:200px;"></div>
@@ -90,7 +98,6 @@
               [color]="color" 
               [mode]="mode" 
               [diameter]="diameter">
-              
               </mat-spinner>
               <small style="position: relative;
               top: -60px;
@@ -106,10 +113,7 @@
                       <ng-template #users><p *ngFor="let likedBy of image.likedBy">{{ likedBy.username}}</p></ng-template>
                   </mat-card-actions>           
           </mat-card>
-          <div style="height:250px;">
+          <div style="height:20px;">
 
             </div>
       </div>
-
-      
-  

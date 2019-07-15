@@ -11,4 +11,7 @@ export class Image {
     createdAt: Date;
     updatedAt: Date;
     likedBy: [];
+    type: string;
+    enabled: boolean;
+    likes: number;
 }

@@ -7,11 +7,29 @@
              autocomplete="Off" required />
     </mat-form-field>
     <mat-form-field>
-      <input matInput
-             placeholder="Mot de passe..."
-             formControlName="password"
-             autocomplete="Off" required />
-    </mat-form-field>
+        <input matInput
+               placeholder="Prénom"
+               formControlName="fname"
+               autocomplete="Off" required />
+      </mat-form-field>
+      <mat-form-field>
+          <input matInput
+                 placeholder="Nom de famille"
+                 formControlName="lname"
+                 autocomplete="Off" required />
+        </mat-form-field>
+      <mat-form-field>
+          <mat-checkbox
+                  placeholder=""
+                  formControlName="adherent"
+                  autocomplete="Off" required>Je suis déjà adhérent</mat-checkbox>
+        </mat-form-field>
+        <mat-form-field>
+        <input matInput
+              placeholder="Mot de passe..."
+              formControlName="password"
+              autocomplete="Off" required />
+      </mat-form-field>
     <div class="row justify-content-between">
       <div class="col-6 text-right">
         <button class="btn btn-sm btn-success" mat-flat-button

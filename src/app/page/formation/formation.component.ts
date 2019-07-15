@@ -16,6 +16,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 export class FormationComponent implements OnInit {
 
   inscrit = false;
+  adherent: boolean;
   color = 'warn';
   diameter = 50;
   public isLoading = false;
@@ -48,18 +49,18 @@ export class FormationComponent implements OnInit {
     const currentUser = this.authService.currentUser;
     this.isLoading = true;
     this.formationService.getAllFormations().subscribe(data => {
-      localStorage.setItem('formations', JSON.stringify(data));
       this.formations = data;
       this.isLoading = false;
       data.forEach((formations) => {
         formations.user.forEach(element => {
-          console.log(element);
-          const name = element['username'];
+          let name: string;
+          name = element['username'];
           if (name === currentUser.username) {
+            console.log(name);
             formations.inscrit = true;
           }
         });
-    });
+      });
     });
   }
 
@@ -93,6 +94,10 @@ export class FormationComponent implements OnInit {
     });
   }
 
+  isUserAdherent(): boolean {
+    return this.authService.isAdherent();
+  }
+
   checkoutFormation(formation: Formation): void {
     this.formationService.leaveFormation(formation).subscribe(data => {
       this.isLoading = false;
@@ -109,7 +114,7 @@ export class FormationComponent implements OnInit {
 
     switch (notificationType) {
       case 'register':
-        this.toast.success('Inscription à : ' + formation.name + ' prise en compte !',
+        this.toast.success('Inscription à : ' + formation.name + ' prise en compte !un mail va vous être envoyé pour vous donner les détails',
         'Console');
         break;
       case 'unregister':

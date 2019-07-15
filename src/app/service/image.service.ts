@@ -39,6 +39,16 @@ export class ImageService {
     return this.http.post(this.baseurl + '/new', formData);
   }
 
+  public uploadProfilePicture(file: File, title: string, description: string) {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('title', title);
+    formData.append('description', description);
+    const datestr = (new Date(this.createdAt)).toUTCString();
+    formData.append('createdAt', datestr);
+    return this.http.post(this.baseurl + '/newProfile', formData);
+  }
+
   likeImage(image: Image) {
     return this.http.patch(this.baseurl + '/' + image.id + '/like', image);
   }

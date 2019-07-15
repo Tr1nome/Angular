@@ -17,11 +17,11 @@ export class RegisterComponent implements OnInit {
 
   createUser() {
     const val = this.userForm.value;
-    this.launchUserCreation(val.username, val.password, val.email);
+    this.launchUserCreation(val.username, val.password, val.email, val.lname, val.fname);
 }
 
-private launchUserCreation(username, email, password) {
-    this.regServ.createUser(username, email, password)
+private launchUserCreation(username, email, password, lname, fname) {
+    this.regServ.createUser(username, email, password, lname, fname)
       .subscribe((data) => {
           this.router.navigate(['/actu']);
       });

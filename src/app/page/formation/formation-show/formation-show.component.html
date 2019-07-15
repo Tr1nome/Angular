@@ -1,4 +1,14 @@
-<h1>{{ formation.name }}</h1>
+<button mat-stroked-button (click)="goBack()"><mat-icon>keyboard_arrow_left</mat-icon>Retour</button>
+<hr>
+<div class="container">
+    <mat-card>
+    <h1>{{ formation?.name }}</h1>
+    <img class="img-thumbnail" style="width:150px;height:150px;" src="http://admin.fenrir-studio.fr/{{ formation?.image?.imgPath }}"/>
+    <div [innerHTML]="formation?.description | html "></div>
+    </mat-card>
+</div>
+<div style="height:150px;">
 
-<img class="img-thumbnail" style="width:150px;height:150px;" src="http://connexion.fr/{{ formation.image.imgPath }}"/>
-<button (click)="goBack()">Retour</button>
+</div>
+
+

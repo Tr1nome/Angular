@@ -18,3 +18,31 @@
 ul {
   list-style-type: none;
 }
+
+footer{
+  background-color: #707070;
+  color: white;
+  font-size: 0.75em;
+  padding: 10px;
+  position:fixed;
+  bottom:0;
+  width:100vw;
+
+}
+.copyright{
+  width: 20px;
+  height: 20px;
+}
+.logoFooter{
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: #ffff;
+}
+footer a:link{
+  text-decoration: none!important;
+  color: white;
+}
+.underFooter{
+  margin: 15px;
+}

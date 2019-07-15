@@ -15,4 +15,12 @@ export class EventService {
   getAllEvents() {
     return this.http.get<Event[]>(this.baseurl + 'event');
   }
+
+  registerEvent(event: Event) {
+    return this.http.patch(this.baseurl + 'event/' + event.id + '/register', event);
+  }
+
+  leaveEvent(event: Event) {
+    return this.http.patch(this.baseurl + 'event/' + event.id + '/leave', event);
+  }
 }

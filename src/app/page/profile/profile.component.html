@@ -1,22 +1,87 @@
-<p *ngIf="isConnected()">
-  Bienvenue {{ user?.username }}, sur votre espace perso ! 
-  Votre adresse mail est {{ user?.email }}.
-</p>
-<div *ngIf="isConnected()">
-    
-  <img class="img-thumbnail" src="{{prefix}}{{user?.image.imgPath}}" style="width:300px;height:300px;"/>
+<div class="container-fluid" style="margin-top: 20px;" *ngIf="isConnected()">
+  <mat-accordion class="example-headers-align">
+    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Données personnelles
+        </mat-panel-title>
+        <mat-panel-description>
+          Mes infos
+          <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="row">
+        <div class="col-6">
+      <img *ngIf="user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="{{prefix}}{{user?.profilePicture.imgPath}}"/>
+      <img *ngIf="!user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="assets/images/placeholder.png"/>
+      
+        <h3>Changer ma photo de profil</h3>
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+              <input style="display:block;" type="file" id="file" name="fichier"(change)="preview($event.target.files)" (change)="handleFileInput($event.target.files)"/>
+              <small>Entrer un titre</small>
+              <input class="form-control" style="display:block;" type="text" id='title' name="title" (change) = "setTitle()"/>
+              <small>Entrer une description</small>
+              <textarea class="form-control" style="display:block;" type="text" id="description" name="description" (change) = "setDescription()"></textarea>
+          </div>
+          <div class="form-group">
+              <button [disabled]="!hasFile" class="btn btn-primary">Modifier</button>
+          </div>
+          <div style="position:relative;top:-580px;left:410px;">
+            <span style="color:red" *ngIf="message">{{message}}</span>
+              <img class='img-thumbnail' [src]="imgURL"style="height:300px;width:300px;" *ngIf="imgURL">
+          </div>
+      </form>
+    </div>
+    <div style="border:1px solid black;padding:1%;" class="col-lg-6 col-sm-12">
+      <div class="row">
+        <div class="col-md-3">
+          <img *ngIf="user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;filter:grayscale(70%)" src="{{prefix}}{{user?.profilePicture.imgPath}}"/>
+          <img *ngIf="!user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="assets/images/placeholder.png"/>
+          </div>
+          <div class="col-md-5 ml-5">
+              Nom: {{ user.fname }}<br>
+              Prénom: {{ user.lname }}<br>
+              Adresse mail: {{ user.email }}<br>
+              Mot de passe: {{ user.password }}
+          </div>
+        
+      </div>
+      <div class="row">
+        
+        <div class="col-md-10">
+        <h3>Ma biographie</h3>
+        <textarea class='form-control'>Ceci est ma description</textarea>
+        </div>
+      </div>
+      <div *ngIf="user.adherent">
+        <mat-icon style="color:green;cursor:pointer;" ngbTooltip="Vous êtes adhérent">verified_user</mat-icon>
+        
+        <mat-icon *ngIf="user.formateur" ngbTooltip="Vous êtes un formateur" style="color:green;cursor:pointer;">school</mat-icon>
+        
+      </div>
+      
+    </div>
+    </div>
+
+      <mat-action-row>
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Mes formations
+        </mat-panel-title>
+        <mat-panel-description>
+          Mes formations
+          <mat-icon>school</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <h2>Mes Formations</h2>
+<div class="container">
   
-    <h3>Changer ma photo de profil</h3>
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <input style="display:block;" type="file" id="file" name="fichier" (change)="handleFileInput($event.target.files)"/>
-        </div>
-        <div class="form-group">
-            <button [disabled]="!hasFile" class="btn btn-primary">Upload</button>
-        </div>
-    </form>
-</div>
-  <h2>Mes Formations</h2>
+    <mat-icon routerLink="/new/formation"  style="color:green;cursor:pointer;" *ngIf="user.formateur">add_circle</mat-icon>
   <div *ngIf="user.formations.length < 1">
     <ngb-alert [dismissible] = "false"><strong>Aucune formation</strong>, vous ne participez à aucune formation actuellement !
       <a routerLink="/formation">Voir les formations disponibles</a> 
@@ -24,59 +89,107 @@
   </div>
   <div *ngIf="user?.formations?.length >=1">
       <div *ngFor="let formation of user.formations">
-        <p [innerHTML]="formation.name | html"></p>
+        <img class="img-thumbnail" style="width:200px;height:200px;" src="http://admin.fenrir-studio.fr/{{ formation.image.imgPath }}"/>
+        <p [innerHTML]="formation?.name | html"></p>
         <p [innerHTML]="formation.description | html"></p>
       </div>
   </div>
+</div>
   <hr>
-  <h2>Mes Evenements</h2>
-  <div *ngIf="user?.events?.length < 1">
-    <ngb-alert [dismissible] = "false"><strong>Aucun évènement</strong>, vous ne participez actuellement à aucun évènement ! 
-      <a routerLink="/event">Voir les évènements en cours</a>
-    </ngb-alert>
-  </div>
-    <div *ngIf="user.events.length >=1">
-      <li *ngFor="let event of user.events">
-          {{ event.name }} :
-          {{ event.description }}
-          <a routerLink="/event/{{event.id}}">Voir les détails de l'évènement</a>
-      </li>
+  
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Précédent</button>
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Mes évènements
+        </mat-panel-title>
+        <mat-panel-description>
+          Mes évènements
+          <mat-icon>date_range</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <h2>Mes Evenements</h2>
+  <div class="container">
+    
+    <div *ngIf="user?.events?.length < 1">
+      <ngb-alert [dismissible] = "false"><strong>Aucun évènement</strong>, vous ne participez actuellement à aucun évènement ! 
+        <a routerLink="/event">Voir les évènements en cours</a>
+      </ngb-alert>
     </div>
+      <div *ngIf="user.events.length >=1">
+        <li *ngFor="let event of user.events">
+            {{ event.name }} :
+            <p [innerHTML]="event.description | html"></p>
+            <p>Cet évènement a lieu le {{ event.hour.timestamp *1000 | date: 'dd/MM/yyyy' }} à {{ event.time.timestamp *1000 | date: 'H:mm' }} </p>
+            <a routerLink="/event/{{event.id}}">Voir les détails de l'évènement</a>
+            <hr style="color:black;">
+        </li>
+        
+      </div>
+      
+    </div>
+  
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Précédent</button>
+        <button mat-button color="primary" (click)="nextStep()">Suivant</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Mes images
+        </mat-panel-title>
+        <mat-panel-description>
+          Mes images
+          <mat-icon>palette</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+  
+      <h2>Mes images</h2>
+      <table class="table table-dark table-borderless">
+          <thead>
+            <tr>
+              <th scope="col">Image</th>
+              <th scope="col">Date de partage</th>
+              <th scope="col">Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+      
+          
+            <tr *ngFor="let photo of user.photos">
+                <td><img src="{{prefix}}{{photo.imgPath}}" title="{{photo.title}}" style="max-width: 100px;" class='img-thumbnail'/></td>
+                <td>{{photo.createdAt.timestamp * 1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</td>
+                <td><button (click)="deleteModal(image)" class="btn btn-danger"><mat-icon>delete</mat-icon></button></td>
+                <ng-template #image let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">Suppression d'une image</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                      <div class="modal-body">
+                        <div>
+                          <p>Voulez vous vraiment supprimer cette image ? Elle n'apparaîtra plus ni dans votre espace perso, ni dans l'onglet portfolio</p>
+                            <img src="http://admin.fenrir-studio.fr/{{ photo.imgPath }}" style="width:150px;height:150px;"/>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
+                        <button type="button" class="btn btn-outline-dark" (click)="deleteImage(photo)">Oui</button>
+                      </div>
+                  </ng-template>
+              </tr>
+            </tbody>
+            
+          </table>     
+  
+      <mat-action-row>
+        <button mat-button color="warn" (click)="prevStep()">Précédent</button>
+      </mat-action-row>
+    </mat-expansion-panel>
     <hr>
-    <h2>Mes images</h2>
-
-    <div style="display:flex">
-      
-    <div *ngFor="let photo of user.photos">
-        <ng-template #image let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Suppression d'une image</h4>
-              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-              <div class="modal-body">
-                <div>
-                  <p>Voulez vous vraiment supprimer cette image ? Elle n'apparaîtra plus ni dans votre espace perso, ni dans l'onglet portfolio</p>
-                    <img src="http://connexion.fr/{{ photo.imgPath }}" style="width:150px;height:150px;"/>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
-                <button type="button" class="btn btn-outline-dark" (click)="deleteImage(photo)">Oui</button>
-              </div>
-          </ng-template>
-      <img src="{{prefix}}{{photo.imgPath}}" title="{{photo.title}}" style="width:100px;height:100px;cursor:pointer;" class='img-thumbnail img-fluid'/>
-      <button (click)="deleteModal(image)" style="width:40px;height:40px;position:relative;top:-30px;left:-40px;" class="btn btn-danger"><mat-icon>delete</mat-icon></button>
-    </div>
-      
-
-    </div>
-    <div style='height:200px;'>
-
-    </div>
-  
-  
-  
-      
-  

@@ -11,8 +11,8 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  createUser(username: string, email: string, password: string) {
-    const data = { username, email, password };
+  createUser(username: string, email: string, password: string, lname: string, fname: string) {
+    const data = { username, email, password, lname, fname };
     return this.http.post(this.uri, data);
   }
 }

@@ -1,44 +1,73 @@
-<mat-card style="width:600px;" *ngIf="!registrationDone">
-    <ngb-alert type="danger" *ngIf="registerFailed" (close)="registerFailed = false">
-        Une erreur est survenue, veuillez consulter l'administrateur du site
-    </ngb-alert>
-    <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
-    <mat-card-title class="text-center">S'enregistrer</mat-card-title>
-    <div class="container">
-    <mat-card-content>
-        <form class="form-content" [formGroup]="registerForm">
-              <mat-form-field>
-                <input matInput
-                       placeholder="username"
-                       formControlName="username"
-                       autocomplete="Off" required/>
-              </mat-form-field>
-            <mat-form-field>
-                <input matInput type="password"
-                       placeholder="{{ password.errors?.pattern ?
-                       '8 caractères minimum, une majuscule, une minuscule et un nombre' :
-                       'password' }}"
-                       formControlName="password"
-                       autocomplete="Off" required/>
-            </mat-form-field>
-            <mat-form-field>
-                <input matInput type="email"
-                       placeholder="email"
-                       formControlName="email"
-                       autocomplete="Off" required/>
-            </mat-form-field>
-            <button class="mt-3" mat-flat-button
-                    [disabled]="loading || registerForm.invalid"
-                    (click)="register()"
-                    color="primary">
-                <span>Envoyer</span>
-            </button>
-        </form>
-    </mat-card-content>
-<mat-card *ngIf="registrationDone">
-    <mat-card-title class="text-center">Enregistrement réalisé</mat-card-title>
-    <mat-card-content class="text-center">
-        Vous devrez cependant attendre que l'administrateur confirme votre inscription
-        avant de pouvoir vous connecter.
-    </mat-card-content>
-</mat-card>
+<div class="container-fluid">
+    <div class="col sm-12">
+
+        <div class="registration"
+            fxLayout
+            fxLayoutAlign="space-evenly center center"
+            fxLayout.lt-md="column">
+            <mat-card *ngIf="!registrationDone">
+                <ngb-alert type="danger" *ngIf="registerFailed" (close)="registerFailed = false">
+                    Une erreur est survenue, veuillez consulter l'administrateur du site
+                </ngb-alert>
+                <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+                <mat-card-title class="text-center">Créer un compte</mat-card-title>
+                <mat-card-content>
+                    <form class="form-content" [formGroup]="registerForm">
+                        <mat-form-field>
+                            <input matInput
+                                type="text"
+                                placeholder="Identifiant"
+                                formControlName="username"
+                                autocomplete="off" required/>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput type="email"
+                                placeholder="email"
+                                formControlName="email"
+                                autocomplete="Off" required/>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput
+                                type="text"
+                                placeholder="Prénom"
+                                formControlName="fname"
+                                autocomplete="off" required/>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput
+                                type="text"
+                                placeholder="Nom de famille"
+                                formControlName="lname"
+                                autocomplete="off" required/>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <input matInput type="password"
+                                placeholder="{{ password.errors?.pattern ?
+                            'Minimum 8 charactères, au moins une majuscule, une minuscule et un chiffre' :
+                            'Mot de passe' }}"
+                                formControlName="password"
+                                autocomplete="Off" required/>
+                        </mat-form-field>
+                        <!--<mat-checkbox formControlName="rgpd">
+                            <span id="rgpd">J'accepte <a routerLink="/confidential">la politique de confidentialité</a></span>
+                        </mat-checkbox>-->
+                        <button class="mt-3" mat-flat-button
+                                [disabled]="loading || registerForm.invalid"
+                                (click)="register()"
+                                color="primary">
+                            <span>Envoyer</span>
+                        </button>
+                    </form>
+                </mat-card-content>
+            </mat-card>
+            <mat-card *ngIf="registrationDone">
+                <mat-card-title class="text-center">Inscription réussie !</mat-card-title>
+                <img mat-card-image style="width:100px;height:100px;" src="assets/images/validate.png" />
+                <mat-card-content>
+                    Veuillez consulter votre boîte mail afin de confirmer votre inscription.
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    </div>
+</div>

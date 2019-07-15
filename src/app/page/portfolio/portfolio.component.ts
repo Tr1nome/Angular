@@ -35,6 +35,8 @@ export class PortfolioComponent implements OnInit {
   likes: number;
   description: string;
   public isAvailable: boolean;
+  selected = '0';
+  displayByLike: boolean;
 
 // tslint:disable-next-line: max-line-length
   constructor(private imageService: ImageService, private toast: ToastrService, private authService: AuthService, private modalService: NgbModal) {}
@@ -44,6 +46,7 @@ export class PortfolioComponent implements OnInit {
     this.likedBy$ = Observable
       .interval(1000)
       .startWith(0).switchMap(() => this.imageService.getImage(this.image));
+    this.orderByLikes();
   }
   open(content) {
     this.modalService.open(content);
@@ -66,8 +69,8 @@ export class PortfolioComponent implements OnInit {
     }
     const reader = new FileReader();
     this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
       this.imgURL = reader.result;
     };
   }
@@ -75,10 +78,23 @@ export class PortfolioComponent implements OnInit {
   setTitle() {
     const titleBox = (document.getElementById('title') as HTMLInputElement);
     this.title = titleBox.value;
+    if (this.title === undefined) {
+      this.title = 'Sans titre';
+    }
   }
   setDescription() {
     const descriptionBox = (document.getElementById('description') as HTMLInputElement);
     this.description = descriptionBox.value;
+    if (this.description === undefined) {
+      this.description = 'Aucune description';
+    }
+  }
+
+  orderByLikes() {
+    if (this.selected === '0') {
+      this.displayByLike = true;
+      console.log(this.displayByLike);
+    }
   }
 
   onSubmit() {

@@ -1,30 +1,43 @@
-<div class="center-div">
+<div class="center-div" *ngIf="isLoading">
   <mat-spinner 
   [color]="color" 
   [mode]="mode" 
   [diameter]="diameter" 
-  *ngIf="isLoading">
-  Chargement des Events...
+  >
+  <span>Chargement des Events...</span>
 </mat-spinner>
 </div>
-<h2 *ngIf="!isLoading">Nos évènements</h2>
-<table class="table" *ngIf="!isLoading">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Titre</th>
-        <th scope="col">Description</th>
-        <th scope="col">Date</th>
-        <th scope="col">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let event of events">
-        <th scope="row">{{ event.id }}</th>
-        <td>{{ event.name }}</td>
-        <td>{{ event.description }}</td>
-        <td>Date</td>
-        <td><button class="btn btn-success">Inscription</button></td>
-      </tr>
-    </tbody>
-  </table>
+<h2 style="text-align: center;" *ngIf="!isLoading">Nos évènements</h2>
+<div *ngIf="!isLoading">
+<div class="container-fluid" style="margin-top: 100px;" *ngFor="let event of events">
+  <div class="row">
+    <div class="col-6">
+      <p style="font-weight: bold;">{{ event.name }}</p>
+      <div><mat-icon>event</mat-icon> : Le {{event.hour.timestamp * 1000 | date: 'dd/MM/yyyy'}}</div>
+      <div><mat-icon>alarm</mat-icon> : A {{event.time.timestamp *1000 | date: 'HH:mm'}}</div>
+      <div><mat-icon>room</mat-icon> {{ event.place }} </div>
+      <div *ngIf="!event.inscrit"><mat-icon style="color:red;">not_interested</mat-icon> Vous ne participez pas à cet évènement</div>
+      <div *ngIf="event.inscrit"><mat-icon style="color:green;">check_circle</mat-icon> Vous participez à cet évènement</div>
+      <hr>
+      <div class="imageHolder">
+        <img class="img" ngbTooltip="{{ user.username }}" *ngFor="let user of event.user"
+        src="http://admin.fenrir-studio.fr/{{ user.profilePicture?.imgPath }}"
+        style="width:30px;height:30px;border-radius: 50%;object-fit: cover;"/>
+      </div>
+    
+    <div [innerHTML]="event.description | html "></div>
+    <hr>
+         
+    </div>
+    <div class="col-6">
+      <ul>
+        <li>
+            <button *ngIf="!event.inscrit" (click)="registerToEvent(event)" class="btn btn-success">Inscription</button>
+        </li>
+        <li>
+            <button *ngIf="event.inscrit" (click)="checkoutEvent(event)" class="btn btn-danger">Ne plus participer</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+  </div>

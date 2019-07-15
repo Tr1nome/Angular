@@ -3,3 +3,33 @@
     top: 125px;
     right: 205px;
 }
+
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+  flex-wrap: wrap;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-around;
+  align-items: center;
+  height:150px;
+  margin:20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+  content: "";
+  clear: both;
+  display: table;
+}

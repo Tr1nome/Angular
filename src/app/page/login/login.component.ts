@@ -59,7 +59,7 @@ completeLoading() {
                 console.log('connected !');
                 user.connected = true;
               }, 2000);
-              this.router.navigate(['/actu']);
+              this.router.navigate(['/profile']);
              },
             (err) => {
               console.error(err);

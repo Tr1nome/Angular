@@ -1,0 +1,27 @@
+<h1>Créer une nouvelle formation</h1>
+
+<div class= "container-fluid">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <mat-card class="col-12">
+      <ngb-alert type="danger" *ngIf="formationFailed" (close)="formationFailed = false">Une info est mauvaise ou manquante..</ngb-alert>
+      <mat-card-title class="text-center">Formulaire de création</mat-card-title>
+        <mat-card-content>
+          <form class="form-content" [formGroup]="formationForm">
+            <img class="img-thumbnail" style="width:200px;height:200px;"/><br>
+              <input class="form-control" style="margin-top: 20px;" placeholder="Titre de la formation" 
+              formControlName="title" autocomplete="Off" required/>
+            <br>
+                <textarea class="form-control" placeholder="Description de la formation" 
+                formControlName="description" autocomplete="Off" required ></textarea>
+            <br>
+            <label for="datepick">Sélectionnez une date</label><br>
+          <ngb-datepicker #dp (navigate)="date = $event.next"></ngb-datepicker>
+            {{ model | json }} <br>
+            
+              <button class="mt-3" [disabled]="formationFailed || formationForm.invalid" mat-flat-button (click)="createFormation()" color="primary">Créer</button>
+          </form>
+          
+        </mat-card-content>
+    </mat-card>
+  </div>
+</div>

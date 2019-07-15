@@ -29,12 +29,16 @@ export class NotificationsComponent implements OnInit {
 
   getAllUsers(): void {
     const currentUser = this.auth.currentUser;
+    const isConnected = this.auth.isConnected();
     this.isLoading = true;
     this.actuService.getAllUsers().subscribe(data => {
       this.users = data;
       this.isLoading = false;
       data.forEach((user) => {
         console.log(user);
+        if (isConnected === true && user.username === currentUser.username) {
+          user.username = user.username + ' (Vous)';
+        }
       });
     });
   }

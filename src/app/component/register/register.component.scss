@@ -1,0 +1,24 @@
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons%7CMaterial+Icons+Outlined");
+
+.form-content{
+  display: flex;
+  flex-direction: column
+}
+#rgpd{
+  font-size: smaller;
+  color: #929292;
+}
+.registration{
+  background-image: url("../../../assets/images/register.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height:100vh;
+}
+mat-card{
+  width: 300px;
+  height:auto;
+}
+a{
+  color: #8b1461;
+  font-weight: bold;
+}

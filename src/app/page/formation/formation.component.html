@@ -6,8 +6,7 @@
   *ngIf="isLoading">
   </mat-spinner>
 </div>
-<h2 *ngIf="!isLoading">Les formations de Fenrir Studio</h2>
-
+<h2 style="text-align: center;" *ngIf="!isLoading">Nos formations</h2>
 <div *ngIf="!isLoading">
     <div class="container-fluid" *ngFor="let formation of formations">
         <ng-template #test let-modal>
@@ -55,8 +54,8 @@
             </div>
               <div class="modal-body">
                 <div *ngFor="let user of formation.user">
-                    <img src="http://connexion.fr/{{ user.image.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
-                    <strong style="margin-left:1em;">{{ user.username }}</strong> y participe
+                    <img src="http://admin.fenrir-studio.fr/{{ user.profilePicture?.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
+                    <strong style="margin-left:1em;">{{ user.username }}</strong> y participe <span></span>
                 </div>
               </div>
               <div class="modal-footer">
@@ -65,26 +64,26 @@
           </ng-template>
           <div class="row">
             <div class="col-6">
-              <img class="img-thumbnail" style="width:100px;height:auto;" src="http://connexion.fr/{{ formation.image.imgPath }}"/>
+              <img class="img-thumbnail" style="width:100px;height:auto;" src="http://admin.fenrir-studio.fr/{{ formation.image.imgPath }}"/>
               <p style="font-weight:bold;">{{ formation.name }}</p>
-              <div [innerHTML]="formation.description | html "></div>
-              <p style=color:green; *ngIf="formation.inscrit">Inscrit</p>
-              <p style="color:red;" *ngIf="!formation.inscrit">Non inscrit</p>
-              <p>{{ formation.day.name }}</p>
+              <p style=color:green; *ngIf="formation.inscrit">Suivie</p>
+              <p style="color:red;" *ngIf="!formation.inscrit">Non suivie</p>
+              <p>La prochaine session aura lieu le {{ formation.hour.timestamp *1000 | date: 'dd/MM/yyyy' }} à {{ formation.time.timestamp *1000 | date: 'H:mm' }}</p>
+              <div style="display:flex">
+                <img ngbTooltip="{{ user.username }}" *ngFor="let user of formation.user" src="http://admin.fenrir-studio.fr/{{ user.profilePicture?.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
+            </div>
             </div>
               <div class="col-6">
                 <ul>
-                  <li><button class="btn" (click) ="open(content)">Voir les participants</button></li>
-                  <li><button class="btn btn-success" *ngIf="!formation.inscrit" (click)="registerToFormation(formation)">Suivre</button></li>
+                  <li>
+                    <button class="btn btn-success" *ngIf="!formation.inscrit && isUserAdherent()" (click)="registerToFormation(formation)">Suivre</button>
+                    <ngb-alert [dismissible]="false" type="danger" *ngIf="!isUserAdherent()">Pour s'inscrire à une formation il faut être adhérent</ngb-alert>
+                    
+                  </li>
                   <li><button class="btn btn-danger" *ngIf="formation.inscrit" (click)="checkoutFormation(formation)">Ne plus suivre</button></li>
                   <li><button class="btn btn-warning" *ngIf="formation.inscrit" (click)="absent(test)">Déclarer une absence</button></li>
                   <li><button class="btn btn-info" routerLink="/formation/{{ formation.id }}">En savoir plus</button></li>
                 </ul>
-                
-                
-                
-                
-                
               </div>
             </div>
             <hr>

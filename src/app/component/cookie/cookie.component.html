@@ -1,0 +1,6 @@
+<ngb-alert [dismissible]="false" class="alert-warning" *ngIf="(!CookieValue) && display">
+  Notre site utilise des cookies pour personnaliser et améliorer votre confort d'utilisation.
+  En utilisant notre site, vous acceptez l'usage des cookies et
+    <span routerLink="/confidential" class="politik">notre politique de confidentialité</span>.
+    <button mat-button (click)="setCookie()" fxFill>Accepter</button>
+  </ngb-alert>

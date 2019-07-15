@@ -17,6 +17,8 @@ export class AuthService {
   private userSubject: BehaviorSubject<User>;
   private userObs: Observable<User>;
 
+  public adherent: boolean;
+
   constructor(private http: HttpClient) {
     const token = JSON.parse(localStorage.getItem(Globals.APP_USER_TOKEN));
     this.loginSubject = new BehaviorSubject<Login>(token);
@@ -46,6 +48,13 @@ export class AuthService {
     return !!this.loginSubject.value && !!this.userSubject.value;
   }
 
+  public isAdherent(): boolean {
+    const data = JSON.parse(localStorage.getItem('data-user'));
+    if (data.adherent) {
+      return true;
+    }
+  }
+
   public logout() {
     console.log('logging out');
     localStorage.removeItem(Globals.APP_USER_TOKEN);
@@ -70,7 +79,9 @@ export class AuthService {
     const obj = {
       username: data.username,
       email: data.email,
-      password: data.password
+      password: data.password,
+      fname: data.fname,
+      lname: data.lname
     };
     return this.http.post(Globals.APP_API + 'auth/register', obj);
   }
@@ -78,4 +89,17 @@ export class AuthService {
   public get currentUser(): User|null {
     return this.userSubject.value;
   }
+
+  public saveProfile(username, email) {
+    const data = {username, email};
+    return this.http.put<User>(Globals.APP_API +  'auth/profile/edit', data)
+        .pipe(map((user) => {
+            if (user) {
+                localStorage.setItem(Globals.APP_USER, JSON.stringify(user));
+                this.userSubject.next(user);
+                this.userObs = this.userSubject.asObservable();
+            }
+            return this.userSubject.value;
+    }));
+}
 }

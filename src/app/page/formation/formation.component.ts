@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/service/auth.service';
 import { User } from 'src/app/class/user';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-formation',
@@ -20,6 +21,7 @@ export class FormationComponent implements OnInit {
   color = 'warn';
   diameter = 50;
   public isLoading = false;
+  public isLoadingSlim = false;
   mode = 'indeterminate';
   formations: Formation[];
   user: User|null;
@@ -30,7 +32,8 @@ export class FormationComponent implements OnInit {
     private toast: ToastrService,
     private router: Router,
     private authService: AuthService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private fb: FormBuilder) { }
 
   ngOnInit() {
     this.getAllFormations();
@@ -83,8 +86,10 @@ export class FormationComponent implements OnInit {
     console.log(JSON.parse(data));
   }
   registerToFormation(formation: Formation) {
+    this.isLoadingSlim = true;
     this.formationService.registerFormation(formation).subscribe(data => {
       console.log(data);
+      this.isLoadingSlim = false;
       formation.inscrit = true;
       this.getAllFormations();
       this.showToaster('register', formation);
@@ -96,6 +101,21 @@ export class FormationComponent implements OnInit {
 
   isUserAdherent(): boolean {
     return this.authService.isAdherent();
+  }
+
+  dismissModal(formation) {
+    this.modalService.dismissAll();
+  }
+
+  sendAbsenceMail(formation: Formation): void {
+    this.isLoadingSlim = true;
+    this.formationService.absentFormation(formation).subscribe(data => {
+      this.isLoadingSlim = false;
+      this.dismissModal(formation);
+      this.showToaster('absent', formation);
+    }, err => {
+      this.showToaster('error', err);
+    });
   }
 
   checkoutFormation(formation: Formation): void {
@@ -120,6 +140,9 @@ export class FormationComponent implements OnInit {
       case 'unregister':
         this.toast.success('Désinscription à : ' + formation.name + '  prise en compte !',
         'Console');
+        break;
+      case 'absent':
+        this.toast.success('Un email a bien été envoyé a Fenrir Studio, merci de nous avoir prévenu !', 'Console');
         break;
       case 'error':
         this.toast.error('Une erreur est survenue, veuillez réessayer plus tard ou contacter Fenrir Studio' + ' code d\'erreur ' + this.error);

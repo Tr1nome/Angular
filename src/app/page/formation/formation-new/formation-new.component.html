@@ -7,18 +7,21 @@
       <mat-card-title class="text-center">Formulaire de création</mat-card-title>
         <mat-card-content>
           <form class="form-content" [formGroup]="formationForm">
-            <img class="img-thumbnail" style="width:200px;height:200px;"/><br>
               <input class="form-control" style="margin-top: 20px;" placeholder="Titre de la formation" 
-              formControlName="title" autocomplete="Off" required/>
+              formControlName="name" autocomplete="Off" required/>
             <br>
-                <textarea class="form-control" placeholder="Description de la formation" 
-                formControlName="description" autocomplete="Off" required ></textarea>
-            <br>
-            <label for="datepick">Sélectionnez une date</label><br>
-          <ngb-datepicker #dp (navigate)="date = $event.next"></ngb-datepicker>
-            {{ model | json }} <br>
+                <textarea class='form-control' formControlName="description"></textarea>
             
+            <br>
+            <input style="display:block;" type="file" id="file" (change)="handleFileInput($event.target.files)"/>
               <button class="mt-3" [disabled]="formationFailed || formationForm.invalid" mat-flat-button (click)="createFormation()" color="primary">Créer</button>
+              <mat-spinner
+              *ngIf="loading"
+              [color]="color" 
+              [mode]="mode" 
+              [diameter]="diameter">
+              </mat-spinner>
+
           </form>
           
         </mat-card-content>

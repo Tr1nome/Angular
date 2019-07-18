@@ -21,12 +21,21 @@ export class FormationService {
     return this.http.get<Formation>(this.baseurl + 'formation' + '/' + id);
   }
 
+  createFormation(name: string, description: string, image = null) {
+    const data = { name, description, image };
+    return this.http.post(this.baseurl + 'formation' + '/new', data);
+  }
+
   updateFormation(formation: Formation) {
     return this.http.put(this.baseurl + 'formation' + '/' + formation.id, formation);
   }
 
   registerFormation(formation: Formation) {
     return this.http.patch(this.baseurl + 'formation/' + formation.id + '/register', formation);
+  }
+
+  absentFormation(formation: Formation) {
+    return this.http.post(this.baseurl + 'formation/' + formation.id + '/absent', formation);
   }
 
   leaveFormation(formation: Formation) {

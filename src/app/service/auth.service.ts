@@ -90,6 +90,10 @@ export class AuthService {
     return this.userSubject.value;
   }
 
+  public get currentUsername(): string {
+    return this.currentUser.username;
+  }
+
   public saveProfile(username, email) {
     const data = {username, email};
     return this.http.put<User>(Globals.APP_API +  'auth/profile/edit', data)

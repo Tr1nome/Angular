@@ -6,18 +6,20 @@
           Données personnelles
         </mat-panel-title>
         <mat-panel-description>
+            <mat-icon>account_circle</mat-icon>
           Mes infos
-          <mat-icon>account_circle</mat-icon>
+          
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="row">
         <div class="col-6">
-      <img *ngIf="user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="{{prefix}}{{user?.profilePicture.imgPath}}"/>
+      <img *ngIf="user.profilePicture || !imgURL" class="img-thumbnail img-fluid" style="max-width: 200px;" src="{{prefix}}{{user?.profilePicture.imgPath}}"/>
       <img *ngIf="!user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="assets/images/placeholder.png"/>
-      
+      <img class='img-thumbnail img-fluid ml-3 md-mt-3' [src]="imgURL"style="max-width:200px;z-index:1000" *ngIf="imgURL"/>
         <h3>Changer ma photo de profil</h3>
         <form (ngSubmit)="onSubmit()">
           <div class="form-group">
+              <span style="color:red" *ngIf="message">{{message}}</span>
               <input style="display:block;" type="file" id="file" name="fichier"(change)="preview($event.target.files)" (change)="handleFileInput($event.target.files)"/>
               <small>Entrer un titre</small>
               <input class="form-control" style="display:block;" type="text" id='title' name="title" (change) = "setTitle()"/>
@@ -27,38 +29,22 @@
           <div class="form-group">
               <button [disabled]="!hasFile" class="btn btn-primary">Modifier</button>
           </div>
-          <div style="position:relative;top:-580px;left:410px;">
-            <span style="color:red" *ngIf="message">{{message}}</span>
-              <img class='img-thumbnail' [src]="imgURL"style="height:300px;width:300px;" *ngIf="imgURL">
-          </div>
       </form>
     </div>
     <div style="border:1px solid black;padding:1%;" class="col-lg-6 col-sm-12">
       <div class="row">
-        <div class="col-md-3">
-          <img *ngIf="user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;filter:grayscale(70%)" src="{{prefix}}{{user?.profilePicture.imgPath}}"/>
-          <img *ngIf="!user.profilePicture" class="img-thumbnail img-fluid" style="max-width: 200px;" src="assets/images/placeholder.png"/>
-          </div>
-          <div class="col-md-5 ml-5">
+          <div class="col-md-6 ml-1">
               Nom: {{ user.fname }}<br>
               Prénom: {{ user.lname }}<br>
               Adresse mail: {{ user.email }}<br>
-              Mot de passe: {{ user.password }}
           </div>
         
       </div>
-      <div class="row">
-        
-        <div class="col-md-10">
-        <h3>Ma biographie</h3>
-        <textarea class='form-control'>Ceci est ma description</textarea>
-        </div>
-      </div>
-      <div *ngIf="user.adherent">
-        <mat-icon style="color:green;cursor:pointer;" ngbTooltip="Vous êtes adhérent">verified_user</mat-icon>
-        
+      <div>
+        <mat-icon *ngIf="user.adherent" style="color:green;cursor:pointer;" ngbTooltip="Vous êtes adhérent">verified_user</mat-icon>
+        <mat-icon *ngIf="!user.adherent" style="cursor:pointer;" ngbTooltip="Vous n'êtes pas adhérent">verified_user</mat-icon>
         <mat-icon *ngIf="user.formateur" ngbTooltip="Vous êtes un formateur" style="color:green;cursor:pointer;">school</mat-icon>
-        
+        <mat-icon *ngIf="!user.formateur" ngbTooltip="Vous n'êtes pas formateur" style="cursor:pointer;">school</mat-icon>
       </div>
       
     </div>
@@ -74,8 +60,8 @@
           Mes formations
         </mat-panel-title>
         <mat-panel-description>
+            <mat-icon>school</mat-icon>
           Mes formations
-          <mat-icon>school</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <h2>Mes Formations</h2>
@@ -92,6 +78,7 @@
         <img class="img-thumbnail" style="width:200px;height:200px;" src="http://admin.fenrir-studio.fr/{{ formation.image.imgPath }}"/>
         <p [innerHTML]="formation?.name | html"></p>
         <p [innerHTML]="formation.description | html"></p>
+        <hr>
       </div>
   </div>
 </div>
@@ -107,9 +94,10 @@
         <mat-panel-title>
           Mes évènements
         </mat-panel-title>
+        
         <mat-panel-description>
+            <mat-icon>date_range</mat-icon>
           Mes évènements
-          <mat-icon>date_range</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
       <h2>Mes Evenements</h2>
@@ -141,11 +129,13 @@
     <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
+            
           Mes images
         </mat-panel-title>
+        
         <mat-panel-description>
+            <mat-icon>palette</mat-icon>
           Mes images
-          <mat-icon>palette</mat-icon>
         </mat-panel-description>
       </mat-expansion-panel-header>
   
@@ -162,9 +152,10 @@
       
           
             <tr *ngFor="let photo of user.photos">
-                <td><img src="{{prefix}}{{photo.imgPath}}" title="{{photo.title}}" style="max-width: 100px;" class='img-thumbnail'/></td>
-                <td>{{photo.createdAt.timestamp * 1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</td>
-                <td><button (click)="deleteModal(image)" class="btn btn-danger"><mat-icon>delete</mat-icon></button></td>
+               
+                <td *ngIf='photo.type.name === "Photo de portfolio"'><img src="{{prefix}}{{photo.imgPath}}" title="{{photo.title}}" style="max-width: 100px;" class='img-thumbnail'/></td>
+                <td *ngIf='photo.type.name =="Photo de portfolio"'>{{photo.createdAt.timestamp * 1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</td>
+                <td *ngIf='photo.type.name === "Photo de portfolio"'><button  (click)="deleteModal(image)" class="btn btn-danger"><mat-icon>delete</mat-icon></button></td>
                 <ng-template #image let-modal>
                     <div class="modal-header">
                       <h4 class="modal-title" id="modal-basic-title">Suppression d'une image</h4>
@@ -182,14 +173,13 @@
                         <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Annuler</button>
                         <button type="button" class="btn btn-outline-dark" (click)="deleteImage(photo)">Oui</button>
                       </div>
-                  </ng-template>
+                    </ng-template>
               </tr>
             </tbody>
-            
-          </table>     
-  
+          </table>
       <mat-action-row>
         <button mat-button color="warn" (click)="prevStep()">Précédent</button>
       </mat-action-row>
     </mat-expansion-panel>
     <hr>
+    <div style="height:500px;"></div>

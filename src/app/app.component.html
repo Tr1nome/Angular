@@ -21,8 +21,8 @@
         <a routerLink="/event" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
           <span class="font">List Event</span>
         </a>
-        <a routerLink="/product" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">List Products</span>
+        <a routerLink="/surveys" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+          <span class="font">Noter le site</span>
         </a>
         <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
           <span class="font">Créations</span>
@@ -36,7 +36,7 @@
       <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
         <span class="font">Mentions légales</span>
       </a>
-      <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="logout()">
+      <a *ngIf="isConnected()" routerLink="/actu" routerLinkActive="active" mat-list-item (click)="logout()">
         <span class="font">Déconnexion</span>
       </a>
       </mat-nav-list>

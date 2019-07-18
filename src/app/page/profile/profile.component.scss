@@ -8,10 +8,11 @@
 .example-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
   flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   height:150px;
   margin:20px;

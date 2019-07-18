@@ -1,6 +1,7 @@
 .item {
     margin: 4px;
     flex: 0 1 calc(20% - 8px); /* <-- adjusting for margin */
+    height:0px;
   }
 
 .displayer{

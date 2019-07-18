@@ -6,6 +6,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { JwtInterceptor } from './class/jwt-interceptor';
 import { ErrorInterceptor } from './class/error-interceptor';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 import { AppComponent } from './app.component';
@@ -27,6 +28,7 @@ import { NgxGalleryModule } from 'ngx-gallery';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { AngularCountdownDateTimeModule } from 'angular-countdown-date-time';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { FormationComponent } from './page/formation/formation.component';
 import { ActuComponent } from './page/actu/actu.component';
@@ -48,6 +50,7 @@ import { FormationNewComponent } from './page/formation/formation-new/formation-
 import { OrderBy } from './pipe/order-by.pipe';
 import { CookieComponent } from './component/cookie/cookie.component';
 import { CookieService } from 'ngx-cookie-service';
+import { SurveysComponent } from './page/surveys/surveys.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Nos Formations'} },
@@ -61,7 +64,7 @@ const appRoutes: Routes = [
   { path: 'formation-registration', component: RegistrationComponent, canActivate: [ IsSignedInGuard ],
    data: { title: 'Inscription à une formation' } },
   { path: 'profile', component: ProfileComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Mon profil' } },
-  { path: 'product', component: ProductComponent, data: { title: 'Les produits' } },
+  { path: 'surveys', component: SurveysComponent, data: { title: 'Retours utilisateurs' } },
   { path: 'add-product', component: AddProductComponent, data: { title: 'Ajouter un produit' } },
   { path: 'update-product' , component: UpdateProductComponent, data: { title: 'Editer un produit' } },
   { path: '', redirectTo: '/actu', pathMatch: 'full' },
@@ -88,13 +91,16 @@ const appRoutes: Routes = [
     FormationShowComponent,
     FormationNewComponent,
     OrderBy,
-    CookieComponent
+    CookieComponent,
+    SurveysComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     MatIconModule,
+    OrderModule,
     MatToolbarModule,
+    CKEditorModule,
     FlexLayoutModule,
     MatSidenavModule,
     FormsModule,

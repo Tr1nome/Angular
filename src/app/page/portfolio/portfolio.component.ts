@@ -21,6 +21,7 @@ export class PortfolioComponent implements OnInit {
   color = 'warn';
   diameter = 50;
   public isLoading = false;
+  public loading = false;
   mode = 'indeterminate';
   images: Image[];
   image: Image;
@@ -89,6 +90,22 @@ export class PortfolioComponent implements OnInit {
       this.description = 'Aucune description';
     }
   }
+  deleteModal(image) {
+    this.modalService.open(image);
+  }
+
+  dismissModal(image) {
+    this.modalService.dismissAll();
+  }
+
+  deleteImage(image: Image): void {
+    console.log(image);
+    this.imageService.deleteImage(image).subscribe(data => {
+      this.image = data;
+      this.dismissModal(image);
+      this.ngOnInit();
+    });
+  }
 
   orderByLikes() {
     if (this.selected === '0') {
@@ -98,11 +115,14 @@ export class PortfolioComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.imageService.uploadImage(this.fileData, this.title, this.description)
       .subscribe(data => {
+        this.loading = false;
         this.showToaster('success');
         this.playAudio();
         this.getAllImages();
+        this.toggleUploader();
     }, err => {
       console.error(err);
       this.showToaster('failure');

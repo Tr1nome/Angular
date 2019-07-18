@@ -21,7 +21,7 @@
                         <textarea class="form-control" style="display:block;" type="text" id="description" name="description" (change) = "setDescription()"></textarea>
                     </div>
                     <div class="form-group">
-                        <button [disabled]="!hasFile" class="btn btn-primary">Upload</button>
+                        <button [disabled]="!hasFile" class="btn btn-primary">Upload</button><img *ngIf="loading" src="assets/images/loading.gif" style="max-width:30px;max-height:15px;" />
                     </div>
                 </form>
             </div>
@@ -35,7 +35,7 @@
   <h2 *ngIf="!isLoading">Nos créations</h2>
   
   <hr>
-    <div *ngIf="displayByLike" style="display:flex;flex-direction: column-reverse;justify-content: center;align-items: center;">
+    <div style="display:flex;flex-direction: column-reverse;justify-content: center;align-items: center;">
       <div class="item" *ngFor="let image of images">
         <ng-template #content let-modal>
           <div class="modal-header">
@@ -51,12 +51,11 @@
               <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Ok</button>
             </div>
         </ng-template>
-        <mat-card *ngIf= "image.allowed" class="example-card">
+        <mat-card *ngIf= 'image.allowed && image.type.name === "Photo de portfolio"' class="example-card">
           <mat-card-header>
-              <div mat-card-avatar class="example-header-image"></div>
-              <mat-card-title *ngIf="image.title !== 'undefined'">{{image.title}}</mat-card-title>
-              <mat-card-title *ngIf="image.title === 'undefined'">Image sans titre</mat-card-title>
-              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}} par {{image.uploadedBy?.username}}</mat-card-subtitle>
+              
+              <mat-card-title *ngIf="image.title !== 'undefined'">{{image.uploadedBy.username}}</mat-card-title>
+              <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</mat-card-subtitle>
           </mat-card-header>
             <img mat-card-image src="http://admin.fenrir-studio.fr/{{ image.imgPath }}" style="cursor:pointer;" alt="http://connexion.fr/{{ image.alternative }}">
               <mat-card-content>
@@ -82,23 +81,14 @@
                     
                 </mat-card-actions>           
         </mat-card>
-        <mat-card *ngIf= "!image.allowed" class="example-card">
+        <mat-card *ngIf= '!image.allowed && image.type.name === "Photo de portfolio"' class="example-card">
             <mat-card-header>
                 <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-title *ngIf="image.title !== 'undefined'">{{image.title}}</mat-card-title>
-                <mat-card-title *ngIf="image.title === 'undefined'">Image sans titre</mat-card-title>
+                <mat-card-title>{{image.uploadedBy.username}}</mat-card-title>
               <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</mat-card-subtitle>
             </mat-card-header>
               <!--<img mat-card-image src="assets/images/placeholder.png" style="height:200px;cursor:pointer;" alt="placeholder">-->
               <div style="height:200px;"></div>
-              <mat-spinner
-              style="position: relative;
-              top: -100px;
-              left: 150px;" 
-              [color]="color" 
-              [mode]="mode" 
-              [diameter]="diameter">
-              </mat-spinner>
               <small style="position: relative;
               top: -60px;
               left: 100px;">En attente de confirmation..</small>

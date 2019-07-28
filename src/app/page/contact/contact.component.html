@@ -1,0 +1,46 @@
+<div class="container-fluid">
+  <div class="col sm-12">
+      <div class="registration"
+          fxLayout
+          fxLayoutAlign="space-evenly center center"
+          fxLayout.lt-md="column">
+          <mat-card *ngIf="!contactDone">
+              <ngb-alert type="danger" *ngIf="contactFailed" (close)="contactFailed = false">
+                  Une erreur est survenue, veuillez réessayer plus tard
+              </ngb-alert>
+              <mat-spinner *ngIf="loading" [diameter]="20"></mat-spinner>
+              <mat-card-title class="text-center">Formulaire de contact</mat-card-title>
+              <mat-card-content>
+                <p>Vous avez une question ? N'hésitez pas à nous envoyer un mail, en nous laissant votre adresse email et votre message nous vous recontacterons dans les plus brefs délais</p>
+                  <form class="form-content" [formGroup]="contactForm">
+                      
+                          <input class="form-control"
+                              type="email"
+                              placeholder="Entrez votre adresse mail.."
+                              formControlName="mail"
+                              autocomplete="off" required/>
+                      <div style="height:20px;"></div>
+                          <textarea
+                              placeholder="entrez votre message"
+                              formControlName="message"
+                              class="form-control"
+                              style="height:200px;"
+                              autocomplete="Off" required ></textarea>
+                      <button class="mt-3" mat-flat-button
+                              [disabled]="loading || contactForm.invalid"
+                              (click)="send()"
+                              color="primary">
+                          <span>Envoyer</span>
+                      </button>
+                  </form>
+              </mat-card-content>
+          </mat-card>
+          <mat-card *ngIf="contactDone">
+              <mat-card-title class="text-center">Votre message a bien été envoyé !</mat-card-title>
+              <mat-card-content>
+                  Nous vous répondrons dans les plus brefs délais
+              </mat-card-content>
+          </mat-card>
+      </div>
+  </div>
+</div>

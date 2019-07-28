@@ -1,0 +1,177 @@
+<footer class="footer" fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div class="underFooter">
+        <mat-icon>room</mat-icon><p>Siège social :</p>
+      <p>Fenrir Studio</p>
+      <p>31 Avenue du Maréchal Gallieni, 33700 Mérignac</p>
+    </div>
+    <div class="underFooter">
+      <p>Contact :</p>
+      <a href="mailto: team.project.orga@gmail.com">
+        <p class="mail">team.project.orga@gmail.com</p>
+      </a>
+    </div>
+    <a href="https://www.facebook.com/Fenrir-Studio-355594018314530/" class="underFooter">
+      <img class="facebook" src="../assets/images/fb.png" alt="logo facebook"/>
+    </a>
+    <div fxlayout="row" class="underFooter">
+        <p (click)="callPoliticModal(politic)" class="politic">Notre politique de confidentialité</p>
+        <p (click)="callMentionsModal(mentions)" class="mentions">Nos mentions légales</p>
+      </div>
+    <div fxlayout="row" class="underFooter">
+      <p>Léo Souly - 2019</p>
+    </div>
+  </footer>
+
+  <ng-template #politic scrollable="true" let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Politique de confidentialité</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div>
+            <div class="titleBand" fxLayoutAlign="center center ">
+                <h1 >Politique de Protection de Vos Données Personnelles</h1>
+            </div>
+            <div class="textReg">
+                <p>
+                    La politique énoncée ci-après s’applique aux traitements de données personnelles effectués par
+                    Valérie Perez, société Re-naissance, immatriculée au registre du commerce et des sociétés de Bordeaux
+                    sous le numéro de SIREN 798 668 109, SIRET 79866910900019 depuis le 01 décembre 2013,
+                    ayant son siège social : 4, impasse de la Gemme, 33830 Lugos.
+                </p>
+                <h4>1 – Dispositions générales</h4>
+                <p>
+                    Les dispositions qui suivent concernent tous les traitements de données personnelles effectués
+                    par Valérie Perez, ci-dessous désignée : le responsable du traitement, sauf mention contraire
+                    dans les dispositions spécifiques.
+                </p>
+                <h6>Cadre juridique – conformité au RGPD et à la loi française</h6>
+                <p>
+                    Le responsable du traitement déclare qu’il effectue des traitements de données personnelles
+                    conformément au règlement (UE) 2016/679 du Parlement européen et du Conseil du 27 avril 2016,
+                    relatif à la protection des personnes physiques à l’égard du traitement des données à caractère
+                    personnel et à la libre circulation de ces données (ci-après désigné le RGPD) et à loi française
+                    n° 78-17 du 6 janvier 1978 relative à l’informatique, aux fichiers et aux libertés (modifiée).
+                </p>
+                <h6>Responsable du traitement </h6>
+                <p>
+                    Le responsable du traitement est identifié ci-dessus. Ses coordonnées sont : Valérie Perez,
+                    4 impasse de la Gemme, 33830 Lugos. Téléphone : 06-84-32-47-95
+                </p>
+                <h6>Transfert de données</h6>
+                <p>
+                    Le responsable du traitement n’a pas l’intention d’effectuer un transfert de données à caractère
+                    personnel vers un pays tiers ou à une organisation internationale.
+                </p>
+                <h6>Durée de conservation des données à caractère personnel</h6>
+                <p>Les données seront conservées pendant une durée de 22 mois à compter de leur collecte .</p>
+                <h6>Droits de la personne dont les données sont collectées</h6>
+                <p>
+                    La personne dont les données personnelles sont collectées a le droit :
+                </p>
+                <ul>
+                    <li>de demander au responsable du traitement l’accès aux données à caractère personnel,
+                        la rectifi¬cation ou l’effacement de celles-ci, ou une limitation du traitement relatif
+                        à la personne concernée,
+                    </li>
+                    <li>de s’opposer au traitement,</li>
+                    <li>à la portabilité de ses données,</li>
+                    <li>d’introduire une réclamation auprès d’une autorité de contrôle,</li>
+                   <li>
+                       de retirer son consentement à tout moment, sans porter atteinte à la licéité du traitement
+                       fondé sur le consentement effectué avant le retrait de celui-ci, ce droit existant
+                       exclusivement lorsque le traitement est fondé sur l’article 6, paragraphe 1, point a), ou
+                       sur l’article 9, paragraphe 2, point a) du RGPD, c’est-à-dire sur le consentement de la
+                       personne concernée au traitement de ses données à caractère personnel pour une ou plusieurs
+                       finalités spécifiques.
+                   </li>
+                </ul>
+                <h6> Prise de décision automatisée – profilage</h6>
+                <p>
+                    Sauf mention contraire dans les dispositions spécifiques, aucun profilage ne sera réalisé et plus
+                    généralement aucune décision automatisée ne sera prise sur la base des données collectées
+                </p>
+                <h4>2 – Dispositions spécifiques</h4>
+                <p>Les dispositions qui suivent sont spécifiques à chaque type de traitement de données personnelles.</p>
+                <h6>Gestion de la relation avec nos contacts </h6>
+                <p>Données personnelles traitées – Nous traitons les données personnelles suivantes : prénom, nom, adresse électronique.
+                    Finalités – Le traitement de données personnelles est destiné à la gestion de la relation avec nos contacts.
+                    En particulier, ce traitement tend à permettre à la personne concernée d’obtenir des informations
+                    sur les services proposés par notre organisation.
+                    Base juridique – Ce traitement de données personnelles est fondé sur le consentement de la personne
+                    concernée (article 6, paragraphe 1, point a) du RGPD). La demande de données a un caractère
+                    contractuel. La personne concernée n’est pas tenue de fournir ces données. Si la personne
+                    concernée ne fournit pas les données ou retire son consentement au traitement de données,
+                    elle ne pourra pas obtenir de renseignements relatifs aux services proposés par notre organisation.
+                </p>
+                <h6>Gestion de la relation avec nos clients</h6>
+                <p>
+                    Données personnelles traitées – Nous traitons les données personnelles suivantes : prénom, nom,
+                    adresse électronique, .
+                    Finalités – Le traitement de données personnelles est destiné à la gestion de la relation avec
+                    nos clients. En particulier, ce traitement tend à permettre la prise de rendez-vous en ligne.
+                    Base juridique – Ce traitement est nécessaire à l’exécution d’un contrat auquel la personne
+                    concernée est partie ou à l’exécution de mesures précontractuelles prises à la demande de celle-ci.
+                    Il est fondé sur l’article 6, paragraphe 1, point b) du RGPD. La demande de données a un caractère
+                    contractuel. La personne concernée est tenue de fournir ces données si elle souhaite bénéficier de
+                    nos services. Si la personne concernée ne fournit pas les données, elle ne pourra pas prendre
+                    rendez-vous en ligne.
+                </p>
+                <h6>Utilisation de Google Analytics </h6>
+                <p>
+                    Données personnelles traitées – Google traite les données mentionnées dans sa politique
+                    de confidentialité (https://support.google.com/analytics/answer/6004245?hl=fr /
+                    https://policies.google.com/privacy?hl=fr#infocollect). Ces données comprennent notamment
+                    l’adresse IP des appareils utilisés pour consulter le site.
+                    Finalités – Ce traitement est utilisé à des fins d’analyse et d’étude statistique de
+                    l’utilisation de notre site.
+                    Base juridique – Le traitement est nécessaire aux fins des intérêts légitimes que nous
+                    poursuivons, consistant à améliorer et optimiser notre site Internet au bénéfice des
+                    utilisateurs. Il est fondé sur l’article 6, paragraphe 1, point f) du RGPD. La demande de
+                    données a un caractère contractuel. La personne concernée n’est pas tenue de fournir ces
+                    données et elle peut s’opposer à tout moment à leur traitement. Pour empêcher la collecte
+                    de données relatives à son utilisation du site et le traitement de ces données par Google ,
+                    la personne concernée doit suivre les indications de Google :
+                    http://tools.google.com/dlpage/gaoptout.
+        
+                </p>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Ok</button>
+
+      </div>
+    </ng-template>
+
+    <ng-template #mentions let-modal>
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Mentions légales</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" *ngIf="!isLoadingSlim">
+          <div>
+              <p>FENRIR STUDIO, association déclarée est active depuis moins d'un an.
+              Établie à MERIGNAC (33700), elle est spécialisée dans le secteur d'activité des autres organisations fonctionnant par adhésion volontaire.</p>
+              <p>Statut INSEE :	Enregistrée à l'INSEE le 14-09-2018</p>
+              <p>Dénomination	FENRIR STUDIO</p>
+              <p>Adresse	31 AV DU MARECHAL GALLIENI 33700 MERIGNAC</p>
+              <p>RNA	W332023896</p>
+              <p>SIREN	843 944 406</p>
+              <p>SIRET (siege)	84394440600019</p>
+              <p>N° de TVA Intracommunautaire</p>
+              <p>Activité (Code NAF ou APE)	Autres organisations fonctionnant par adhésion volontaire (9499Z)</p>
+              <p>Forme juridique	Association déclarée</p>
+              <p>Date création entreprise	14-09-2018</p>
+              <p>Date de dernière mise à jour	01-07-2019</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="modal.close('Save click')">Non</button>
+
+        </div>
+      </ng-template>

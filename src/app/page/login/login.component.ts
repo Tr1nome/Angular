@@ -49,14 +49,14 @@ completeLoading() {
     this.connectionFailed = false;
     const val = this.loginForm.value;
     if (val.username && val.password) {
-      this.loading = true;
+      this.startLoading();
       this.auth.login(val.username, val.password)
         .subscribe(() => {
-          this.startLoading();
           this.auth.profile().subscribe(
             (user) => {
               setTimeout(() => {
                 console.log('connected !');
+                this.completeLoading();
                 user.connected = true;
               }, 2000);
               this.router.navigate(['/profile']);

@@ -32,11 +32,22 @@
     <div style="display:flex;justify-content: center;"><button class="btn btn-success" (click)= "toggleUploader()"><mat-icon>backup</mat-icon></button></div>
     
     <hr>
-  <h2 *ngIf="!isLoading">Nos créations</h2>
+  <h2 style="display:flex;justify-content: center;">Nos créations</h2>
   
   <hr>
-    <div style="display:flex;flex-direction: column-reverse;justify-content: center;align-items: center;">
+    <div style="display:flex;flex-direction: column-reverse;justify-content: center;align-items: center;background-image: url(assets/images/foliobg.jpg);background-size:cover;">
       <div class="item" *ngFor="let image of images">
+          <ng-template #bigimage let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title">{{ image.title }}</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+                <div class="modal-body">
+                  <img class="img-fluid" style="width:770px;height:auto;" src = "http://admin.fenrir-studio.fr/{{image.imgPath}}"/>
+                </div>
+            </ng-template>
         <ng-template #content let-modal>
           <div class="modal-header">
             <h4 class="modal-title" id="modal-basic-title">Ces utilisateurs ont aimé</h4>
@@ -53,11 +64,10 @@
         </ng-template>
         <mat-card *ngIf= 'image.allowed && image.type.name === "Photo de portfolio"' class="example-card">
           <mat-card-header>
-              
               <mat-card-title *ngIf="image.title !== 'undefined'">{{image.uploadedBy.username}}</mat-card-title>
               <mat-card-subtitle>Upload le {{image.createdAt.timestamp *1000 | date: 'dd/MM/yyyy \à HH:mm:ss'}}</mat-card-subtitle>
           </mat-card-header>
-            <img mat-card-image src="http://admin.fenrir-studio.fr/{{ image.imgPath }}" style="cursor:pointer;" alt="http://connexion.fr/{{ image.alternative }}">
+            <img mat-card-image src="http://admin.fenrir-studio.fr/{{ image.imgPath }}" style="cursor:pointer;" title="{{ image.title }}" alt="{{ image.title }}" (click)="showDetails(bigimage)"/>
               <mat-card-content>
                   <p *ngIf="image.description !=='undefined'">
                   {{image.description}}
@@ -77,7 +87,7 @@
                     <hr>
                     <button mat-button ngbTooltip="Aimer cette image" *ngIf="!image.liked" (click)="setLike(this.image)"><mat-icon>thumb_up</mat-icon> J'aime</button>
                     <button mat-button ngbTooltip="Ne plus aimer cette image" *ngIf="image.liked" (click)="setDislike(this.image)"><mat-icon>thumb_down</mat-icon> Je n'aime plus</button>
-                    <button mat-button ngbTooltip="Partager cette image sur les réseaux sociaux"><mat-icon>share</mat-icon> Partager</button>
+                    
                     
                 </mat-card-actions>           
         </mat-card>
@@ -97,13 +107,11 @@
                   <mat-card-actions>
                       <button disabled mat-button ngbTooltip="Aimer cette image" *ngIf="!image.liked" (click)="setLike(this.image)"><mat-icon>thumb_up</mat-icon>J'aime</button>
                       <button disabled mat-button ngbTooltip="Ne plus aimer cette image" *ngIf="image.liked" (click)="setDislike(this.image)"><mat-icon>thumb_down</mat-icon>Je n'aime plus</button>
-                      <button disabled mat-button ngbTooltip="Partager cette image sur les réseaux sociaux"><mat-icon>share</mat-icon>Partager</button>
+                      
                       <mat-icon *ngIf="!image.liked">favorite_border</mat-icon>
                       <mat-icon class="heart" *ngIf="image.liked">favorite</mat-icon>
                       <ng-template #users><p *ngFor="let likedBy of image.likedBy">{{ likedBy.username}}</p></ng-template>
                   </mat-card-actions>           
           </mat-card>
-          <div style="height:20px;">
-
-            </div>
+          
       </div>

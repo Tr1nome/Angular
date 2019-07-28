@@ -50,10 +50,11 @@ export class FormationComponent implements OnInit {
 
   getAllFormations(): void {
     const currentUser = this.authService.currentUser;
-    this.isLoading = true;
+    // this.isLoading = true;
     this.formationService.getAllFormations().subscribe(data => {
+      console.log(data);
       this.formations = data;
-      this.isLoading = false;
+      // this.isLoading = false;
       data.forEach((formations) => {
         formations.user.forEach(element => {
           let name: string;
@@ -86,10 +87,10 @@ export class FormationComponent implements OnInit {
     console.log(JSON.parse(data));
   }
   registerToFormation(formation: Formation) {
-    this.isLoadingSlim = true;
+    formation.loading = true;
     this.formationService.registerFormation(formation).subscribe(data => {
       console.log(data);
-      this.isLoadingSlim = false;
+      formation.loading = false;
       formation.inscrit = true;
       this.getAllFormations();
       this.showToaster('register', formation);
@@ -119,9 +120,12 @@ export class FormationComponent implements OnInit {
   }
 
   checkoutFormation(formation: Formation): void {
+    formation.loading = true;
     this.formationService.leaveFormation(formation).subscribe(data => {
-      this.isLoading = false;
-      formation.inscrit = false;
+      setTimeout(() => {
+        formation.loading = false;
+        formation.inscrit = false;
+      }, 2000);
       this.getAllFormations();
       this.showToaster('unregister', formation);
     }, err => {

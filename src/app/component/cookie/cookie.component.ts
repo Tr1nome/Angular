@@ -24,7 +24,7 @@ export class CookieComponent implements OnInit {
     setTimeout( () => {
       this.display = true;
       this.CookieValue = this.cookieServ.get('rgpd');
-    }, 3000);
+    }, 90000);
   }
   setCookie() {
     this.cookieServ.set('rgpd', 'true');

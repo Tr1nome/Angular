@@ -5,6 +5,7 @@ import { AuthService } from './service/auth.service';
 import { User } from './class/user';
 import { ToastrService } from 'ngx-toastr';
 import { SlimLoadingBarService } from 'ng2-slim-loading-bar';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +21,11 @@ export class AppComponent implements OnInit {
   prefix = 'http://connexion.fr/';
   refreshRate = 3;
   formations: [];
-  constructor(private titleService: TitleService, private auth: AuthService, private toast: ToastrService,private slimLoadingBarService: SlimLoadingBarService) { }
+  constructor(private titleService: TitleService,
+              private auth: AuthService,
+              private toast: ToastrService,
+              private slimLoadingBarService: SlimLoadingBarService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.titleService.init();
@@ -33,6 +38,7 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.auth.logout();
+    this.router.navigate(['/login']);
   }
 
   showToaster() {

@@ -141,10 +141,9 @@ export class ProfileComponent implements OnInit {
   onSubmit() {
     this.imageService.uploadProfilePicture(this.fileData, this.title, this.description)
       .subscribe(data => {
-        this.showToaster('success');
         this.playAudio();
+        this.imgURL = null;
         this.getProfile();
-        location.reload();
     }, err => {
       console.error(err);
       this.showToaster('failure');

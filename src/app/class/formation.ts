@@ -4,4 +4,5 @@ export class Formation {
     user: [];
     description: string;
     inscrit: boolean;
+    loading: boolean;
 }

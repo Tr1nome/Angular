@@ -20,6 +20,7 @@ export class SurveysComponent implements OnInit {
   currentRate = 0;
   public commentForm: FormGroup;
   isDeletable: boolean;
+  loading = false;
 
   constructor(private surveyService: SurveyServiceService,
               private toast: ToastrService,
@@ -65,10 +66,12 @@ export class SurveysComponent implements OnInit {
     note = this.currentRate;
     console.log(note);
     const val = this.commentForm.value;
+    this.loading = true;
     this.surveyService.publishSurvey(note, val.commentary)
     .subscribe( () => {
       this.currentRate = 0;
       setTimeout(() => {
+        this.loading = false;
         this.ngOnInit();
       }, 2000);
     });

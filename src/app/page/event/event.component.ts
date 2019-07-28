@@ -30,16 +30,13 @@ export class EventComponent implements OnInit {
 
   getAllEvents(): void {
     const currentUser = this.authService.currentUser;
-    this.isLoading = true;
     this.eventService.getAllEvents().subscribe(data => {
       this.events = data;
-      this.isLoading = false;
       data.forEach((events) => {
         events.user.forEach(element => {
           let name: string;
           name = element['username'];
           if (name === currentUser.username) {
-            console.log(name);
             events.inscrit = true;
             }
           });
@@ -48,20 +45,26 @@ export class EventComponent implements OnInit {
   }
 
   registerToEvent(event: Event) {
+    event.loading = true;
     this.eventService.registerEvent(event).subscribe(data => {
-      console.log(data);
-      event.inscrit = true;
-      this.getAllEvents();
+      setTimeout(() => {
+        event.loading = false;
+        event.inscrit = true;
+        this.getAllEvents();
+      }, 1000);
     }, err => {
       console.log(err);
     });
   }
 
   checkoutEvent(event: Event) {
+    event.loading = true;
     this.eventService.leaveEvent(event).subscribe(data => {
-      console.log(data);
-      event.inscrit = true;
-      this.getAllEvents();
+      setTimeout(() => {
+        event.loading = false;
+        event.inscrit = false;
+        this.getAllEvents();
+      }, 1000);
     }, err => {
       console.log(err);
     });

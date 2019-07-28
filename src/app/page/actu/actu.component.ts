@@ -8,6 +8,7 @@ import { Commentary } from '../../class/commentary';
 import { OrderPipe } from 'ngx-order-pipe';
 import { AuthService } from 'src/app/service/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-actu',
@@ -17,10 +18,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class ActuComponent implements OnInit {
 
   color = 'warn';
-  diameter = 50;
+  diameter = 20;
   public isLoading = false;
   mode = 'indeterminate';
   actus: Actu[];
+  actu: Actu;
   order: 'id';
   loading: boolean;
   commentForm: FormGroup;
@@ -31,35 +33,60 @@ export class ActuComponent implements OnInit {
               private orderPipe: OrderPipe,
               private auth: AuthService,
               private fb: FormBuilder,
-              private commentService: CommentaryService) {}
+              private commentService: CommentaryService,
+              private modalService: NgbModal) {}
 
   ngOnInit() {
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+    }, 2000);
     this.getAllActus();
     this.commentForm = this.fb.group({
       commentary: ['', Validators.required]
     });
   }
 
+  open(del) {
+    this.modalService.open(del);
+  }
+
+  close() {
+    this.modalService.dismissAll();
+  }
+
   publishComment(actu: Actu) {
     const val = this.commentForm.value;
-    this.loading = true;
+    actu.isLoading = true;
     this.actuService.publishComment(actu, val.commentary)
-    .subscribe(() => {
-      this.loading = false;
-      this.commentForm.reset();
-      this.getAllActus();
+    .subscribe((data) => {
+      setTimeout(() => {
+        actu.isLoading = false;
+        this.commentForm.reset();
+        this.ngOnInit();
+      }, 1000);
     });
   }
 
   deleteComment(commentary: Commentary) {
     this.commentService.deleteCommentary(commentary).subscribe(() => {
+      this.close();
       this.getAllActus();
     });
+  }
+
+  refreshComments() {
+    this.commentService.getAllComments();
   }
 
   toggleCommentBox(actu: Actu) {
     actu.boxComment = !actu.boxComment;
   }
+
+  display(commentaries) {
+    this.modalService.open(commentaries);
+  }
+
   getAllActus(): void {
     this.isLoading = true;
     const currentUser = this.auth.currentUser;
@@ -86,6 +113,10 @@ export class ActuComponent implements OnInit {
         });
     });
     });
+  }
+
+  isConnected(): boolean {
+    return this.auth.isConnected();
   }
 
   setLike(actu: Actu) {

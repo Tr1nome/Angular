@@ -7,4 +7,5 @@ export class Actu {
     boxComment: boolean;
     canDelete: boolean;
     commentaries: [];
+    isLoading: boolean;
 }

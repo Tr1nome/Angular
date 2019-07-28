@@ -1,0 +1,16 @@
+.star {
+    font-size: 1rem;
+    color: #5a5a5a;
+  }
+  .filled {
+    color: gold;
+  }
+  .bad {
+    color: #deb0b0;
+  }
+  .filled.bad {
+    color: #ff1e1e;
+  }
+  .remaining-space {
+    flex: 1 1 auto;
+  }

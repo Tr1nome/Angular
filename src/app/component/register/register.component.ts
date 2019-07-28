@@ -7,7 +7,7 @@ import {FormBuilder,
 import {AuthService} from '../../service/auth.service';
 import { CheckType } from '@angular/core/src/view';
 import { MatCheckbox } from '@angular/material';
-// import {CookieService} from 'ngx-cookie-service';
+import {CookieService} from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
      loading: boolean;
      registerForm: FormGroup;
 
-    constructor(private fb: FormBuilder, private authServ: AuthService, private reactiveForm: ReactiveFormsModule ) { }
+    constructor(private fb: FormBuilder, private authServ: AuthService, private reactiveForm: ReactiveFormsModule,  private cookieServ: CookieService) { }
 
     ngOnInit() {
 
@@ -37,6 +37,7 @@ export class RegisterComponent implements OnInit {
                 Validators.required,
                 Validators.pattern('^(([^<>()\\[\\]\\.,;:\\s@\\"]+(\\.[^<>()\\[\\]\\.,;:\\s@\\"]+)*)|(\\".+\\"))@(([^<>()[\\]\\.,;:\\s@\\"]+\\.)+[^<>()[\\]\\.,;:\\s@\\"]{2,})$')
             ])),
+            rgpd: [ null, Validators.required ]
         });
     }
 
@@ -46,6 +47,7 @@ export class RegisterComponent implements OnInit {
 
     register() {
         const val = this.registerForm.value;
+        this.setCookie();
         this.loading = true;
         this.authServ.register(val).subscribe( (data) => {
             console.log(data);
@@ -54,6 +56,13 @@ export class RegisterComponent implements OnInit {
         }, () => {
             this.registerFailed = true;
         });
+    }
+
+    setCookie() {
+        this.cookieServ.check('rgpd');
+        if (!'rgpd') {
+            this.cookieServ.set('rgpd', 'true');
+        }
     }
 
 

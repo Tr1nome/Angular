@@ -16,4 +16,8 @@ export class CommentaryService {
   deleteCommentary(commentary: Commentary) {
     return this.http.delete<Commentary>(this.baseurl + 'commentary/' + commentary.id);
   }
+
+  getAllComments() {
+    return this.http.get<Commentary[]>(this.baseurl + 'commentary');
+  }
 }

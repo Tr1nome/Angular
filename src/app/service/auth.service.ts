@@ -81,7 +81,8 @@ export class AuthService {
       email: data.email,
       password: data.password,
       fname: data.fname,
-      lname: data.lname
+      lname: data.lname,
+      rgpd: data.rgpd
     };
     return this.http.post(Globals.APP_API + 'auth/register', obj);
   }

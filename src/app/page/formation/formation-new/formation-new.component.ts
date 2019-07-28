@@ -18,6 +18,7 @@ import { Image } from 'src/app/class/image';
 export class FormationNewComponent implements OnInit {
   public formationForm: FormGroup;
   public formationFailed: boolean;
+  public formationSuccess: boolean;
   public loading: boolean;
   fileToUpload: File;
   model: NgbDateStruct;
@@ -63,7 +64,12 @@ private launchFormationCreation(name, description, image) {
   this.formationService.createFormation(name, description, image)
     .subscribe(() => {
       this.loading = false;
-      this.router.navigate(['/formation']);
+      this.formationSuccess = true;
+      setTimeout(() => {
+        this.router.navigate(['/profile']);
+      }, 2000);
+    }, err => {
+      this.formationFailed = true;
     });
 }
 

@@ -52,6 +52,10 @@ export class PortfolioComponent implements OnInit {
   open(content) {
     this.modalService.open(content);
   }
+
+  showDetails(bigimage) {
+    this.modalService.open(bigimage, { size: 'lg' });
+  }
   handleFileInput(files) {
     this.fileData = files.item(0);
     this.hasFile = true;

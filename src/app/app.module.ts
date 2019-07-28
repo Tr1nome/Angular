@@ -51,12 +51,16 @@ import { OrderBy } from './pipe/order-by.pipe';
 import { CookieComponent } from './component/cookie/cookie.component';
 import { CookieService } from 'ngx-cookie-service';
 import { SurveysComponent } from './page/surveys/surveys.component';
+import { FooterComponent } from './component/footer/footer.component';
+import { CommentariesComponent } from './component/commentaries/commentaries.component';
+import { ContactComponent } from './page/contact/contact.component';
 
 const appRoutes: Routes = [
   { path: 'formation', component: FormationComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Nos Formations'} },
   { path: 'formation/:id', component: FormationShowComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Détails Formation'}},
   { path: 'new/formation', component: FormationNewComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Créer une formation'}},
   { path: 'login', component: LoginComponent, data: { title: 'Connexion' } },
+  { path: 'contact', component: ContactComponent, data: { title: 'Contact' } },
   { path: 'register', component: RegisterComponent, data: { title: 'Inscription' } },
   { path: 'actu', component: ActuComponent, data: { title: 'Accueil' } },
   { path: 'event', component: EventComponent, canActivate: [ IsSignedInGuard ], data: { title: 'Evenements' } },
@@ -92,7 +96,10 @@ const appRoutes: Routes = [
     FormationNewComponent,
     OrderBy,
     CookieComponent,
-    SurveysComponent
+    SurveysComponent,
+    FooterComponent,
+    CommentariesComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

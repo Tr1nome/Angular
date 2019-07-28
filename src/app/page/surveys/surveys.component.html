@@ -1,10 +1,10 @@
-<div style="height:auto;">
+<div>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row ml-2">
       <h2>Noter le site</h2>
       
     </div>
-    <div class="row">
+    <div class="row ml-2">
       <p>Vous pouvez noter le site de 1 à 10 et laisser un petit commentaire, tous les commentaires sont les bienvenus du moment qu'ils sont constructifs :)</p>
     </div>
     <div class="container">
@@ -34,8 +34,8 @@
                             <button type="button" class="btn btn-outline-dark" (click)="deleteComment(survey)">Supprimer</button>
                           </div>
                       </ng-template>
-                  <td><img style ="border-radius:50%;width:50px;height:50px;"
-                        src="http://admin.fenrir-studio.fr/{{ survey.user.profilePicture.imgPath }}"/>
+                  <td style="width:250px;"><img style ="border-radius:50%;width:50px;height:50px;"
+                        src="http://admin.fenrir-studio.fr/{{ survey.user.profilePicture.imgPath }}"/> {{ survey.user.username }}
                   </td>
                   <td>
                     {{ survey.note }}/10
@@ -52,13 +52,19 @@
             <label for="commentary">Publier un commentaire</label>
               <textarea formControlName="commentary" id="commentary" class="form-control"></textarea>
               <div class="container">
-                  <ngb-rating [(rate)]="currentRate"></ngb-rating>
+                  <ngb-rating [(rate)]="currentRate">
+                    <ng-template let-fill="fill" let-index="index">
+                      <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                    </ng-template>
+                  </ngb-rating>
+                  <mat-spinner *ngIf="loading" [diameter]="15" [color]="black"></mat-spinner>
                   <button class="btn btn-success mt-2" style="float: right;" (click)="publishComment()">Publier</button>
               </div>
               </form>
-              <pre>Rate: <b>{{currentRate}}</b></pre>
+              <pre>Note: <b>{{currentRate}}</b></pre>
                 
       </div>
     </div>
   </div>
 </div>
+<div style="height:350px;"></div>

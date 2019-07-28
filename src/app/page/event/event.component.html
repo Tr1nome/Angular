@@ -7,15 +7,17 @@
   <span>Chargement des Events...</span>
 </mat-spinner>
 </div>
-<h2 style="text-align: center;" *ngIf="!isLoading">Nos évènements</h2>
+<h2 style="text-align: center;">Nos évènements</h2>
 <div *ngIf="!isLoading">
 <div class="container-fluid" style="margin-top: 100px;" *ngFor="let event of events">
   <div class="row">
     <div class="col-6">
       <p style="font-weight: bold;">{{ event.name }}</p>
-      <div><mat-icon>event</mat-icon> : Le {{event.hour.timestamp * 1000 | date: 'dd/MM/yyyy'}}</div>
-      <div><mat-icon>alarm</mat-icon> : A {{event.time.timestamp *1000 | date: 'HH:mm'}}</div>
-      <div><mat-icon>room</mat-icon> {{ event.place }} </div>
+      <div><mat-icon class="icon" ngbTooltip="La date de l'évènement">event</mat-icon> : Le {{event.hour.timestamp * 1000 | date: 'dd/MM/yyyy'}}</div>
+      <div><mat-icon class="icon" ngbTooltip="L'heure de l'évènement">alarm</mat-icon> : A {{event.time.timestamp *1000 | date: 'HH:mm'}}</div>
+      <div><mat-icon class="icon" ngbTooltip="Le lieu de l'évènement">room</mat-icon> : {{ event.place }} </div>
+      <div><mat-icon class="icon" ngbTooltip="Nombres d'utilisateurs participants à cet évènement">people</mat-icon> :{{ event.user.length }}/{{ event.max }}</div> 
+            <p *ngIf="event.user.length >= event.max">L'évènement est fermé aux inscriptions</p>
       <div *ngIf="!event.inscrit"><mat-icon style="color:red;">not_interested</mat-icon> Vous ne participez pas à cet évènement</div>
       <div *ngIf="event.inscrit"><mat-icon style="color:green;">check_circle</mat-icon> Vous participez à cet évènement</div>
       <hr>
@@ -30,12 +32,15 @@
          
     </div>
     <div class="col-6">
+        <mat-spinner [diameter]="15" *ngIf="event.loading"></mat-spinner>
       <ul>
         <li>
-            <button *ngIf="!event.inscrit" (click)="registerToEvent(event)" class="btn btn-success">Inscription</button>
+            <button *ngIf="!event.inscrit && !event.loading" (click)="registerToEvent(event)" class="btn btn-success">Je participe !</button>
+            
         </li>
         <li>
-            <button *ngIf="event.inscrit" (click)="checkoutEvent(event)" class="btn btn-danger">Ne plus participer</button>
+            <button *ngIf="event.inscrit && !event.loading" (click)="checkoutEvent(event)" class="btn btn-danger">Ne plus participer</button>
+            
         </li>
       </ul>
     </div>

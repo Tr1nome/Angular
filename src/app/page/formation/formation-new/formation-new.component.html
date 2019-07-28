@@ -1,25 +1,39 @@
 <h1>Créer une nouvelle formation</h1>
-
-<div class= "container-fluid">
+<mat-card class="col-12" style="height:100vh;" *ngIf="formationSuccess">
+  <mat-card-title class="text-center">Formulaire de création</mat-card-title>
+    <mat-card-content>
+      <p style="color:green;">Votre formation a bien été proposée, si elle est acceptée vous la verrez apparaître dans l'onglet Formation ! Vous allez être redirigé dans deux secondes vers votre profil</p>
+    </mat-card-content>
+</mat-card>
+<div class= "container-fluid" *ngIf= "!formationSuccess">
   <div fxLayout="row" fxLayoutAlign="center center">
     <mat-card class="col-12">
       <ngb-alert type="danger" *ngIf="formationFailed" (close)="formationFailed = false">Une info est mauvaise ou manquante..</ngb-alert>
       <mat-card-title class="text-center">Formulaire de création</mat-card-title>
         <mat-card-content>
+          <p>Vous pouvez ici proposer une formation, elle sera évalué par le Fenrir Studio afin de voir si il y a la possibilité de dispenser cette formation
+            et si tel est le cas, nous vous proposerons les horaires.
+          </p>
+          <p>Pour ce faire, vous pouvez proposer un titre à la formation que vous souhaitez dispenser ainsi qu'une description, vous pouvez également proposer une image
+            pour illustrer la formation, sachez néanmoins qu'elle sera vérifiée pour nous assurer qu'elle correspond bien au thème proposé.
+          </p>
           <form class="form-content" [formGroup]="formationForm">
+            <small>Entrez un titre</small>
               <input class="form-control" style="margin-top: 20px;" placeholder="Titre de la formation" 
               formControlName="name" autocomplete="Off" required/>
             <br>
-                <textarea class='form-control' formControlName="description"></textarea>
+            <small>Entrez une description</small>
+                <textarea class='form-control' placeholder="Description de la formation(tâches proposées, ateliers, travaux pratiques...)" formControlName="description"></textarea>
             
             <br>
+            <small>Poposez une image</small>
             <input style="display:block;" type="file" id="file" (change)="handleFileInput($event.target.files)"/>
               <button class="mt-3" [disabled]="formationFailed || formationForm.invalid" mat-flat-button (click)="createFormation()" color="primary">Créer</button>
               <mat-spinner
               *ngIf="loading"
               [color]="color" 
               [mode]="mode" 
-              [diameter]="diameter">
+              [diameter]="15">
               </mat-spinner>
 
           </form>
@@ -27,4 +41,7 @@
         </mat-card-content>
     </mat-card>
   </div>
+</div>
+<div style="height:200px;">
+
 </div>

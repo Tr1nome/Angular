@@ -1,0 +1,10 @@
+<img style="border-radius:50%;width:30px;height:30px;"
+              src="http://admin.fenrir-studio.fr/{{ commentari.user.profilePicture.imgPath}}" /> <span
+              style="font-weight: bold;">{{ commentari.user.username }}</span><br>
+            <div class="col-md-12">
+              {{ commentari.content }}
+              <div *ngIf="commentari.canDelete == true"
+                style="display:flex;flex-direction: row-reverse;align-items: flex-end;">
+                <button class='btn btn-danger' (click)="deleteComment(commentari)">
+                  <mat-icon>delete</mat-icon>
+                </button>

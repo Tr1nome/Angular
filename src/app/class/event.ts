@@ -6,4 +6,5 @@ export class Event {
     inscrit: boolean;
     hour: string;
     time: string;
+    loading: boolean;
 }

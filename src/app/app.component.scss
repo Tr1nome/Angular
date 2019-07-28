@@ -14,14 +14,33 @@
 
   .font{
 
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
   }
 
   .container{
     height:auto;
   }
-
+  app {
+    min-height: 100%;
+    width: 100%;
+    margin-bottom: -271px;
+    display: table;
+  }
+  
+  header-main,
+  router-outlet,
+  footer{
+    display: table-row;
+  }
+  
+  header-main {
+   height: 60px;
+  }
+  
+  router-outlet {
+    position: absolute;
+  }
 .example-events {
     width: 300px;
     height: 200px;
@@ -100,15 +119,6 @@ mat-toolbar{
     color:white;
   }
 
-  footer{
-    background-color: black;
-    color: white;
-    font-size: 0.85em;
-    padding: 10px;
-    bottom:0;
-    width:100vw;
- 
- }
  .copyright{
     width: 20px;
     height: 20px;
@@ -126,3 +136,6 @@ mat-toolbar{
  .underFooter{
     margin: 15px;
  }
+
+ @import url('https://fonts.googleapis.com/css?family=Shojumaru&display=swap');
+ @import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');

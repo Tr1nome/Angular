@@ -1,77 +1,81 @@
-<div class="center-div">
-  <mat-spinner 
-  [color]="color" 
-  [mode]="mode" 
-  [diameter]="diameter" 
-  *ngIf="isLoading">
-  </mat-spinner>
-</div>
-<h2 style="text-align: center;" *ngIf="!isLoading">Nos formations</h2>
-<div *ngIf="!isLoading">
-  <div style="display:flex; justify-content: center;" *ngIf="isLoadingSlim">
-      <mat-spinner 
-      [color]="color" 
-      [mode]="mode" 
-      [diameter]="diameter">
-      </mat-spinner>
+  <div class="center-div">
+    <mat-spinner [color]="color" [mode]="mode" [diameter]="diameter" *ngIf="isLoading">
+    </mat-spinner>
   </div>
-    
-    <div class="container-fluid" *ngFor="let formation of formations">
+  <div>
+    <h2 style="text-align: center;">Nos formations</h2>
+    <div>
+      <div style="display:flex; justify-content: center;" *ngIf="isLoadingSlim">
+        <mat-spinner [color]="color" [mode]="mode" [diameter]="diameter">
+        </mat-spinner>
+      </div>
+      <div class="container-fluid mt-5 ml-1" *ngFor="let formation of formations">
         <ng-template #test let-modal>
-            <div class="modal-header">
-              <h4 class="modal-title" id="modal-basic-title">Déclarer une indisponibilité</h4>
-              <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
+          <div class="modal-header">
+            <h4 class="modal-title" id="modal-basic-title">Déclarer une indisponibilité</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" *ngIf="!isLoadingSlim">
+            <div>
+              Il arrive à tout le monde d'avoir un empêchement mais il est toujours bien de prévenir, merci !
             </div>
-              <div class="modal-body" *ngIf="!isLoadingSlim">
-                <div>
-                  Il arrive à tout le monde d'avoir un empêchement mais il est toujours bien de prévenir, merci !
-                </div>
-                <hr>
-                <div>
-                  Etes vous sùr de vouloir vous déclarer absent pour la prochaine session ?
-                </div>
-              </div>
-              <div class="modal-body" *ngIf="isLoadingSlim">
-                Un email est en cours d'envoi...
-                  <mat-spinner 
-                  [color]="color" 
-                  [mode]="mode" 
-                  [diameter]="diameter">
-                  </mat-spinner>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Non</button>
-                <button type="button" class="btn btn-success" (click)="sendAbsenceMail(formation)">Oui</button>
-              
-              </div>
-          </ng-template>
-          <div class="row" *ngIf="formation.allowed">
-            <div class="col-6">
-              <img class="img-thumbnail" style="width:100px;height:auto;" src="http://admin.fenrir-studio.fr/{{ formation.image.imgPath }}"/>
-              <p style="font-weight:bold;">{{ formation.name }}</p>
-              <p style=color:green; *ngIf="formation.inscrit">Suivie</p>
-              <p style="color:red;" *ngIf="!formation.inscrit">Non suivie</p>
-              <p>La prochaine session aura lieu le {{ formation.hour.timestamp *1000 | date: 'dd/MM/yyyy' }} à {{ formation.time.timestamp *1000 | date: 'H:mm' }}</p>
-              <div style="display:flex">
-                <img ngbTooltip="{{ user.username }}" *ngFor="let user of formation.user" src="http://admin.fenrir-studio.fr/{{ user.profilePicture?.imgPath }}" style="width:30px;height:30px;border-radius: 50%;"/>
-            </div>
-            </div>
-              <div class="col-6">
-                <ul style="padding:0%">
-                  <li>
-                    <button class="btn btn-success mt-3 mr-5" ngbTooltip= "Cliquez pour suivre cette formation" *ngIf="!formation.inscrit && isUserAdherent()" (click)="registerToFormation(formation)">Suivre</button>
-                    <ngb-alert [dismissible]="false" type="danger" *ngIf="!isUserAdherent()">Pour s'inscrire à une formation il faut être adhérent</ngb-alert>
-                  </li>
-                  <li><button style="width:150px;" ngbTooltip= "Cliquez pour ne plus suivre cette formation" class="btn btn-danger mt-3 mr-5" *ngIf="formation.inscrit" (click)="checkoutFormation(formation)">Ne plus suivre</button></li>
-                  <li><button style="width:150px;" ngbTooltip= "Cliquez pour prévenir de votre absence au prochain cours" class="btn btn-warning mt-3 mr-5" *ngIf="formation.inscrit" (click)="absent(test)">Déclarer une absence</button></li>
-                  <li><button style="width:150px;" ngbTooltip= "Cliquez pour en savoir plus sur cette formation" class="btn btn-info mt-3 mr-5" routerLink="/formation/{{ formation.id }}">En savoir plus</button></li>
-                </ul>
-              </div>
-              
+            <div>
+              Etes vous sùr de vouloir vous déclarer absent pour la prochaine session ?
             </div>
           </div>
-          
-      <div>
-</div>
+          <div class="modal-body" *ngIf="isLoadingSlim">
+            Un email est en cours d'envoi...
+            <mat-spinner [color]="color" [mode]="mode" [diameter]="diameter">
+            </mat-spinner>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" (click)="modal.close('Save click')">Non</button>
+            <button type="button" class="btn btn-success" (click)="sendAbsenceMail(formation)">Oui</button>
+
+          </div>
+        </ng-template>
+        <div class="row" *ngIf="formation.allowed">
+          <div class="col-6">
+            <img class="img-thumbnail" style="width:100px;height:auto;"
+              src="http://admin.fenrir-studio.fr/{{ formation.image.imgPath }}" />
+            <p style="font-weight:bold;">{{ formation.name }}</p>
+            <p style=color:green; *ngIf="formation.inscrit">Suivie</p>
+            <p style="color:red;" *ngIf="!formation.inscrit">Non suivie</p>
+            <div><mat-icon>event</mat-icon> {{ formation.hour.timestamp *1000 | date: 'dd/MM/yyyy' }} </div>
+            <div><mat-icon>alarm</mat-icon> {{ formation.time.timestamp *1000 | date: 'H:mm' }}</div>
+            <div><mat-icon>people</mat-icon> {{ formation.user.length }}/{{ formation.max }}</div> 
+            <div *ngIf="formation.user.length >= formation.max">La formation est fermée aux inscriptions</div> 
+            <div style="display:flex" class="mt-5">
+              <img ngbTooltip="{{ user.username }}" *ngFor="let user of formation.user"
+                src="http://admin.fenrir-studio.fr/{{ user.profilePicture?.imgPath }}"
+                style="width:30px;height:30px;border-radius: 50%;" />
+            </div>
+          </div>
+          <div class="col-6">
+            <ul style="padding:0%">
+              <li>
+                <button class="btn btn-success mt-3 mr-5" ngbTooltip="Cliquez pour suivre cette formation"
+                  *ngIf="!formation.inscrit && isUserAdherent() && !formation.loading && formation.user.length < formation.max" (click)="registerToFormation(formation)">Suivre</button>
+                <ngb-alert [dismissible]="false" type="danger" *ngIf="!isUserAdherent()">Pour s'inscrire à une formation
+                  il
+                  faut être adhérent</ngb-alert>
+              </li>
+              <li><button style="width:150px;" ngbTooltip="Cliquez pour ne plus suivre cette formation"
+                  class="btn btn-danger mt-3 mr-5" *ngIf="formation.inscrit && !formation.loading" (click)="checkoutFormation(formation)">Ne
+                  plus
+                  suivre</button></li>
+              <li><button style="width:150px;" ngbTooltip="Cliquez pour prévenir de votre absence au prochain cours"
+                  class="btn btn-warning mt-3 mr-5" *ngIf="formation.inscrit && !formation.loading" (click)="absent(test)">Déclarer une
+                  absence</button></li>
+              <li><button style="width:150px;" *ngIf="!formation.loading" ngbTooltip="Cliquez pour en savoir plus sur cette formation"
+                  class="btn btn-info mt-3 mr-5" routerLink="/formation/{{ formation.id }}">En savoir plus</button></li>
+            </ul>
+            <mat-spinner [diameter]="15" *ngIf="formation.loading"></mat-spinner>
+          </div>
+
+        </div>
+        <hr>
+      </div>
+  </div>

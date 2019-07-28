@@ -1,7 +1,8 @@
 <mat-sidenav-container class="example-container">
   <mat-sidenav #sidenav mode="side" [(opened)]="opened">
     <mat-toolbar class="darkNav" role="heading">
-      <span>{{ user?.username}}</span>
+      <img *ngIf="isConnected()" src="http://admin.fenrir-studio.fr/{{user?.profilePicture?.imgPath}}" style="width:40px;height:40px; border-radius:50%;"/>
+      <span class="ml-2">{{ user?.username}}</span>
       <span class="remaining-space"></span>
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon>clear</mat-icon>
@@ -9,34 +10,32 @@
     </mat-toolbar>
     <nav>
       <mat-nav-list>
+          <hr style="background-color: white;">
           <a routerLink="/actu" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-            <span class="font">Accueil</span>
+            <mat-icon>new_releases</mat-icon><span class="font">Accueil</span>
           </a>
-        <a routerLink="/formation" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">List formation</span>
-        </a>
-        <a routerLink="/register" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">Insciption</span>
-        </a>
-        <a routerLink="/event" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">List Event</span>
-        </a>
-        <a routerLink="/surveys" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">Noter le site</span>
-        </a>
-        <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-          <span class="font">Créations</span>
-        </a>
+          <a routerLink="/formation" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <mat-icon style="color:darkblue;">school</mat-icon><span class="font">Nos formations</span>
+          </a>
+          <a *ngIf="!isConnected()" routerLink="/register" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <span class="font">Insciption</span>
+          </a>
+          <a routerLink="/event" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <mat-icon style="color:red;">event</mat-icon><span class="font">Nos évènements</span>
+          </a>
+          <a routerLink="/surveys" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <mat-icon style="color:gold">grade</mat-icon><span class="font">Noter le site</span>
+          </a>
+          <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <mat-icon style="color:brown;">color_lens</mat-icon><span class="font">Nos créations</span>
+          </a>
+          <a routerLink="/contact" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
+            <span class="font">Contact</span>
+          </a>
       </mat-nav-list>
-      <div style="height:150px;"></div>
+      <div class="remaining-space"></div>
       <mat-nav-list>
-      <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-        <span class="font">Politique de confidentialitée</span>
-      </a>
-      <a routerLink="/portfolio" routerLinkActive="active" mat-list-item (click)="sidenav.close()">
-        <span class="font">Mentions légales</span>
-      </a>
-      <a *ngIf="isConnected()" routerLink="/actu" routerLinkActive="active" mat-list-item (click)="logout()">
+      <a *ngIf="isConnected()" routerLink="/actu" routerLinkActive="active" mat-list-item (click)="logout()" (click)="sidenav.close()">
         <span class="font">Déconnexion</span>
       </a>
       </mat-nav-list>
@@ -46,8 +45,11 @@
     <mat-toolbar color="primary" role="heading">
       <button mat-button (click)="sidenav.toggle()">
         <mat-icon>view_headline</mat-icon>
-        {{ title }} - {{ titleService.currentTitle }}
+        
       </button>
+      <span class="remaining-space"></span>
+      <img src="assets/images/0.jpeg" style="width:40px;height:40px; border-radius:50%;"/>
+      <span style = "font-family: 'Shojumaru', cursive;">Fenrir Studio</span>
       <span class="remaining-space"></span>
       <span *ngIf="!isConnected()">
         <button mat-button [matMenuTriggerFor]="menu">
@@ -62,8 +64,8 @@
       </span>
       <span *ngIf="isConnected()">
         <button mat-button [matMenuTriggerFor]="menu">
-          <img *ngIf="user.profilePicture" style="width:40px; height:40px; border-radius:50%;" src="http://admin.fenrir-studio.fr/{{user.profilePicture.imgPath}}"/>
-          <img *ngIf="!user.profilePicture" style="width:40px; height:40px; border-radius:50%;" src="assets/images/placeholder.png"/>
+          <img *ngIf="user?.profilePicture" style="width:40px; height:40px; border-radius:50%;" src="http://admin.fenrir-studio.fr/{{user.profilePicture.imgPath}}"/>
+          <img *ngIf="!user?.profilePicture" style="width:40px; height:40px; border-radius:50%;" src="assets/images/placeholder.png"/>
           <span class="ml-2">{{ user?.username }}</span>
         </button>
         
@@ -72,7 +74,11 @@
                 <mat-icon class="material-icons">account_circle</mat-icon>
                 <span>Mon compte</span>
               </button>
-          <button mat-menu-item routerLink="/actu" (click)="logout()">
+              <!--<button mat-menu-item routerLink="/profile" routerLinkActive="active">
+                <mat-icon class="material-icons">build</mat-icon>
+                <span>Options</span>
+              </button>-->
+          <button mat-menu-item (click)="logout()">
               <mat-icon class="material-icons">exit_to_app</mat-icon>
             <span>Se Déconnecter</span>
           </button>
@@ -87,28 +93,10 @@
         </p>
     </footer>-->
     <app-cookie></app-cookie>
-    
+    <app-footer style="margin-top: auto;"></app-footer>
     
 
-    <footer class="footer" fxLayout="row wrap" fxLayoutAlign="space-around center">
-        <div class="underFooter">
-            <mat-icon>room</mat-icon><p>Siège social :</p>
-          <p>Fenrir Studio</p>
-          <p>31 Avenue du Maréchal Gallieni, 33700 Mérignac</p>
-        </div>
-        <div class="underFooter">
-          <p>Contact :</p>
-          <a href="mailto: team.project.orga@gmail.com">
-            <p class="mail">team.project.orga@gmail.com</p>
-          </a>
-        </div>
-        <a href="https://www.facebook.com/Fenrir-Studio-355594018314530/" class="underFooter">
-          <img class="facebook" src="../assets/images/fb.png" alt="logo facebook"/>
-        </a>
-        <div fxlayout="row" class="underFooter">
-          <p>Léo Souly - 2019</p>
-        </div>
-      </footer>
+    
       
     </mat-sidenav-content>
     

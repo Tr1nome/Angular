@@ -17,6 +17,10 @@ export class ActuService {
     return this.http.get<Actu[]>(this.baseurl + 'actu');
   }
 
+  getActu(actu: Actu) {
+    return this.http.get<Actu>(this.baseurl + 'actu/' + actu.id);
+  }
+
   likeActu(actu: Actu) {
     return this.http.patch<Actu>(this.baseurl + 'actu/' + actu.id + '/like', actu);
   }

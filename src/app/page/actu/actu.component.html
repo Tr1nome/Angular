@@ -1,48 +1,85 @@
-<div class="center-div">
-  <mat-spinner 
-  [color]="color" 
-  [mode]="mode" 
-  [diameter]="diameter" 
-  *ngIf="isLoading">
-  </mat-spinner>
-</div>
-<div class="container" style="height:auto;" *ngIf="!isLoading">
+<div class="container" style="height:auto;">
   <div class="row">
     <div class="col-md-12">
-      <h1 >Actualités</h1>
-        <div style="height:80px;">
-          </div>
-          <div *ngFor="let actu of actus | orderBy">
-            <h2 style="font-weight:bold;">{{ actu.title }}</h2>
-            <div [innerHTML]="actu.content | html "></div>
-            <hr>
-            <ng-template #users><p *ngFor="let lovedBy of actu.lovedBy">{{ lovedBy.username}}</p></ng-template>
-            <button mat-button ngbTooltip="Aimer cette publication" *ngIf="!actu.liked" (click)="setLike(this.actu)"><mat-icon>thumb_up</mat-icon> J'aime</button>
-            <button mat-button ngbTooltip="Ne plus aimer cette publication" *ngIf="actu.liked" (click)="setDislike(this.actu)"><mat-icon>thumb_down</mat-icon> Je n'aime plus</button>
-            <button mat-button ngbTooltip="Commenter cette publication" (click)="toggleCommentBox(actu)"><mat-icon>message</mat-icon> Commenter</button>
-            <mat-icon *ngIf="!actu.liked">favorite_border</mat-icon>
-            <mat-icon class="heart" *ngIf="actu.liked">favorite</mat-icon>
-            <small *ngIf="actu.lovedBy.length > 0" placement="top" [ngbTooltip]="users" class="likeNumber">
-                {{ actu.lovedBy.length }}
-              </small> 
-              <hr>
-            <div class="container mb-3">
-              <div class="row mb-2" style="min-height:80px;height:auto;border:1px solid beige;padding:5px;background:blanchedalmond;" *ngFor="let commentari of actu.commentaries">
-                <img style="border-radius:50%;width:30px;height:30px;" src="http://admin.fenrir-studio.fr/{{ commentari.user.profilePicture.imgPath}}"/> <span style="font-weight: bold;">{{ commentari.user.username }}</span><br>
-                <div class="col-md-12">
-                  {{ commentari.content }}
-                  <div *ngIf="commentari.canDelete == true" style="display:flex;flex-direction: row-reverse;align-items: flex-end;">
-                    <button class='btn btn-danger' (click)="deleteComment(commentari)"><mat-icon>delete</mat-icon></button>
-                  </div>
-                </div>
-              </div>
-              <form *ngIf="actu.boxComment" [formGroup]="commentForm">
-              <textarea  class='form-control' id="comment" formControlName="commentary" placeholder="Publiez quelque chose"></textarea>
-              <div class="container mb-5">
-                <button class="btn btn-success mt-1" (click)="publishComment(actu)" style="float: right;">Publier</button>
-              </div>
-                </form>
-            </div>  
-            <hr style="background:black;">
+      <h2>Actualités</h2>
+      <div style="height:80px;">
       </div>
-    </div>
+      <div *ngFor="let actu of actus | orderBy">
+        <h2 style="font-weight:bold; font-family: Roboto;">{{ actu.title }}</h2>
+        <div [innerHTML]="actu.content | html "></div>
+        <hr>
+        <ng-template #users>
+          <p *ngFor="let lovedBy of actu.lovedBy">{{ lovedBy.username}}</p>
+        </ng-template>
+        <button mat-button ngbTooltip="Aimer cette publication" *ngIf="!actu.liked && isConnected()" (click)="setLike(this.actu)">
+          <mat-icon>thumb_up</mat-icon> <span style="font-family: 'Roboto', sans-serif;">J'aime</span>
+        </button>
+        <button mat-button ngbTooltip="Ne plus aimer cette publication" *ngIf="actu.liked && isConnected()"
+          (click)="setDislike(this.actu)">
+          <mat-icon>thumb_down</mat-icon> Je n'aime plus
+        </button>
+        <button *ngIf="isConnected()" mat-button ngbTooltip="Commenter cette publication" (click)="toggleCommentBox(actu)">
+          <mat-icon>message</mat-icon> Commenter
+        </button>
+        <ngb-alert *ngIf="!isConnected()">Vous devez être connecté pour pouvoir intéragir avec les actualités <a routerLink="/login">Je me connecte</a>
+        si vous n'avez pas de compte vous pouvez toujours <a routerLink="/register">en créer un</a> !</ngb-alert>
+        <mat-icon *ngIf="!actu.liked && isConnected()">favorite_border</mat-icon>
+        <mat-icon class="heart" *ngIf="actu.liked && isConnected()">favorite</mat-icon>
+        <small *ngIf="actu.lovedBy.length > 0 && isConnected()" placement="top" [ngbTooltip]="users" class="likeNumber">
+          {{ actu.lovedBy.length }}
+        </small>
+        <hr>
+        <div class="container mb-3">
+          <div class="row mb-2">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let commentari of actu.commentaries">
+                  <ng-template #del let-modal>
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="modal-basic-title">Supprimer son avis</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div>Etes vous vraiment sur de vouloir supprimer votre avis ? vous pourrez toujours publier un
+                        nouvel avis si vous le souhaitez</div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-dark"
+                        (click)="deleteComment(commentari)">Supprimer</button>
+                    </div>
+                  </ng-template>
+
+                  <td>
+                    <img style="border-radius:50%;width:30px;height:30px;"
+                      src="http://admin.fenrir-studio.fr/{{ commentari.user.profilePicture.imgPath}}" /> <span
+                      style="font-weight: bold;margin-left:5px;">{{ commentari.user.username }}</span><br>
+                    <div class="col-md-12">
+                      {{ commentari.content }}
+                      <button *ngIf="isConnected() && commentari.canDelete == true" class='btn btn-danger float-right' (click)="open(del)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+
+              </tbody>
+            </table>
+          </div>
+
+          <form *ngIf="actu.boxComment" [formGroup]="commentForm">
+            <textarea class='form-control' id="comment" formControlName="commentary"
+              placeholder="Publiez quelque chose"></textarea>
+            <div class="container mb-5">
+              <mat-spinner class="mt-2" [color]="color" [mode]="mode" [diameter]="diameter" *ngIf="actu.isLoading">
+              </mat-spinner><button class="btn btn-success mt-1" (click)="publishComment(actu)"
+                style="float: right;">Publier</button>
+            </div>
+          </form>
+        </div>
+        <hr style="background:black;">
+      </div>
